@@ -68,17 +68,17 @@ Now look at the last section where it says "Multiple R-squared: 0.601". This val
 
 <font size="4">**Prediction**</font>
 
-Suppose I observed some new values of $X_1$ and $X_2$, say $X_1=1$ and $X_2=9$. How can I use the model to **predict** the corresponding value of $Y$?
+Suppose I observed some new values of $X_1$ and $X_2$, say $X_1=0$ and $X_2=0.5$. How can I use the model to **predict** the corresponding value of $Y$?
 
 I could simply do the calculation by hand:
-$$\hat{Y}=\hat{\beta}_0 + \hat{\beta}_1X_1 + \hat{\beta}_2X_2 =-4.914 + 1.666(1) - 1.004(9)=-12.28$$
+$$\hat{Y}=\hat{\beta}_0 + \hat{\beta}_1X_1 + \hat{\beta}_2X_2 =-4.914 + 1.666(0) - 1.004(0.5)=-5.416$$
 where we use the "hat" notation to denote estimates or predicted values.
 
 We can also use built-in prediction tools in R (where any differences would just be due to rounding error).
 
 
 ```{r}
-predict(lm.fit, newdata=data.frame(X1=1,X2=9))
+predict(lm.fit, newdata=data.frame(X1=0,X2=0.5))
 ```
 
 
@@ -145,12 +145,12 @@ The top node is called the **root node** and indicates the most important variab
 
 Tree models should be interpreted as a sequence of decisions for the purposes of making a prediction. Each node will present a logical statement and if that statement is true, we move *down and to the left* whereas if that statement is false, we move *down and to the right*.
 
-For example, if you wanted to predict $Y$ when $X_1=1$ and $X_2=9$, the root note first asks "Is $X_1\geq -0.9113$?" If yes, then left and if no then right. Here our answer is yes, so we go to the next node to the left and ask "Is $X_1\geq0.264$?" Our answer is yes so we go to the left and ask $X_2\geq0.7014$?" Again, our answer is yes so we go to the left. Since this represents the terminal node, we're left with our predition of $\hat{Y}=-27.25$. That is, if $X_1=1$ and $X_2=9$ then the model predicts $\hat{Y}=-27.25$.
+For example, if you wanted to predict $Y$ when $X_1=0$ and $X_2=0.5$, the root note first asks "Is $X_1\geq -0.9113$?" If yes, then left and if no then right. Here our answer is yes, so we go to the next node to the left and ask "Is $X_1\geq0.264$?" Our answer is no so we go to the right and ask $X_2<0.6835$?" Our answer is yes so we go to the left. Since this represents the terminal node, we're left with our predition of $\hat{Y}=-4.037$. That is, if $X_1=1$ and $X_2=9$ then the model predicts $\hat{Y}=-4.037$.
 
 We can also use the `predict( )` function as we did with the  linear regression model above.
 
 ```{r}
-predict(tree.fit, newdata=data.frame(X1=1,X2=9))
+predict(tree.fit, newdata=data.frame(X1=0,X2=0.5))
 ```
 
 ## Model Selection
