@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>5 Estimation | Data Analytics with R</title>
+  <meta name="description" content="5 Estimation | Data Analytics with R" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="5 Estimation | Data Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="5 Estimation | Data Analytics with R" />
+  
+  
+  
+
+<meta name="author" content="Adam Smith, UCL School of Management" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="sampling-distributions-and-the-clt.html"/>
+<link rel="next" href="hypothesis-tests.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Forward</a></li>
+<li class="chapter" data-level="2" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html"><i class="fa fa-check"></i><b>2</b> Introduction to Data Analytics</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#loading-and-inspecting-data-sets"><i class="fa fa-check"></i><b>2.1</b> Loading and Inspecting Data Sets</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#statistical-summaries"><i class="fa fa-check"></i><b>2.2</b> Statistical Summaries</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#graphical-summaries"><i class="fa fa-check"></i><b>2.3</b> Graphical Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="computing-probabilities.html"><a href="computing-probabilities.html"><i class="fa fa-check"></i><b>3</b> Computing Probabilities</a><ul>
+<li class="chapter" data-level="3.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#normal-distribution"><i class="fa fa-check"></i><b>3.1</b> Normal Distribution</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#probability-density-function-dnorm"><i class="fa fa-check"></i><b>3.1.1</b> Probability Density Function (<code>dnorm</code>)</a></li>
+<li class="chapter" data-level="3.1.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#cumulative-distribution-function-pnorm"><i class="fa fa-check"></i><b>3.1.2</b> Cumulative Distribution Function (<code>pnorm</code>)</a></li>
+<li class="chapter" data-level="3.1.3" data-path="computing-probabilities.html"><a href="computing-probabilities.html#quantile-function-qnorm"><i class="fa fa-check"></i><b>3.1.3</b> Quantile Function (<code>qnorm</code>)</a></li>
+<li class="chapter" data-level="3.1.4" data-path="computing-probabilities.html"><a href="computing-probabilities.html#random-number-generator-rnorm"><i class="fa fa-check"></i><b>3.1.4</b> Random Number Generator (<code>rnorm</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#bernoulli-and-binomial-distributions"><i class="fa fa-check"></i><b>3.2</b> Bernoulli and Binomial Distributions</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#probability-mass-function-dbinom"><i class="fa fa-check"></i><b>3.2.1</b> Probability Mass Function (<code>dbinom</code>)</a></li>
+<li class="chapter" data-level="3.2.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#cumulative-distribution-function-pbinom"><i class="fa fa-check"></i><b>3.2.2</b> Cumulative Distribution Function (<code>pbinom</code>)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="computing-probabilities.html"><a href="computing-probabilities.html#quantile-function-qbinom"><i class="fa fa-check"></i><b>3.2.3</b> Quantile Function (<code>qbinom</code>)</a></li>
+<li class="chapter" data-level="3.2.4" data-path="computing-probabilities.html"><a href="computing-probabilities.html#random-number-generator-rbinom"><i class="fa fa-check"></i><b>3.2.4</b> Random Number Generator (<code>rbinom</code>)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sampling-distributions-and-the-clt.html"><a href="sampling-distributions-and-the-clt.html"><i class="fa fa-check"></i><b>4</b> Sampling Distributions and the CLT</a></li>
+<li class="chapter" data-level="5" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>5</b> Estimation</a><ul>
+<li class="chapter" data-level="5.1" data-path="estimation.html"><a href="estimation.html#point-estimation"><i class="fa fa-check"></i><b>5.1</b> Point Estimation</a></li>
+<li class="chapter" data-level="5.2" data-path="estimation.html"><a href="estimation.html#confidence-intervals"><i class="fa fa-check"></i><b>5.2</b> Confidence Intervals</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="estimation.html"><a href="estimation.html#types-of-confidence-intervals"><i class="fa fa-check"></i><b>5.2.1</b> Types of Confidence Intervals</a></li>
+<li class="chapter" data-level="5.2.2" data-path="estimation.html"><a href="estimation.html#examples"><i class="fa fa-check"></i><b>5.2.2</b> Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i><b>6</b> Hypothesis Tests</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#steps-of-hypothesis-testing"><i class="fa fa-check"></i><b>6.1</b> Steps of Hypothesis Testing</a></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#connection-to-confidence-intervals"><i class="fa fa-check"></i><b>6.2</b> Connection to Confidence Intervals</a></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#hypothesis-testing-in-r"><i class="fa fa-check"></i><b>6.3</b> Hypothesis Testing in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> Regression</a><ul>
+<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#linear-regression"><i class="fa fa-check"></i><b>7.1</b> Linear Regression</a></li>
+<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression-trees"><i class="fa fa-check"></i><b>7.2</b> Regression Trees</a></li>
+<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#model-selection"><i class="fa fa-check"></i><b>7.3</b> Model Selection</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a><ul>
+<li class="chapter" data-level="8.1" data-path="classification.html"><a href="classification.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>8.1</b> <span class="math inline">\(k\)</span>-Nearest Neighbors</a></li>
+<li class="chapter" data-level="8.2" data-path="classification.html"><a href="classification.html#logistic-regression"><i class="fa fa-check"></i><b>8.2</b> Logistic Regression</a></li>
+<li class="chapter" data-level="8.3" data-path="classification.html"><a href="classification.html#classification-trees"><i class="fa fa-check"></i><b>8.3</b> Classification Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>9</b> Clustering</a><ul>
+<li class="chapter" data-level="9.1" data-path="clustering.html"><a href="clustering.html#k-means"><i class="fa fa-check"></i><b>9.1</b> <span class="math inline">\(k\)</span>-Means</a></li>
+<li class="chapter" data-level="9.2" data-path="clustering.html"><a href="clustering.html#hierarchical-clustering"><i class="fa fa-check"></i><b>9.2</b> Hierarchical Clustering</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="estimation" class="section level1">
+<h1><span class="header-section-number">5</span> Estimation</h1>
+<div id="point-estimation" class="section level2">
+<h2><span class="header-section-number">5.1</span> Point Estimation</h2>
+<hr>
+<p>Point estimation is all about using one single number (statistic) to estimate a population parameter of interest. One question is how do we actually come up with those statistics?</p>
+<p>In this section, we will illustrate the concept of <strong>maximum likelihood estimation</strong>. The idea of maximum likelihood estimation is to first assume our data come from a known family of distributions (e.g., normal) that contain parameters (e.g., mean <span class="math inline">\(\mu\)</span>, variance <span class="math inline">\(\sigma^2\)</span>). Then the maximum likelihood estimates (MLEs) of the parameters will be the parameter values that are most likely to have generated our data, where “most likely” is measured by the likelihood function.</p>
+<p>To start, let’s create a simple data set. We will generate <span class="math inline">\(n=25\)</span> normal random variables with mean <span class="math inline">\(\mu=5\)</span> and variance <span class="math inline">\(\sigma^2=1\)</span>.</p>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">25</span>, <span class="dt">mean=</span><span class="dv">5</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
+<p>Now we will pretend as if we do not know the mean parameter of the population distribution <span class="math inline">\(\mu\)</span> and then use the method of maximum likelihood to estimate <span class="math inline">\(\mu\)</span>.</p>
+<p>Remember that the MLE of <span class="math inline">\(\mu\)</span> is defined as <span class="math inline">\(\hat{\mu}^{\text{MLE}}=\arg\max f(x_1,\dotsc,x_n|\mu,\sigma^2)\)</span>. That is, <span class="math inline">\(\hat{\mu}^{\text{MLE}}\)</span> is the value of <span class="math inline">\(\mu\)</span> that maximizes the likelihood function.</p>
+<p>Once we have made the assumption that are our data are normally distributed, the likelihood function takes the form <span class="math display">\[f(x_1,\dotsc,x_n|\mu,\sigma^2)=\prod_{i=1}^n f(x_i|\mu,\sigma^2)=\prod_{i=1}^n{1\over\sqrt{2\pi\sigma^2}}\exp\left(-{1\over2\sigma^2}(x_i-\mu)^2\right)\]</span>
+where the right-most term is the PDF of the normal distribution.</p>
+<p>If we use calculus to formally maximize the likelihood function, we will find that <span class="math inline">\(\hat{\mu}^{\text{MLE}}=\bar{X}\)</span>.</p>
+<p>Since the MLE of <span class="math inline">\(\mu\)</span> is the sample mean, computing the MLE in R becomes straightforward.</p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" data-line-number="1"><span class="kw">mean</span>(x)</a></code></pre></div>
+<pre><code>## [1] 5.162</code></pre>
+<p>Therefore, the MLE of <span class="math inline">\(\mu\)</span> is about 5.16.</p>
+<p>To help provide some intuition for how the maximum likelihood method works, let’s work through an example. Rather than try to work through the calculus to show that <span class="math inline">\(\hat{\mu}^{\text{MLE}}=\bar{x}=5.16\)</span>, we can plot the likelihood function against many candidate values of <span class="math inline">\(\mu\)</span> and see where the curve is highest.</p>
+<p>Since the likelihood function is a product of positive numbers (many of which can be very small), it’s more convenient and numerically stable to work with the <em>log-likelihood function</em>.
+<span class="math display">\[\log f(x_1,\dotsc,x_n|\mu,\sigma^2)=\log\left(\prod_{i=1}^n f(x_i|\mu,\sigma^2)\right)=\sum_{i=1}^n \log f(x_i|\mu,\sigma^2)\]</span></p>
+<p>To compute the log-likelihood function for each <span class="math inline">\(x_i\)</span>, we can use the <code>dnorm( )</code> function.</p>
+<p>Let’s start by evaluating the log-likelihood for each observation. To do this we need to plug in a value for the mean (which we will fix to its true value <span class="math inline">\(\mu=5\)</span>).</p>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" data-line-number="1"><span class="kw">dnorm</span>(x, <span class="dt">mean=</span><span class="dv">5</span>, <span class="dt">sd=</span><span class="dv">1</span>, <span class="dt">log=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>##  [1] -1.2702 -1.0084 -0.9244 -1.4070 -2.8072 -0.9735 -2.2069 -1.6471
+##  [9] -1.3350 -0.9204 -1.0977 -1.0532 -2.3580 -2.0379 -1.1200 -0.9289
+## [17] -1.0902 -1.4054 -1.5403 -0.9302 -2.1302 -1.5254 -1.9105 -2.3638
+## [25] -1.7857</code></pre>
+<p>The entire log-likelihood function is the sum of the individual log-likelihood evaluations. Therefore, the log-likelihood for <span class="math inline">\(\mu=5\)</span> can be found as follows.</p>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean=</span><span class="dv">5</span>, <span class="dt">sd=</span><span class="dv">1</span>, <span class="dt">log=</span><span class="ot">TRUE</span>))</a></code></pre></div>
+<pre><code>## [1] -37.78</code></pre>
+<p>This number now represents a measure of the relative likelihood that our data x were generated from a normal distribution with mean 5. We can the imagine using the likelihood function as a way of finding “good” estimates of <span class="math inline">\(\mu\)</span>. The “best” estimate of <span class="math inline">\(\mu\)</span> would correspond to the value that is <em>most</em> likely to have generated our data.</p>
+<p>As a simple example, we could say: is it more likely that our data come from a distribution with mean <span class="math inline">\(\mu=5\)</span> or <span class="math inline">\(\mu=6\)</span>?</p>
+<p>To test this, we could evaluate the log likelihood function for <span class="math inline">\(\mu=6\)</span> and compare.</p>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" data-line-number="1"><span class="kw">sum</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean=</span><span class="dv">6</span>, <span class="dt">sd=</span><span class="dv">1</span>, <span class="dt">log=</span><span class="ot">TRUE</span>))</a></code></pre></div>
+<pre><code>## [1] -46.22</code></pre>
+<p>Given that the likelihood function is higher (less negative) for <span class="math inline">\(\mu=5\)</span>, we say that <span class="math inline">\(\hat{\mu}=5\)</span> is our estimate of <span class="math inline">\(\mu\)</span>.</p>
+<p>Since <span class="math inline">\(\mu\)</span> can be any real number, there is no reason to restrict plausible values of <span class="math inline">\(\mu\)</span> to the set of integers. Instead, we can lay out a grid of candidate parameter values of any desired level of granularity.</p>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" data-line-number="1">index =<span class="st"> </span><span class="kw">seq</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="dt">by=</span>.<span class="dv">01</span>)</a>
+<a class="sourceLine" id="cb94-2" data-line-number="2">index</a></code></pre></div>
+<pre><code>##   [1] 3.00 3.01 3.02 3.03 3.04 3.05 3.06 3.07 3.08 3.09 3.10 3.11 3.12 3.13
+##  [15] 3.14 3.15 3.16 3.17 3.18 3.19 3.20 3.21 3.22 3.23 3.24 3.25 3.26 3.27
+##  [29] 3.28 3.29 3.30 3.31 3.32 3.33 3.34 3.35 3.36 3.37 3.38 3.39 3.40 3.41
+##  [43] 3.42 3.43 3.44 3.45 3.46 3.47 3.48 3.49 3.50 3.51 3.52 3.53 3.54 3.55
+##  [57] 3.56 3.57 3.58 3.59 3.60 3.61 3.62 3.63 3.64 3.65 3.66 3.67 3.68 3.69
+##  [71] 3.70 3.71 3.72 3.73 3.74 3.75 3.76 3.77 3.78 3.79 3.80 3.81 3.82 3.83
+##  [85] 3.84 3.85 3.86 3.87 3.88 3.89 3.90 3.91 3.92 3.93 3.94 3.95 3.96 3.97
+##  [99] 3.98 3.99 4.00 4.01 4.02 4.03 4.04 4.05 4.06 4.07 4.08 4.09 4.10 4.11
+## [113] 4.12 4.13 4.14 4.15 4.16 4.17 4.18 4.19 4.20 4.21 4.22 4.23 4.24 4.25
+## [127] 4.26 4.27 4.28 4.29 4.30 4.31 4.32 4.33 4.34 4.35 4.36 4.37 4.38 4.39
+## [141] 4.40 4.41 4.42 4.43 4.44 4.45 4.46 4.47 4.48 4.49 4.50 4.51 4.52 4.53
+## [155] 4.54 4.55 4.56 4.57 4.58 4.59 4.60 4.61 4.62 4.63 4.64 4.65 4.66 4.67
+## [169] 4.68 4.69 4.70 4.71 4.72 4.73 4.74 4.75 4.76 4.77 4.78 4.79 4.80 4.81
+## [183] 4.82 4.83 4.84 4.85 4.86 4.87 4.88 4.89 4.90 4.91 4.92 4.93 4.94 4.95
+## [197] 4.96 4.97 4.98 4.99 5.00 5.01 5.02 5.03 5.04 5.05 5.06 5.07 5.08 5.09
+## [211] 5.10 5.11 5.12 5.13 5.14 5.15 5.16 5.17 5.18 5.19 5.20 5.21 5.22 5.23
+## [225] 5.24 5.25 5.26 5.27 5.28 5.29 5.30 5.31 5.32 5.33 5.34 5.35 5.36 5.37
+## [239] 5.38 5.39 5.40 5.41 5.42 5.43 5.44 5.45 5.46 5.47 5.48 5.49 5.50 5.51
+## [253] 5.52 5.53 5.54 5.55 5.56 5.57 5.58 5.59 5.60 5.61 5.62 5.63 5.64 5.65
+## [267] 5.66 5.67 5.68 5.69 5.70 5.71 5.72 5.73 5.74 5.75 5.76 5.77 5.78 5.79
+## [281] 5.80 5.81 5.82 5.83 5.84 5.85 5.86 5.87 5.88 5.89 5.90 5.91 5.92 5.93
+## [295] 5.94 5.95 5.96 5.97 5.98 5.99 6.00 6.01 6.02 6.03 6.04 6.05 6.06 6.07
+## [309] 6.08 6.09 6.10 6.11 6.12 6.13 6.14 6.15 6.16 6.17 6.18 6.19 6.20 6.21
+## [323] 6.22 6.23 6.24 6.25 6.26 6.27 6.28 6.29 6.30 6.31 6.32 6.33 6.34 6.35
+## [337] 6.36 6.37 6.38 6.39 6.40 6.41 6.42 6.43 6.44 6.45 6.46 6.47 6.48 6.49
+## [351] 6.50 6.51 6.52 6.53 6.54 6.55 6.56 6.57 6.58 6.59 6.60 6.61 6.62 6.63
+## [365] 6.64 6.65 6.66 6.67 6.68 6.69 6.70 6.71 6.72 6.73 6.74 6.75 6.76 6.77
+## [379] 6.78 6.79 6.80 6.81 6.82 6.83 6.84 6.85 6.86 6.87 6.88 6.89 6.90 6.91
+## [393] 6.92 6.93 6.94 6.95 6.96 6.97 6.98 6.99 7.00</code></pre>
+<p>We now want to step through each value in the index and evaluate the log-likelihood function. The MLE will be the value in the index that yields the highest log-likelihood function.</p>
+<p>To do this, we will use a “for loop” in R.</p>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" data-line-number="1">R =<span class="st"> </span><span class="kw">length</span>(index)</a>
+<a class="sourceLine" id="cb96-2" data-line-number="2">loglike =<span class="st"> </span><span class="kw">double</span>(R)</a>
+<a class="sourceLine" id="cb96-3" data-line-number="3"><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>R){</a>
+<a class="sourceLine" id="cb96-4" data-line-number="4">  loglike[r] =<span class="st"> </span><span class="kw">sum</span>(<span class="kw">dnorm</span>(x, <span class="dt">mean=</span>index[r], <span class="dt">sd=</span><span class="dv">1</span>, <span class="dt">log=</span><span class="ot">TRUE</span>))</a>
+<a class="sourceLine" id="cb96-5" data-line-number="5">}</a></code></pre></div>
+<p>Here R counts the number of elements in the index variable and loglike is a vector of R elements that are initially set to be zero but are then filled in in each iteration of the for loop.</p>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1"><span class="kw">plot</span>(index, loglike, <span class="dt">type=</span><span class="st">&quot;l&quot;</span>)</a>
+<a class="sourceLine" id="cb97-2" data-line-number="2"><span class="kw">abline</span>(<span class="dt">v=</span>index[<span class="kw">which.max</span>(loglike)], <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-57-1.png" width="672" /></p>
+<p>Once we have evaluated the log-likelihood function for each value in the index, we can plot the log-likelihood against the index.</p>
+<p>Based on this plot, it looks like the value that maximizes the log-likehood functin is a little bit greater than 5. We formally check this in R.</p>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" data-line-number="1">index[<span class="kw">which.max</span>(loglike)]</a></code></pre></div>
+<pre><code>## [1] 5.16</code></pre>
+<p>This matches the MLE that we initially computed using the sample mean.</p>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1"><span class="kw">mean</span>(x)</a></code></pre></div>
+<pre><code>## [1] 5.162</code></pre>
+<p>The only difference is the fact that our estimate using the plot is rounded to two decimal places because of the grid that we selected when creating the index variable.</p>
+<p><br></p>
+</div>
+<div id="confidence-intervals" class="section level2">
+<h2><span class="header-section-number">5.2</span> Confidence Intervals</h2>
+<hr>
+<p>Ultimately, point estimates are insufficient because the estimators themselves are random variables and subject to variation across different samples. Rather than provide a single point estimate, it will be better to provide a <em>range of plausible values</em> for the parameter of interest. This is the idea of <strong>confidence intervals</strong>.</p>
+<p>A confidence interval for any parameter <span class="math inline">\(\theta\)</span> will always take the form:
+<span class="math display">\[\hat{\theta}\pm \text{(critical value)}\times SD(\hat{\theta})\]</span>
+where <span class="math inline">\(\hat{\theta}\)</span> is an estimator of <span class="math inline">\(\theta\)</span>, the critical value is a quantile of a normal or t distribution, and <span class="math inline">\(SD(\hat{\theta})\)</span> is the standard deviation of the estimator.</p>
+<div id="types-of-confidence-intervals" class="section level3">
+<h3><span class="header-section-number">5.2.1</span> Types of Confidence Intervals</h3>
+<p>We will consider four types of <span class="math inline">\((1-\alpha)100\%\)</span> confidence intervals.</p>
+<ol style="list-style-type: decimal">
+<li><p>Confidence interval for mean <span class="math inline">\(\mu\)</span>, data are normally distributed, variance <span class="math inline">\(\sigma^2\)</span> is known
+<span class="math display">\[\bar{x}\pm z_{\alpha/2}{\sigma\over\sqrt{n}}\]</span></p></li>
+<li><p>Confidence interval for mean <span class="math inline">\(\mu\)</span>, data are normally distributed, variance <span class="math inline">\(\sigma^2\)</span> is unknown
+<span class="math display">\[\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}\]</span></p></li>
+<li><p>Confidence interval for mean <span class="math inline">\(\mu\)</span>, data are not normally distributed
+<span class="math display">\[\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}\]</span></p></li>
+<li><p>Confidence interval for proportion <span class="math inline">\(p\)</span>, data are binary (0s and 1s)
+<span class="math display">\[\hat{p}\pm z_{\alpha/2}\sqrt{\hat{p}(1-\hat{p})\over n}\]</span></p></li>
+</ol>
+<p>Notice that we can compute the critical values in R. If we need <span class="math inline">\(z_{\alpha/2}\)</span>, then we must find the value of a standard normal random variable such that <span class="math inline">\(\alpha/2\)</span> percent of the area is to its right. This is can be found using the normal quantile function <code>qnorm( )</code>!</p>
+<p>For example, if <span class="math inline">\(\alpha=0.05\)</span> let’s use <code>qnorm( )</code> to find <span class="math inline">\(z_{0.025}\)</span>.</p>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" data-line-number="1"><span class="kw">qnorm</span>(<span class="fl">0.025</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] 1.96</code></pre>
+<p>A summary of the most commonly used normal critical values are provided below.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:center;">
+Confidence Level <span class="math inline">\((1-\alpha)\)</span>
+</th>
+<th style="text-align:center;">
+Critical Value <span class="math inline">\(z_{\alpha/2}\)</span>
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center;">
+99%
+</td>
+<td style="text-align:center;">
+2.576
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+95%
+</td>
+<td style="text-align:center;">
+1.96
+</td>
+</tr>
+<tr>
+<td style="text-align:center;">
+90%
+</td>
+<td style="text-align:center;">
+1.645
+</td>
+</tr>
+</tbody>
+</table>
+<p>Similarly, if we need to compute <span class="math inline">\(t_{n-1,\alpha/2}\)</span> with <span class="math inline">\(\alpha=0.05\)</span> and our data have <span class="math inline">\(n=50\)</span> observations, we can use the <code>qt( )</code> function.</p>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" data-line-number="1"><span class="kw">qt</span>(<span class="fl">0.025</span>, <span class="dt">df=</span><span class="dv">50-1</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] 2.01</code></pre>
+<p>Notice this critical value is larger than <span class="math inline">\(z_{0.025}\)</span> – this comes from the fact that the t-distribution has fatter tails than the normal distribution. But, it also turns out that a t distribution (which only has one parameter <span class="math inline">\(\nu\)</span> called the “degrees of freedom”) converges to a normal distribution as <span class="math inline">\(\nu\to\infty\)</span>. We can formally check this using <code>qt( )</code>.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" data-line-number="1"><span class="kw">qt</span>(<span class="fl">0.025</span>, <span class="dt">df=</span><span class="dv">50</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] 2.009</code></pre>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" data-line-number="1"><span class="kw">qt</span>(<span class="fl">0.025</span>, <span class="dt">df=</span><span class="dv">100</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] 1.984</code></pre>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" data-line-number="1"><span class="kw">qt</span>(<span class="fl">0.025</span>, <span class="dt">df=</span><span class="dv">1000</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] 1.962</code></pre>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">qt</span>(<span class="fl">0.025</span>, <span class="dt">df=</span><span class="dv">10000</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] 1.96</code></pre>
+<p>Notice how these values approach <span class="math inline">\(z_{0.025}\approx1.96\)</span> as the degrees of freedom parameter gets large.</p>
+</div>
+<div id="examples" class="section level3">
+<h3><span class="header-section-number">5.2.2</span> Examples</h3>
+<p><strong>PROBLEM 1:</strong> A wine importer needs to report the average percentage of alcohol in bottles of French wine. From experience with previous kinds of wine, the importer believes that alcolhol percentages are normally distributed and the population standard deviation is 1.2%. The importer randomly samples 60 bottles of the new wine and obtains a sample mean <span class="math inline">\(\bar{x}=9.3\%\)</span>. Give a 90% confidence interval for the average percentage of alcohol in all bottles of the new wine.</p>
+<p>ANSWER: From the problem, we know the following.
+<span class="math display">\[\begin{align*}
+n = 60\\
+\sigma=1.2\\
+\bar{x} =9.3\\
+\alpha=0.10
+\end{align*}\]</span>
+We must first figure out which type of confidence interval to use. Notice that we are trying to estimate the <em>average</em> percentage of alcohol, so our parameter is a mean <span class="math inline">\(\mu\)</span>. Moreover, we are told to assume that the data are normally distributed and the population standard deviation <span class="math inline">\(\sigma\)</span> is known. Thefore, our confidence interval will be of the form:
+<span class="math display">\[\bar{x}\pm z_{\alpha/2}{\sigma\over\sqrt{n}}.\]</span>
+We can now define each object in R and construct the confidence interval.</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1">n =<span class="st"> </span><span class="dv">60</span></a>
+<a class="sourceLine" id="cb114-2" data-line-number="2">sigma =<span class="st"> </span><span class="fl">1.2</span></a>
+<a class="sourceLine" id="cb114-3" data-line-number="3">xbar =<span class="st"> </span><span class="fl">9.3</span></a>
+<a class="sourceLine" id="cb114-4" data-line-number="4">zalpha =<span class="st"> </span><span class="kw">qnorm</span>(<span class="fl">0.05</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb114-5" data-line-number="5">xbar <span class="op">-</span><span class="st"> </span>zalpha<span class="op">*</span>sigma<span class="op">/</span><span class="kw">sqrt</span>(n)</a></code></pre></div>
+<pre><code>## [1] 9.045</code></pre>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" data-line-number="1">xbar <span class="op">+</span><span class="st"> </span>zalpha<span class="op">*</span>sigma<span class="op">/</span><span class="kw">sqrt</span>(n)</a></code></pre></div>
+<pre><code>## [1] 9.555</code></pre>
+<p>Therefore, we are 90% confident that the true average alcohol content in all new bottles of wine is between 9.05% and 9.55%.</p>
+<p><strong>PROBLEM 2:</strong> An economist wants to estimate the average amount in checking accounts at banks in a given region. A random sample of 100 accounts gives <span class="math inline">\(\bar{x}=£357.60\)</span> and <span class="math inline">\(s=£140.00\)</span>. Give a 95% confidence interval for <span class="math inline">\(\mu\)</span>, the average amount in any checking account at a bank in the given region.</p>
+<p>ANSWER: From the problem, we know the following.
+<span class="math display">\[\begin{align*}
+n &amp;= 100\\
+\bar{x} &amp;=357.60\\
+s &amp;= 140\\
+\alpha&amp;=0.5
+\end{align*}\]</span>
+Here we are not told whether the data are normally distributed. However, it won’t matter because we only have an estimate of <span class="math inline">\(\sigma\)</span> (remember that among the four types of confidence intervals we considered earlier, there are no differences between case II and III). Therefore, our confidence interval will be of the form:
+<span class="math display">\[\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}.\]</span>
+We can again define each object in R and construct the confidence interval.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" data-line-number="1">n =<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb118-2" data-line-number="2">xbar =<span class="st"> </span><span class="fl">357.60</span></a>
+<a class="sourceLine" id="cb118-3" data-line-number="3">s =<span class="st"> </span><span class="dv">140</span></a>
+<a class="sourceLine" id="cb118-4" data-line-number="4">talpha =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.025</span>, <span class="dt">df=</span>n<span class="dv">-1</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb118-5" data-line-number="5">xbar <span class="op">-</span><span class="st"> </span>talpha<span class="op">*</span>s<span class="op">/</span><span class="kw">sqrt</span>(n)</a></code></pre></div>
+<pre><code>## [1] 329.8</code></pre>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1">xbar <span class="op">+</span><span class="st"> </span>talpha<span class="op">*</span>s<span class="op">/</span><span class="kw">sqrt</span>(n)</a></code></pre></div>
+<pre><code>## [1] 385.4</code></pre>
+<p>Therefore, we are 95% confident that the true average account checking account value in the given region is between £329.82 and £385.38.</p>
+<p><strong>PROBLEM 3:</strong> The EuStockMarkets data set in R provides daily closing prices of four major European stock indices: Germany DAX (Ibis), Switzerland SMI, France CAC, and UK FTSE. Using this data set, produce a 99% confidence interval for the average closing price of the UK FTSE.</p>
+<p>ANSWER: First, let’s load in the data from R.</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="kw">data</span>(EuStockMarkets)</a>
+<a class="sourceLine" id="cb122-2" data-line-number="2"><span class="kw">head</span>(EuStockMarkets)</a></code></pre></div>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+DAX
+</th>
+<th style="text-align:right;">
+SMI
+</th>
+<th style="text-align:right;">
+CAC
+</th>
+<th style="text-align:right;">
+FTSE
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+1629
+</td>
+<td style="text-align:right;">
+1678
+</td>
+<td style="text-align:right;">
+1773
+</td>
+<td style="text-align:right;">
+2444
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1614
+</td>
+<td style="text-align:right;">
+1688
+</td>
+<td style="text-align:right;">
+1750
+</td>
+<td style="text-align:right;">
+2460
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1607
+</td>
+<td style="text-align:right;">
+1679
+</td>
+<td style="text-align:right;">
+1718
+</td>
+<td style="text-align:right;">
+2448
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1621
+</td>
+<td style="text-align:right;">
+1684
+</td>
+<td style="text-align:right;">
+1708
+</td>
+<td style="text-align:right;">
+2470
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1618
+</td>
+<td style="text-align:right;">
+1687
+</td>
+<td style="text-align:right;">
+1723
+</td>
+<td style="text-align:right;">
+2485
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1611
+</td>
+<td style="text-align:right;">
+1672
+</td>
+<td style="text-align:right;">
+1714
+</td>
+<td style="text-align:right;">
+2467
+</td>
+</tr>
+</tbody>
+</table>
+<p>Now let’s pull the subset of data we care about (i.e., the UK FTSE column).</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1">uk =<span class="st"> </span>EuStockMarkets[,<span class="dv">4</span>]</a></code></pre></div>
+<p>Notice that we are not told anything about the true distribution of the data. Therefore, our confidence interval will be of the form:
+<span class="math display">\[\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}.\]</span>
+Next, let’s compute each component necessary to construct the 99% confidence interval.</p>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" data-line-number="1">n =<span class="st"> </span><span class="kw">length</span>(uk)</a>
+<a class="sourceLine" id="cb124-2" data-line-number="2">xbar =<span class="st"> </span><span class="kw">mean</span>(uk)</a>
+<a class="sourceLine" id="cb124-3" data-line-number="3">s =<span class="st"> </span><span class="kw">sd</span>(uk)</a>
+<a class="sourceLine" id="cb124-4" data-line-number="4">talpha =<span class="st"> </span><span class="kw">qt</span>(<span class="fl">0.005</span>, <span class="dt">df=</span>n<span class="dv">-1</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb124-5" data-line-number="5">xbar <span class="op">-</span><span class="st"> </span>talpha<span class="op">*</span>s<span class="op">/</span><span class="kw">sqrt</span>(n)</a></code></pre></div>
+<pre><code>## [1] 3507</code></pre>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1">xbar <span class="op">+</span><span class="st"> </span>talpha<span class="op">*</span>s<span class="op">/</span><span class="kw">sqrt</span>(n)</a></code></pre></div>
+<pre><code>## [1] 3624</code></pre>
+<p>Therefore, we are 99% confident that the true closing price for the UK FTSE index is between £3,507.25 and £3,624.04.</p>
+<p>Finally, notice that we can use the <code>t.test( )</code> function to perform the same analysis but with fewer steps.</p>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" data-line-number="1"><span class="kw">t.test</span>(uk, <span class="dt">conf.level=</span><span class="fl">0.99</span>)</a></code></pre></div>
+<pre><code>## 
+##  One Sample t-test
+## 
+## data:  uk
+## t = 157, df = 1859, p-value &lt;2e-16
+## alternative hypothesis: true mean is not equal to 0
+## 99 percent confidence interval:
+##  3507 3624
+## sample estimates:
+## mean of x 
+##      3566</code></pre>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="sampling-distributions-and-the-clt.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="hypothesis-tests.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

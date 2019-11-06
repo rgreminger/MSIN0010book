@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>8 Classification | Data Analytics with R</title>
+  <meta name="description" content="8 Classification | Data Analytics with R" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="8 Classification | Data Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="8 Classification | Data Analytics with R" />
+  
+  
+  
+
+<meta name="author" content="Adam Smith, UCL School of Management" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regression.html"/>
+<link rel="next" href="clustering.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Forward</a></li>
+<li class="chapter" data-level="2" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html"><i class="fa fa-check"></i><b>2</b> Introduction to Data Analytics</a><ul>
+<li class="chapter" data-level="2.1" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#loading-and-inspecting-data-sets"><i class="fa fa-check"></i><b>2.1</b> Loading and Inspecting Data Sets</a></li>
+<li class="chapter" data-level="2.2" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#statistical-summaries"><i class="fa fa-check"></i><b>2.2</b> Statistical Summaries</a></li>
+<li class="chapter" data-level="2.3" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#graphical-summaries"><i class="fa fa-check"></i><b>2.3</b> Graphical Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="computing-probabilities.html"><a href="computing-probabilities.html"><i class="fa fa-check"></i><b>3</b> Computing Probabilities</a><ul>
+<li class="chapter" data-level="3.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#normal-distribution"><i class="fa fa-check"></i><b>3.1</b> Normal Distribution</a><ul>
+<li class="chapter" data-level="3.1.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#probability-density-function-dnorm"><i class="fa fa-check"></i><b>3.1.1</b> Probability Density Function (<code>dnorm</code>)</a></li>
+<li class="chapter" data-level="3.1.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#cumulative-distribution-function-pnorm"><i class="fa fa-check"></i><b>3.1.2</b> Cumulative Distribution Function (<code>pnorm</code>)</a></li>
+<li class="chapter" data-level="3.1.3" data-path="computing-probabilities.html"><a href="computing-probabilities.html#quantile-function-qnorm"><i class="fa fa-check"></i><b>3.1.3</b> Quantile Function (<code>qnorm</code>)</a></li>
+<li class="chapter" data-level="3.1.4" data-path="computing-probabilities.html"><a href="computing-probabilities.html#random-number-generator-rnorm"><i class="fa fa-check"></i><b>3.1.4</b> Random Number Generator (<code>rnorm</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#bernoulli-and-binomial-distributions"><i class="fa fa-check"></i><b>3.2</b> Bernoulli and Binomial Distributions</a><ul>
+<li class="chapter" data-level="3.2.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#probability-mass-function-dbinom"><i class="fa fa-check"></i><b>3.2.1</b> Probability Mass Function (<code>dbinom</code>)</a></li>
+<li class="chapter" data-level="3.2.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#cumulative-distribution-function-pbinom"><i class="fa fa-check"></i><b>3.2.2</b> Cumulative Distribution Function (<code>pbinom</code>)</a></li>
+<li class="chapter" data-level="3.2.3" data-path="computing-probabilities.html"><a href="computing-probabilities.html#quantile-function-qbinom"><i class="fa fa-check"></i><b>3.2.3</b> Quantile Function (<code>qbinom</code>)</a></li>
+<li class="chapter" data-level="3.2.4" data-path="computing-probabilities.html"><a href="computing-probabilities.html#random-number-generator-rbinom"><i class="fa fa-check"></i><b>3.2.4</b> Random Number Generator (<code>rbinom</code>)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="sampling-distributions-and-the-clt.html"><a href="sampling-distributions-and-the-clt.html"><i class="fa fa-check"></i><b>4</b> Sampling Distributions and the CLT</a></li>
+<li class="chapter" data-level="5" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>5</b> Estimation</a><ul>
+<li class="chapter" data-level="5.1" data-path="estimation.html"><a href="estimation.html#point-estimation"><i class="fa fa-check"></i><b>5.1</b> Point Estimation</a></li>
+<li class="chapter" data-level="5.2" data-path="estimation.html"><a href="estimation.html#confidence-intervals"><i class="fa fa-check"></i><b>5.2</b> Confidence Intervals</a><ul>
+<li class="chapter" data-level="5.2.1" data-path="estimation.html"><a href="estimation.html#types-of-confidence-intervals"><i class="fa fa-check"></i><b>5.2.1</b> Types of Confidence Intervals</a></li>
+<li class="chapter" data-level="5.2.2" data-path="estimation.html"><a href="estimation.html#examples"><i class="fa fa-check"></i><b>5.2.2</b> Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i><b>6</b> Hypothesis Tests</a><ul>
+<li class="chapter" data-level="6.1" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#steps-of-hypothesis-testing"><i class="fa fa-check"></i><b>6.1</b> Steps of Hypothesis Testing</a></li>
+<li class="chapter" data-level="6.2" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#connection-to-confidence-intervals"><i class="fa fa-check"></i><b>6.2</b> Connection to Confidence Intervals</a></li>
+<li class="chapter" data-level="6.3" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#hypothesis-testing-in-r"><i class="fa fa-check"></i><b>6.3</b> Hypothesis Testing in R</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>7</b> Regression</a><ul>
+<li class="chapter" data-level="7.1" data-path="regression.html"><a href="regression.html#linear-regression"><i class="fa fa-check"></i><b>7.1</b> Linear Regression</a></li>
+<li class="chapter" data-level="7.2" data-path="regression.html"><a href="regression.html#regression-trees"><i class="fa fa-check"></i><b>7.2</b> Regression Trees</a></li>
+<li class="chapter" data-level="7.3" data-path="regression.html"><a href="regression.html#model-selection"><i class="fa fa-check"></i><b>7.3</b> Model Selection</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>8</b> Classification</a><ul>
+<li class="chapter" data-level="8.1" data-path="classification.html"><a href="classification.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>8.1</b> <span class="math inline">\(k\)</span>-Nearest Neighbors</a></li>
+<li class="chapter" data-level="8.2" data-path="classification.html"><a href="classification.html#logistic-regression"><i class="fa fa-check"></i><b>8.2</b> Logistic Regression</a></li>
+<li class="chapter" data-level="8.3" data-path="classification.html"><a href="classification.html#classification-trees"><i class="fa fa-check"></i><b>8.3</b> Classification Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>9</b> Clustering</a><ul>
+<li class="chapter" data-level="9.1" data-path="clustering.html"><a href="clustering.html#k-means"><i class="fa fa-check"></i><b>9.1</b> <span class="math inline">\(k\)</span>-Means</a></li>
+<li class="chapter" data-level="9.2" data-path="clustering.html"><a href="clustering.html#hierarchical-clustering"><i class="fa fa-check"></i><b>9.2</b> Hierarchical Clustering</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="classification" class="section level1">
+<h1><span class="header-section-number">8</span> Classification</h1>
+<p>Classification shares many similarities with regression: We have a response variable <span class="math inline">\(Y\)</span> and a set of one or more predictors <span class="math inline">\(X_1,\dotsc,X_p\)</span>. The difference is that for classification problems, the response <span class="math inline">\(Y\)</span> is <strong>discrete</strong>, meaning <span class="math inline">\(Y\in\{1,2,\dotsc,C\}\)</span> where <span class="math inline">\(C\)</span> is the number of classes that <span class="math inline">\(Y\)</span> can take on.</p>
+<p>We will focus our attention on <strong>binary</strong> responses <span class="math inline">\(Y\in\{0,1\}\)</span>, but all of the methods we discuss can be extended to the more general case outlined above.</p>
+<p>To illustrate classification methods, we will use the Default data in the “ISLR” R library. The data set contains four variables: “default” is an indicator of whether the customer defaulted on their debt, “student” is an indicator of whether the customer is a student, “balance” is the average balance that the customer has remaining on their credit card after making their monthly payment, and “income” is the customer’s income.</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb161-2" data-line-number="2"><span class="kw">data</span>(Default)</a>
+<a class="sourceLine" id="cb161-3" data-line-number="3"><span class="kw">head</span>(Default)</a></code></pre></div>
+<pre><code>##   default student balance income
+## 1      No      No   729.5  44362
+## 2      No     Yes   817.2  12106
+## 3      No      No  1073.5  31767
+## 4      No      No   529.3  35704
+## 5      No      No   785.7  38463
+## 6      No     Yes   919.6   7492</code></pre>
+<p>We also need to split up the data into training and test samples in order to measure the predictive accuracy of different approaches to classification.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1">train =<span class="st"> </span>Default[<span class="dv">1</span><span class="op">:</span><span class="dv">7000</span>,]</a>
+<a class="sourceLine" id="cb163-2" data-line-number="2">test =<span class="st"> </span>Default[<span class="dv">7001</span><span class="op">:</span><span class="dv">10000</span>,]</a></code></pre></div>
+<div id="k-nearest-neighbors" class="section level2">
+<h2><span class="header-section-number">8.1</span> <span class="math inline">\(k\)</span>-Nearest Neighbors</h2>
+<hr>
+<p>The <span class="math inline">\(k\)</span>-NN algorithms are built on the following idea: given a new observation <span class="math inline">\(X^*\)</span> for which we want to predict an associated response <span class="math inline">\(Y^*\)</span>, we can find values of <span class="math inline">\(X\)</span> in our data that look similar to <span class="math inline">\(X^*\)</span> and then classify <span class="math inline">\(Y^*\)</span> based on the associated <span class="math inline">\(Y\)</span>’s. We will use Euclidean distance is a measure of similarity (which is only defined for real-valued <span class="math inline">\(X\)</span>’s).</p>
+<p>Let’s take a small portion (first 10 rows) of the Default data to work through a simple example. Notice that we will exclude the “student” variable since it is a categorical rather than numeric variable. We will use the 11th observation as our “test” data <span class="math inline">\(X^*\)</span> that we want to make predictions for.</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1">X =<span class="st"> </span>Default[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>]</a>
+<a class="sourceLine" id="cb164-2" data-line-number="2">Y =<span class="st"> </span>Default[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb164-3" data-line-number="3">newX =<span class="st"> </span>Default[<span class="dv">11</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>]</a></code></pre></div>
+<p>We now need to compute the similarity (i.e., Euclidean distance) between <span class="math inline">\(X^*=(X_1^*,X_2^*)\)</span> and <span class="math inline">\(X_i=(X_{1i},X_{2i})\)</span> for each <span class="math inline">\(i=1,\dotsc,n\)</span>.</p>
+<p><span class="math display">\[dist(X^*,X_i)=||X^*-X_i||=\sqrt{(X_1^*-X_{1i})^2+(X_2^*-X_{2i})^2}\]</span></p>
+<p>To do this in R, we can take use the apply( ) function. The first argument is the matrix of <span class="math inline">\(X\)</span> variables that we want to cycle through to compare with <span class="math inline">\(X^*\)</span>.</p>
+<p>The second argument of the apply( ) function tells R whether we want to perform an operation for each row (=1) of for each column (=2). The last row tells R what function we want to compute. Here, we need to evaluate <span class="math inline">\(dist(X^*,X_i)\)</span> for each row.</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1">distance =<span class="st"> </span><span class="kw">apply</span>(X,<span class="dv">1</span>,<span class="cf">function</span>(x)<span class="kw">sqrt</span>(<span class="kw">sum</span>((x<span class="op">-</span>newX)<span class="op">^</span><span class="dv">2</span>)))</a>
+<a class="sourceLine" id="cb165-2" data-line-number="2">distance</a></code></pre></div>
+<pre><code>##     1     2     3     4     5     6     7     8     9    10 
+## 22502  9799  9954 13844 16611 14409  3144  4347 15641  7404</code></pre>
+<p>Notice that the function returns a set of 10 distances. If we wanted to use the 1st-nearest neighbor classifier to predict <span class="math inline">\(Y^*\)</span>, for example, then we would need to find the <span class="math inline">\(Y\)</span> value of <span class="math inline">\(X_i\)</span> for the observation <span class="math inline">\(i\)</span> that has the smallest distance. We can find that value using the which.min( ) function.</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="kw">which.min</span>(distance)</a></code></pre></div>
+<pre><code>## 7 
+## 7</code></pre>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1">Y[<span class="kw">which.min</span>(distance)]</a></code></pre></div>
+<pre><code>## [1] No
+## Levels: No Yes</code></pre>
+<p>Therefore, we would predict <span class="math inline">\(Y^*=No\)</span> having observed <span class="math inline">\(X^*\)</span>.</p>
+<p>Now let’s go back to the full data set and test the performance of the <span class="math inline">\(k\)</span>-NN classifier. The first thing we should do is standardize the <span class="math inline">\(X\)</span>’s since the nearest neighbors algorithm depends on the scale of the covariates.</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1">stdtrainX =<span class="st"> </span><span class="kw">scale</span>(train[,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>])</a>
+<a class="sourceLine" id="cb171-2" data-line-number="2">stdtestX =<span class="st"> </span><span class="kw">scale</span>(test[,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>])</a>
+<a class="sourceLine" id="cb171-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb171-4" data-line-number="4"><span class="kw">summary</span>(stdtrainX)</a></code></pre></div>
+<pre><code>##     balance           income       
+##  Min.   :-1.728   Min.   :-2.4632  
+##  1st Qu.:-0.733   1st Qu.:-0.9207  
+##  Median :-0.030   Median : 0.0804  
+##  Mean   : 0.000   Mean   : 0.0000  
+##  3rd Qu.: 0.686   3rd Qu.: 0.7730  
+##  Max.   : 3.454   Max.   : 3.0059</code></pre>
+<p>Now we can use the <code>knn( )</code> function in the <code>class</code> R library to run the algorithm on the training data and then make predictions for each observation in the test data. The first argument calls for the <span class="math inline">\(X\)</span>’s in the training data, the second calls for the <span class="math inline">\(X\)</span>’s in the test data (for which we want to predict), the third calls for the <span class="math inline">\(Y\)</span>’s in the training data, and the fourth calls for <span class="math inline">\(k\)</span>, the number of nearest neighbors we want to use to make the prediction.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1"><span class="kw">library</span>(class)</a>
+<a class="sourceLine" id="cb173-2" data-line-number="2">knn1 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">1</span>)</a></code></pre></div>
+<p>The “knn1” object now contains a vector of predicted <span class="math inline">\(Y\)</span>’s for each value of <span class="math inline">\(X\)</span> in the test data. We can then compare the predicted response <span class="math inline">\(\hat{Y}\)</span> to the true response in the test data <span class="math inline">\(Y\)</span> to assess the performance of the classification algorithm. In particular, we will see the fraction of predictions the algorithm gets wrong.</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1"><span class="kw">mean</span>(knn1 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
+<pre><code>## [1] 0.04467</code></pre>
+<p>In this case, the 1-NN classifier as an error rate of about 4.5% (or equivalently, an accuracy of 95.5%).</p>
+<p>We can try increasing <span class="math inline">\(k\)</span> to see if there is any effect on predictive fit.</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="co"># 5 nearest neighbors</span></a>
+<a class="sourceLine" id="cb176-2" data-line-number="2">knn5 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb176-3" data-line-number="3"><span class="kw">mean</span>(knn5 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
+<pre><code>## [1] 0.029</code></pre>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="co"># 10 nearest neighbors</span></a>
+<a class="sourceLine" id="cb178-2" data-line-number="2">knn10 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb178-3" data-line-number="3"><span class="kw">mean</span>(knn10 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
+<pre><code>## [1] 0.026</code></pre>
+<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1"><span class="co"># 50 nearest neighbors</span></a>
+<a class="sourceLine" id="cb180-2" data-line-number="2">knn50 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb180-3" data-line-number="3"><span class="kw">mean</span>(knn50 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
+<pre><code>## [1] 0.024</code></pre>
+<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1"><span class="co"># 100 nearest neighbors</span></a>
+<a class="sourceLine" id="cb182-2" data-line-number="2">knn100 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb182-3" data-line-number="3"><span class="kw">mean</span>(knn100 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default) </a></code></pre></div>
+<pre><code>## [1] 0.027</code></pre>
+<p>We would then likely choose the model that predicts best (i.e., has the lowest error/misclassification rate).</p>
+<p>The last object of interest when doing classification is the <strong>confusion matrix</strong>, which allows us to decompose misclassification mistakes into two groups: <strong>false positives</strong> (predict <span class="math inline">\(\hat{Y}=1\)</span> when <span class="math inline">\(Y=0\)</span>) and <strong>false negatives</strong> (predict <span class="math inline">\(\hat{Y}=0\)</span> when <span class="math inline">\(Y=1\)</span>).</p>
+<p>Let’s produce the confusion matrix for the 10-NN classifier.</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1"><span class="kw">table</span>(knn10,test<span class="op">$</span>default)</a></code></pre></div>
+<pre><code>##      
+## knn10   No  Yes
+##   No  2889   60
+##   Yes   18   33</code></pre>
+<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1"><span class="co"># false positive rate</span></a>
+<a class="sourceLine" id="cb186-2" data-line-number="2"><span class="dv">18</span><span class="op">/</span>(<span class="dv">18</span><span class="op">+</span><span class="dv">2889</span>)</a></code></pre></div>
+<pre><code>## [1] 0.006192</code></pre>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" data-line-number="1"><span class="co"># false negative rate</span></a>
+<a class="sourceLine" id="cb188-2" data-line-number="2"><span class="dv">60</span><span class="op">/</span>(<span class="dv">60</span><span class="op">+</span><span class="dv">33</span>)</a></code></pre></div>
+<pre><code>## [1] 0.6452</code></pre>
+<p>The false negative rate is especially high, which would be concerning given the risks to the lending agency (e.g., bank).</p>
+<p><br></p>
+</div>
+<div id="logistic-regression" class="section level2">
+<h2><span class="header-section-number">8.2</span> Logistic Regression</h2>
+<hr>
+<p>Issues with the <span class="math inline">\(k\)</span>-NN algorithms include the fact they can’t accommodate categorical <span class="math inline">\(X\)</span>’s, the algorithms aren’t based on a formal statistical model so we can’t do inference (or learn about how the <span class="math inline">\(X\)</span>’s relate to <span class="math inline">\(Y\)</span>), and there is an assumption that all <span class="math inline">\(X\)</span>’s matter and matter equally in determining <span class="math inline">\(Y\)</span>.</p>
+<p>Our first solution to these problems is <strong>logistic regression</strong>.</p>
+<p>Given a response <span class="math inline">\(Y\in\{0,1\}\)</span> and a set of predictors <span class="math inline">\(X_1,\dotsc,X_P\)</span>, the logistic regression model is written as follows.</p>
+<p><span class="math display">\[\text{Pr}(Y=1|X)={\exp(\beta_0+\beta_1X_1+\dotsc+\beta_pX_p)\over 1 + \exp(\beta_0+\beta_1X_1+\dotsc+\beta_pX_p)}\]</span></p>
+<p>The intuition for this formula is as follows. If <span class="math inline">\(Y\in\{0,1\}\)</span>, then we can assume that <span class="math inline">\(Y\sim\text{Bernoulli}(\theta)\)</span> where <span class="math inline">\(\theta=\text{Pr}(Y=1)\)</span>. We can then write down a regression model for <span class="math inline">\(\theta\)</span> rather than <span class="math inline">\(Y\)</span>. The only remaining problem is that <span class="math inline">\(\theta\in(0,1)\)</span>, so we need to transform the linear regression function <span class="math inline">\(h(X)=\beta_0+\beta_1X_1+\dotsc+\beta_pX_p)\)</span> in a way so that it is constrained to be between 0 and 1. The function <span class="math inline">\(e^{h(X)}/(1 + e^{h(X)})\)</span> does just that.</p>
+<p>Estimating a logistic regression model in R can be done using the <code>glm( )</code> function, which is similar to the lm( ) command we use to estimate linear regression models.</p>
+<p>Let’s illustrate with the training sample from the Default data set.</p>
+<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1">glm.fit =<span class="st"> </span><span class="kw">glm</span>(default <span class="op">~</span><span class="st"> </span>student <span class="op">+</span><span class="st"> </span>balance <span class="op">+</span><span class="st"> </span>income, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="dt">data=</span>train)</a>
+<a class="sourceLine" id="cb190-2" data-line-number="2"><span class="kw">summary</span>(glm.fit)</a></code></pre></div>
+<pre><code>## 
+## Call:
+## glm(formula = default ~ student + balance + income, family = &quot;binomial&quot;, 
+##     data = train)
+## 
+## Deviance Residuals: 
+##    Min      1Q  Median      3Q     Max  
+## -2.187  -0.142  -0.055  -0.020   3.686  
+## 
+## Coefficients:
+##              Estimate Std. Error z value Pr(&gt;|z|)    
+## (Intercept) -1.10e+01   5.89e-01  -18.70   &lt;2e-16 ***
+## studentYes  -6.46e-01   2.85e-01   -2.27    0.023 *  
+## balance      5.83e-03   2.78e-04   20.96   &lt;2e-16 ***
+## income       4.71e-06   9.87e-06    0.48    0.633    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## (Dispersion parameter for binomial family taken to be 1)
+## 
+##     Null deviance: 2090.7  on 6999  degrees of freedom
+## Residual deviance: 1109.4  on 6996  degrees of freedom
+## AIC: 1117
+## 
+## Number of Fisher Scoring iterations: 8</code></pre>
+<p>Notice that we added one more option in the glm( ) function: type=“binomial”. This option tells R to use the logistic regression model rather than other types of <em>generalized linear models</em>.</p>
+<p>The output from the logistic regression model looks fairly similar to that of linear regression models. However, the interpretation of model paramters (and their estimates) changes a bit.</p>
+<p>For example, we find that the coefficient on balance is estimated to be about 0.0058, which means that a one dollar increase in balance multiplies the odds of default by exp(0.0058)=1.006. Since this number is greater than 1, we can say that increasing the balance <em>increases</em> the odds of default.</p>
+<p>To predict responses in the test data, we can use the <code>predict( )</code> function in R. We again need to add one option: <code>type=&quot;response&quot;</code>, which will tell R to return the predicted probabilities that <span class="math inline">\(Y=1\)</span>.</p>
+<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1">glm.probs =<span class="st"> </span><span class="kw">predict</span>(glm.fit, <span class="dt">newdata=</span>test, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>)</a></code></pre></div>
+<p>Then we can compute <span class="math inline">\(\hat{Y}\)</span> by using the rule that <span class="math inline">\(\hat{Y}=\text{Yes}\)</span> if the predicted probability is greater than 0.5 and <span class="math inline">\(\hat{Y}=\text{No}\)</span> otherwise.</p>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb193-1" data-line-number="1">glm.predict =<span class="st"> </span><span class="kw">ifelse</span>(glm.probs<span class="op">&gt;</span><span class="fl">0.5</span>,<span class="st">&quot;Yes&quot;</span>,<span class="st">&quot;No&quot;</span>)</a></code></pre></div>
+<p>Just as before, we can compare the model predictions with the actual <span class="math inline">\(Y\)</span>’s in the test data to compute the out-of-sample error (misclassification) rate.</p>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" data-line-number="1"><span class="kw">mean</span>(glm.predict <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
+<pre><code>## [1] 0.024</code></pre>
+<p>This error rate can be decomposed by producing the associated confusion matrix and computing the false positive and false negative rates.</p>
+<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" data-line-number="1"><span class="kw">table</span>(glm.predict, test<span class="op">$</span>default)</a></code></pre></div>
+<pre><code>##            
+## glm.predict   No  Yes
+##         No  2896   61
+##         Yes   11   32</code></pre>
+<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" data-line-number="1"><span class="co"># false positive rate</span></a>
+<a class="sourceLine" id="cb198-2" data-line-number="2"><span class="dv">11</span><span class="op">/</span>(<span class="dv">11</span><span class="op">+</span><span class="dv">2896</span>)</a></code></pre></div>
+<pre><code>## [1] 0.003784</code></pre>
+<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1"><span class="co"># false negative rate</span></a>
+<a class="sourceLine" id="cb200-2" data-line-number="2"><span class="dv">61</span><span class="op">/</span>(<span class="dv">61</span><span class="op">+</span><span class="dv">32</span>)</a></code></pre></div>
+<pre><code>## [1] 0.6559</code></pre>
+<p><br></p>
+</div>
+<div id="classification-trees" class="section level2">
+<h2><span class="header-section-number">8.3</span> Classification Trees</h2>
+<hr>
+<p>Classification trees offer the same advantages over logistic regression that regression trees do for linear regression. That is, classification trees provide a classification rule that does not assume any form of linearity in the covariates <span class="math inline">\(X\)</span>.</p>
+<p>The nice thing is their implimentation in R is nearly identical to that of regression trees.</p>
+<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" data-line-number="1"><span class="kw">library</span>(rpart)</a>
+<a class="sourceLine" id="cb202-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb202-3" data-line-number="3"><span class="co"># estimate regression tree</span></a>
+<a class="sourceLine" id="cb202-4" data-line-number="4">tree.fit =<span class="st"> </span><span class="kw">rpart</span>(default <span class="op">~</span><span class="st"> </span>student <span class="op">+</span><span class="st"> </span>balance <span class="op">+</span><span class="st"> </span>income, <span class="dt">method=</span><span class="st">&quot;class&quot;</span>, <span class="dt">data=</span>train)</a>
+<a class="sourceLine" id="cb202-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb202-6" data-line-number="6"><span class="co"># plot estimated tree</span></a>
+<a class="sourceLine" id="cb202-7" data-line-number="7"><span class="kw">plot</span>(tree.fit,<span class="dt">uniform=</span><span class="ot">TRUE</span>,<span class="dt">margin=</span><span class="fl">0.05</span>,<span class="dt">main=</span><span class="st">&quot;DEFAULT&quot;</span>)</a>
+<a class="sourceLine" id="cb202-8" data-line-number="8"><span class="kw">text</span>(tree.fit)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-119-1.png" width="672" /></p>
+<p>We can again use the <code>predict( )</code> function to predict the response values for the test data and compute the out-of-sample error (misclassification) rate. We need to specify the <code>type=&quot;class&quot;</code> option so that the <code>predict( )</code> function returns the predicted values <span class="math inline">\(\hat{Y}\)</span>.</p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb203-1" data-line-number="1">tree.predict =<span class="st"> </span><span class="kw">predict</span>(tree.fit, <span class="dt">newdata=</span>test, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)</a>
+<a class="sourceLine" id="cb203-2" data-line-number="2"><span class="kw">mean</span>(tree.predict <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
+<pre><code>## [1] 0.027</code></pre>
+<p>Finally, the error rate can be decomposed by producing the associated confusion matrix and computing the false positive and false negative rates.</p>
+<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb205-1" data-line-number="1"><span class="kw">table</span>(tree.predict, test<span class="op">$</span>default)</a></code></pre></div>
+<pre><code>##             
+## tree.predict   No  Yes
+##          No  2880   54
+##          Yes   27   39</code></pre>
+<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" data-line-number="1"><span class="co"># false positive rate</span></a>
+<a class="sourceLine" id="cb207-2" data-line-number="2"><span class="dv">27</span><span class="op">/</span>(<span class="dv">27</span><span class="op">+</span><span class="dv">2880</span>)</a></code></pre></div>
+<pre><code>## [1] 0.009288</code></pre>
+<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" data-line-number="1"><span class="co"># false negative rate</span></a>
+<a class="sourceLine" id="cb209-2" data-line-number="2"><span class="dv">54</span><span class="op">/</span>(<span class="dv">54</span><span class="op">+</span><span class="dv">39</span>)</a></code></pre></div>
+<pre><code>## [1] 0.5806</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="clustering.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"google": false,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

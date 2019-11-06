@@ -1,0 +1,48 @@
+--- 
+title: "Data Analytics with R"
+author: "Adam Smith, UCL School of Management"
+date: "`r format(Sys.Date(), format='%B %d %Y')`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+---
+
+<style type="text/css">
+h1 { /* Header 1 */
+  font-size: 24px;
+}
+h2 { /* Header 2 */
+  font-size: 20px;
+}
+title {
+  font-size: 30px;
+  line-height: 1.5;
+}
+author {
+  font-size: 22px;
+  line-height: 0.75;
+}
+code{
+  font-size: 14px;
+  font-family: courier;
+}
+blockquote{
+  font-size: 12px;
+  line-height:1.75;
+}
+</style>
+
+```{r setup, include=FALSE}
+library(knitr)
+library(kableExtra)
+library(rpart)
+library(dendextend)
+library(ggplot2)
+
+set.seed(1)
+options(digits=4)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Forward
+
+This book is written for use in MSIN0010: Data Analytics I at the UCL School of Management. It is meant to serve as a supplement to lecture and seminar materials and specifically focuses on applications in R.

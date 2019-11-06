@@ -1,0 +1,260 @@
+```{r echo=FALSE}
+set.seed(1000)
+```
+
+# Regression
+
+## Linear Regression
+<hr>
+
+Regression models are useful tools for (1) understanding the relationship between a response variable $Y$ and a set of predictors $X_1,\dotsc,X_p$ and (2) predicting new responses $Y$ from the predictors $X_1,\dotsc,X_p$.
+
+We'll start with **linear regression**, which assumes that the relationship between $Y$ and $X_1,\dotsc,X_p$ is linear.
+
+Let's consider a simple example where we generate data from the following regression model.
+
+$$Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + \varepsilon$$
+
+To generate data from this model, we first need to set the "true values" for the model parameters $(\beta_0, \beta_1, \beta_2)$, generate the predictor variables $(X_1, X_2)$, and generate the error term $(\varepsilon)$.
+
+- parameters: $\beta_0=-5$, $\beta_1=2$, $\beta_2=-1$
+- predictor variables: $X_1\sim Unif(-1,1)$, $X_2\sim Unif(-1,1)$
+- error term: $\varepsilon\sim N(0,1)$
+
+Once we have fixed the true values of the parameters and generated predictor variables and the error term, the regression formula above tells us how to generate the response variable $Y$.
+
+```{r}
+n = 100
+beta0 = -5
+beta1 = 2
+beta2 = -1
+X1 = runif(n,min=-1,max=1)
+X2 = runif(n,min=-1,max=1)
+epsilon = rnorm(n)
+Y = beta0 + beta1*X1 + beta2*X2 + epsilon
+```
+Now let's inspect the data.
+
+```{r}
+pairs(Y ~ X1 + X2)
+```
+
+
+As we should expect, we find a positive relationship between $Y$ and $X_1$, a negative relationship between $Y$ and $X_2$, and no relationship between $X_1$ and $X_2$ (since they are uncorrelated).
+
+Now let's formally estimate the model parameters $(\beta_0,\beta_1,\beta_2)$ using R's built-in linear model function `lm( )`.
+
+
+```{r}
+lm.fit = lm(Y ~ X1 + X2)
+summary(lm.fit)
+```
+
+<font size="4">**Parameter Estimates**</font>
+
+First, focus on the "Coefficients" section. Notice that in the first column R reports estimates of our model parameters: $\hat{\beta}_0=-4.914$, $\hat{\beta}_1=1.666$, and $\hat{\beta}_2=-1.004$. Since we generated this data set, we know the "true" values are $\beta_0=-5$, $\beta_1=2$, and $\beta_2=-1$. The estimates here are pretty close to the truth. (Remember: the estimates will not exactly equal the true values because we only have a random sample of $n=100$ observations!)
+
+<font size="4">**Interpretation**</font>
+
+How should we interpret the estimates? Since $\hat{\beta}_1=1.666$, we would say that a one unit increase in $X_1$ will lead to a 1.666 unit *increase* in $Y$. Similarly, a one unit increase in $X_2$ will lead to a 1.004 unit *decrease* in $Y$. The only way to interpret the intercept is as the value of $Y$ when the $X$'s are all set to zero. In many instances, setting $X=0$ makes no sense, so we usually focus our attention on the coefficients attached to the predictor variables.
+
+<font size="4">**Significance**</font>
+
+In the second, third, and fourth columns, R reports the standard error of $\hat{\beta}$ and the t-statistic and p-value corresponding to a (one-sample) test of $H_0:\beta=0$ against $H_1:\beta\ne0$. The asterisks next to the p-values indicate the levels (e.g., $\alpha=0.05$, $\alpha=0.001$) for which we would conclude that the parameter is significantly different from zero. This test is naturally of interest in a regression setting because if $\beta_2=0$, for example, then $X_2$ has no effect on the response $Y$.
+
+<font size="4">**Model Fit**</font>
+
+Now look at the last section where it says "Multiple R-squared: 0.601". This value is the $R^2$ statistic, which measures the percent of the variation in $Y$ that is explained by the predictors. In this case, we find that 60.1% of the variation in $Y$ can be explained by $X_1$ and $X_2$. In general, it is difficult to define an absolute scale for what a "good" $R^2$ value is. In some contexts, 60% may be very high while in others it may be low. It likely depends on how difficult the response variable is to model and predict.
+
+<font size="4">**Prediction**</font>
+
+Suppose I observed some new values of $X_1$ and $X_2$, say $X_1=1$ and $X_2=9$. How can I use the model to **predict** the corresponding value of $Y$?
+
+I could simply do the calculation by hand:
+$$\hat{Y}=\hat{\beta}_0 + \hat{\beta}_1X_1 + \hat{\beta}_2X_2 =-4.914 + 1.666(1) - 1.004(9)=-12.28$$
+where we use the "hat" notation to denote estimates or predicted values.
+
+We can also use built-in prediction tools in R (where any differences would just be due to rounding error).
+
+
+```{r}
+predict(lm.fit, newdata=data.frame(X1=1,X2=9))
+```
+
+
+The first argument of the `predict( )` function is the regression object we created using the `lm( )` function. The second argument is the new set of covariates for which we want to predict a new response $Y$. (Note: the names of variables in `newdata` must be the same names used in the original data.)
+
+<br>
+
+## Regression Trees
+<hr>
+
+A natural question to ask now is what happens if the "true" model that generated our data was not linear? For example, our model could look something like this:
+
+$$Y_i = \beta_0 + {\beta_1X_{1i} \over\beta_2 + X_{2i}} + \varepsilon_i$$
+
+Here we still have three model parameters ($\beta_0,\beta_1,\beta_2$), but they enter the regression function in a nonlinear fashion.
+
+If we generate data from this model and then estimate the linear regression model from section 1, what will happen?
+
+
+```{r}
+# generate data
+n = 100
+beta0 = -5
+beta1 = 2
+beta2 = -1
+X1 = runif(n,min=-1,max=1)
+X2 = runif(n,min=-1,max=1)
+epsilon = rnorm(n)
+Y = beta0 + beta1*X1/(beta2+X2) + epsilon
+
+# estimate linear regression model
+lm.fit = lm(Y ~ X1 + X2)
+summary(lm.fit)
+```
+
+The answer is that we get incorrect estimates of model parameters! (Remember $\beta=-5,\beta_1=2,\beta_2=-1$.)
+
+A more flexible approach to regression modeling is provided by **regression trees**. The idea is to split up the covariate space into homogeneous regions (with respect to the response $Y$) and then fit simple linear models within each region.
+
+We can use the rpart library in R to fit and plot regression trees. You'll actually notice a similar syntax between `lm( )` and `rpart( )`.
+
+
+```{r results="hide" , fig.keep = 'none'}
+# estimate regression tree
+tree.fit = rpart(Y ~ X1 + X2)
+
+# plot the estimated tree
+plot(tree.fit, uniform=TRUE, margin=.05)
+text(tree.fit)
+```
+
+```{r echo=FALSE}
+# estimate regression tree
+tree.fit = rpart(Y ~ X1 + X2)
+
+# plot the estimated tree
+plot(tree.fit, uniform=TRUE, margin=.05)
+text(tree.fit, digits=4)
+```
+
+The output from a regression tree model looks very different from the output of a linear regression model. This is mostly because we had real-valued parameters in the linear model, but have much more complicated parameters in the tree model.
+
+The top node is called the **root node** and indicates the most important variable for predicting $Y$. Each subsequent node is called an **interior node** until you get to the last node showing a numeric value which is called a **terminal node**.
+
+Tree models should be interpreted as a sequence of decisions for the purposes of making a prediction. Each node will present a logical statement and if that statement is true, we move *down and to the left* whereas if that statement is false, we move *down and to the right*.
+
+For example, if you wanted to predict $Y$ when $X_1=1$ and $X_2=9$, the root note first asks "Is $X_1\geq -0.9113$?" If yes, then left and if no then right. Here our answer is yes, so we go to the next node to the left and ask "Is $X_1\geq0.264$?" Our answer is yes so we go to the left and ask $X_2\geq0.7014$?" Again, our answer is yes so we go to the left. Since this represents the terminal node, we're left with our predition of $\hat{Y}=-27.25$. That is, if $X_1=1$ and $X_2=9$ then the model predicts $\hat{Y}=-27.25$.
+
+We can also use the `predict( )` function as we did with the  linear regression model above.
+
+```{r}
+predict(tree.fit, newdata=data.frame(X1=1,X2=9))
+```
+
+## Model Selection
+<hr>
+
+Let's see how regression trees compare to linear regression models in terms of out-of-sample prediction. We'll consider two cases:
+
+<ol type="A">
+<li> The true model is a linear model
+<li> The true model is a nonlinear model
+</ol>
+<br>
+<font size="4"> **CASE A: TRUE MODEL IS LINEAR** </font>
+
+First, we'll generate a training and test data set from a linear regression model as in section 1. The training data set will be used for estimation and the test data will be used for prediction.
+
+
+```{r}
+n = 100
+beta0 = -5
+beta1 = 2
+beta2 = -1
+X1 = runif(n,min=-1,max=1)
+X2 = runif(n,min=-1,max=1)
+epsilon = rnorm(n)
+Y = beta0 + beta1*X1 + beta2*X2 + epsilon
+train = data.frame(Y=Y[1:70], X1=X1[1:70], X2=X2[1:70])
+test = data.frame(Y=Y[71:100], X1=X1[71:100], X2=X2[71:100])
+```
+
+
+Now let's estimate both the linear regression and regression tree models on the training data.
+
+
+```{r}
+# estimate linear regression model
+lm.fit = lm(Y ~ X1 + X2, data=train)
+
+# estimate regression tree model
+tree.fit = rpart(Y ~ X1 + X2, data=train)
+```
+
+To compare out-of-sample model performance, we'll compute the root mean squared error (RMSE).
+$$\text{RMSE}=\sqrt{{1\over n}\sum_{i=1}^n (\hat{y}_i-y_i)^2}$$
+
+
+```{r}
+# linear regression model
+lm.predict = predict(lm.fit, newdata=test)
+lm.rmse = sqrt(mean((lm.predict-test$Y)^2))
+lm.rmse
+```
+
+```{r}
+# regression tree model
+tree.predict = predict(tree.fit, newdata=test)
+tree.rmse = sqrt(mean((tree.predict - test$Y)^2))
+tree.rmse
+```
+
+
+In this case the linear regression model has better predictive performance, which is not too surprising because we simulated the data from that model!
+
+<br>
+<font size="4"> **CASE B: TRUE MODEL IS NONLINEAR** </font>
+
+We will again generate a training and test data set, but now from the nonlinear regression model we used in section 2.
+
+```{r echo=FALSE}
+set.seed(100)
+```
+
+```{r}
+n = 100
+beta0 = -5
+beta1 = 2
+beta2 = -1
+X1 = runif(n,min=-1,max=1)
+X2 = runif(n,min=-1,max=1)
+epsilon = rnorm(n)
+Y = beta0 + beta1*X1/(beta2+X2) + epsilon
+train = data.frame(Y=Y[1:70], X1=X1[1:70], X2=X2[1:70])
+test = data.frame(Y=Y[71:100], X1=X1[71:100], X2=X2[71:100])
+```
+
+
+Let's again estimate both the linear regression and regression tree models on the training data and compute the predictive RMSE.
+
+```{r}
+# linear regression model
+lm.fit = lm(Y ~ X1 + X2, data=train)
+lm.predict = predict(lm.fit, newdata=test)
+lm.rmse = sqrt(mean((lm.predict - test$Y)^2))
+lm.rmse
+```
+
+
+```{r}
+# regression tree model
+tree.fit = rpart(Y ~ X1 + X2, data=train)
+tree.predict = predict(tree.fit, newdata=test)
+tree.rmse = sqrt(mean((tree.predict - test$Y)^2))
+tree.rmse
+```
+
+
+Now the regression tree model has better predictive performance (but notice that the linear model still does relatively well!) In general, regression trees suffer from a problem called **overfitting**: the trees learn *too much* from the training data that they don't generalize well to test data. There are ways of correcting for this, and you will learn more about them in Data Analyics II!
