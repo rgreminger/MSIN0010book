@@ -3,7 +3,7 @@
 ## Loading and Inspecting Data Sets
 <hr>
 
-The following line of code reads a data set that contains weekly prices, promotional activity, and sales for 20 different brands of beer. The data come from a Chicago grocery retailer (Dominick's Finer Foods) and cover more than five years of transactions. The data set is publically available from the Kilts Center for Marketing at the University of Chicago and can be accessed here https://www.chicagobooth.edu/research/kilts/datasets/dominicks.
+The following line of code reads a data set that contains weekly prices, promotional activity, and sales for 20 different brands of beer. The data come from a Chicago grocery retailer (Dominick's Finer Foods) and cover more than five years of transactions. The data set is publically available from the Kilts Center for Marketing at the University of Chicago.^[https://www.chicagobooth.edu/research/kilts/datasets/dominicks]
 
 ```{r}
 beer = read.csv("beer.csv", sep=",")

@@ -196,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="loading-and-inspecting-data-sets" class="section level2">
 <h2><span class="header-section-number">1.1</span> Loading and Inspecting Data Sets</h2>
 <hr>
-<p>The following line of code reads a data set that contains weekly prices, promotional activity, and sales for 20 different brands of beer. The data come from a Chicago grocery retailer (Dominick’s Finer Foods) and cover more than five years of transactions. The data set is publically available from the Kilts Center for Marketing at the University of Chicago and can be accessed here <a href="https://www.chicagobooth.edu/research/kilts/datasets/dominicks" class="uri">https://www.chicagobooth.edu/research/kilts/datasets/dominicks</a>.</p>
+<p>The following line of code reads a data set that contains weekly prices, promotional activity, and sales for 20 different brands of beer. The data come from a Chicago grocery retailer (Dominick’s Finer Foods) and cover more than five years of transactions. The data set is publically available from the Kilts Center for Marketing at the University of Chicago.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">beer =<span class="st"> </span><span class="kw">read.csv</span>(<span class="st">&quot;beer.csv&quot;</span>, <span class="dt">sep=</span><span class="st">&quot;,&quot;</span>)</a></code></pre></div>
 <p>Notice we used the <code>sep=</code> option to specify the delimiter used in our data file (which is a comma <code>,</code> for this data file).</p>
 <p>We always want to view the data after importing to make sure all the values were read-in correctly. To inspect the first few lines of a data set, use the <code>head( )</code> command.</p>
@@ -749,6 +749,12 @@ SAMUEL ADAMS LAGER N
 <p>The last line of code adds a legend to the plot so that we know what the colors correspond to. The first argument indicates the legend position, the second argument <code>legend</code> indicates the values to be shown on the legend, the third argument <code>pch</code> is the point type, the fourth argument <code>col</code> is the color for each value, and the fifth argument <code>cex</code> adjusts the text size.</p>
 
 </div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p><a href="https://www.chicagobooth.edu/research/kilts/datasets/dominicks" class="uri">https://www.chicagobooth.edu/research/kilts/datasets/dominicks</a><a href="introduction-to-data-analytics.html#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
