@@ -43,6 +43,6 @@ options(digits=4)
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-# Forward {-}
+# Preface {-}
 
 This book is written for use in MSIN0010: Data Analytics I at the UCL School of Management. It is meant to serve as a supplement to lecture and seminar materials and specifically focuses on applications in R.
