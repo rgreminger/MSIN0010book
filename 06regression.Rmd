@@ -118,10 +118,12 @@ The answer is that we get incorrect estimates of model parameters! (Remember $\b
 
 A more flexible approach to regression modeling is provided by **regression trees**. The idea is to split up the covariate space into homogeneous regions (with respect to the response $Y$) and then fit simple linear models within each region.
 
-We can use the rpart library in R to fit and plot regression trees. You'll actually notice a similar syntax between `lm( )` and `rpart( )`.
+We can use the `rpart` library in R to fit and plot regression trees. You'll actually notice a similar syntax between `lm( )` and `rpart( )`.
 
 
 ```{r results="hide" , fig.keep = 'none'}
+library(rpart)
+
 # estimate regression tree
 tree.fit = rpart(Y ~ X1 + X2)
 

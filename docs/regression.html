@@ -302,13 +302,15 @@ where we use the “hat” notation to denote estimates or predicted values.</p>
 ## F-statistic: 9.91 on 2 and 97 DF,  p-value: 0.000121</code></pre>
 <p>The answer is that we get incorrect estimates of model parameters! (Remember <span class="math inline">\(\beta=-5,\beta_1=2,\beta_2=-1\)</span>.)</p>
 <p>A more flexible approach to regression modeling is provided by <strong>regression trees</strong>. The idea is to split up the covariate space into homogeneous regions (with respect to the response <span class="math inline">\(Y\)</span>) and then fit simple linear models within each region.</p>
-<p>We can use the rpart library in R to fit and plot regression trees. You’ll actually notice a similar syntax between <code>lm( )</code> and <code>rpart( )</code>.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1"><span class="co"># estimate regression tree</span></a>
-<a class="sourceLine" id="cb149-2" data-line-number="2">tree.fit =<span class="st"> </span><span class="kw">rpart</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2)</a>
-<a class="sourceLine" id="cb149-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb149-4" data-line-number="4"><span class="co"># plot the estimated tree</span></a>
-<a class="sourceLine" id="cb149-5" data-line-number="5"><span class="kw">plot</span>(tree.fit, <span class="dt">uniform=</span><span class="ot">TRUE</span>, <span class="dt">margin=</span>.<span class="dv">05</span>)</a>
-<a class="sourceLine" id="cb149-6" data-line-number="6"><span class="kw">text</span>(tree.fit)</a></code></pre></div>
+<p>We can use the <code>rpart</code> library in R to fit and plot regression trees. You’ll actually notice a similar syntax between <code>lm( )</code> and <code>rpart( )</code>.</p>
+<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1"><span class="kw">library</span>(rpart)</a>
+<a class="sourceLine" id="cb149-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb149-3" data-line-number="3"><span class="co"># estimate regression tree</span></a>
+<a class="sourceLine" id="cb149-4" data-line-number="4">tree.fit =<span class="st"> </span><span class="kw">rpart</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2)</a>
+<a class="sourceLine" id="cb149-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb149-6" data-line-number="6"><span class="co"># plot the estimated tree</span></a>
+<a class="sourceLine" id="cb149-7" data-line-number="7"><span class="kw">plot</span>(tree.fit, <span class="dt">uniform=</span><span class="ot">TRUE</span>, <span class="dt">margin=</span>.<span class="dv">05</span>)</a>
+<a class="sourceLine" id="cb149-8" data-line-number="8"><span class="kw">text</span>(tree.fit)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
 <p>The output from a regression tree model looks very different from the output of a linear regression model. This is mostly because we had real-valued parameters in the linear model, but have much more complicated parameters in the tree model.</p>
 <p>The top node is called the <strong>root node</strong> and indicates the most important variable for predicting <span class="math inline">\(Y\)</span>. Each subsequent node is called an <strong>interior node</strong> until you get to the last node showing a numeric value which is called a <strong>terminal node</strong>.</p>

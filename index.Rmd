@@ -34,10 +34,6 @@ blockquote{
 ```{r setup, include=FALSE}
 library(knitr)
 library(kableExtra)
-library(rpart)
-library(dendextend)
-library(ggplot2)
-
 set.seed(1)
 options(digits=4)
 knitr::opts_chunk$set(echo = TRUE)
