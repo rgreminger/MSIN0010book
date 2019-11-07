@@ -3,40 +3,55 @@
 ## Loading and Inspecting Data Sets
 <hr>
 
-The following line of code reads in the Bank Marketing data set from the UCI Machine Learning Repository (https://archive.ics.uci.edu/ml/index.php).
-
+The following line of code reads a data set that contains weekly prices, promotional activity, and sales for 20 different brands of beer. The data come from a Chicago grocery retailer (Dominick's Finer Foods) and cover more than five years of transactions. The data set is publically available from the Kilts Center for Marketing at the University of Chicago and can be accessed here https://www.chicagobooth.edu/research/kilts/datasets/dominicks.
 
 ```{r}
-bank = read.csv("bank.csv", sep=";")
+beer = read.csv("beer.csv", sep=",")
 ```
 
-Notice we used the `sep=` option to specify the delimiter used in our data file (which is a semicolon ";" in the bank data).
+Notice we used the `sep=` option to specify the delimiter used in our data file (which is a comma `,` for this data file).
 
 We always want to view the data after importing to make sure all the values were read-in correctly. To inspect the first few lines of a data set, use the `head( )` command.
 
 ```{r results="hide"}
-head(bank)
+head(beer)
 ```
 
 ```{r echo=FALSE}
-head(bank) %>% 
+head(beer) %>% 
   kable() %>%
-  kable_styling(font_size = 10) %>%
+  kable_styling(font_size=10) %>%
   scroll_box(width = "100%")
 ```
 
-Finally, we need to attach the data set so that R knows where to find the variables we want to analyze (e.g., age, default, balance).
+We can see that our data set contains 11 different variables (i.e., columns). A brief summary of each variable is provided below. 
+
+- `store`: unique store ID number 
+- `upc`: Universal Product Code
+- `week`: week ID number
+- `move`: number of units sold
+- `price`: retail price in US dollars
+- `sale`: indicator of promotional activity
+- `profit`: gross profit margin
+- `brand`: brand name
+- `packsize`: number of items in one package
+- `itemsize`: size of items in one package
+- `units`: units of items
+
+Finally, we need to attach the data set so that R knows where to find the variables we want to analyze (e.g., move, price).
+
 
 ```{r}
-attach(bank)
+attach(beer)
 ```
 
-Now we can access/view any of the variables by typing their name. For example, let's look at the first 10 observations of the balance variable.
-
+Now we can access/view any of the variables by typing their name. For example, let's look at the first 5 observations of the `price` variable.
 
 ```{r}
-balance[1:10]
+price[1:5]
 ```
+
+Here the closed brackets `[ ]` allow us to subset the data and the numbers `1:5` tell R to return observations 1, 2, 3, 4, and 5.
 
 <br>
 
@@ -55,41 +70,39 @@ dt %>%
   kable_styling(full_width = FALSE)
 ```
 
-For example, we can compute the mean of the balance variable using the `mean( )` function.
+For example, we can compute the average demand (i.e., units sold) variable using the `mean( )` function.
 
 
 ```{r}
-mean(balance)
+mean(move)
 ```
 
 
-Now suppose we wanted to find the average balance for individuals who have a level of education equal to `primary`. To do this, we first need to pull the subset of balance observations where education is equal to `primary`. 
+Now suppose we wanted to find the average demand only for a certain brand of beer, say Budweiser. To do this, we first need to subset `move` and only include observations where `brand` is equal to `BUDWEISER BEER`.
 
 
 ```{r results="hide"}
-balance[education=="primary"]
+move[brand=="BUDWEISER BEER"]
 ```
 
-Here the closed brackets `[ ]` allow us to subset the data. We are interested in the balance variable, but now we only want the observations where the condition stated inside the brackets is satisfied.
+Again, using closed brackets `[ ]` allow us to subset the data. We are interested in the `move` variable, but now we only want the observations where the condition stated inside the brackets is satisfied. Note: a double equals sign `==` is always used when writing logical statements to check equality.
 
-Note: a double equals sign `==` is always used when writing logical statements to check equality.
-
-Now we can use the `mean( )` function to compute the desired average of balance conditional on a primary education.
+Now we can use the `mean( )` function to compute the desired average demand for Budweiser.
 
 
 ```{r}
-mean(balance[education=="primary"])
+mean(move[brand=="BUDWEISER BEER"])
 ```
 
 An all-purpose way to compute averages across different factor levels is to use the `aggregate( )` function. The first argument specifies the variable we want to average and associated categorical/factor variable, and the second argument specifies the function we want to execute (i.e., the mean).
 
 
 ```{r results="hide"}
-aggregate(balance ~ education, FUN=mean)
+aggregate(move ~ brand, FUN=mean)
 ```
 
 ```{r echo=FALSE}
-aggregate(balance ~ education, FUN=mean) %>%
+aggregate(move ~ brand, FUN=mean) %>%
   kable() %>%
   kable_styling(full_width=F)
 ```
@@ -101,18 +114,16 @@ aggregate(balance ~ education, FUN=mean) %>%
 
 Creating visual data summaries in R is also one of its strengths. Examples of useful graphical functions include `hist( )`, `boxplot( )`, `plot( )`, `pie( )`, `barplot( )`.
 
-An example of a **histogram** of yearly balances is shown below.
-
+An example of a **histogram** of weekly demand is shown below.
 
 ```{r}
-hist(balance, main="Average Yearly Balance (in euros)")
+hist(move, main="Distribution of Beer Sales Volume")
 ```
-
 
 Here the `main=` option allows us to customize the plot title. We can also use the `breaks=` option to control the bin width.
 
 ```{r}
-hist(balance, main="Average Yearly Balance (in euros)", breaks=50)
+hist(move, main="Distribution of Beer Sales Volume", breaks=50)
 ```
 
 
@@ -120,7 +131,7 @@ We can also use a **boxplot** to look at the distribution of balance. To do this
 
 
 ```{r}
-boxplot(balance)
+boxplot(move, main="Distribution of Beer Sales Volume")
 ```
 
 
@@ -128,40 +139,54 @@ Notice how the extreme positive values (outliers) make the boxplot hard to analy
 
 
 ```{r}
-boxplot(balance, outline=FALSE)
+boxplot(move, main="Distribution of Beer Sales Volume", outline=FALSE)
 ```
 
-We can also use the `boxplot( )` function to compare the distribution of balances across education levels.
+We can also use the `boxplot( )` function to see how the distribution of demand changes across brands of beer.
 
 
 ```{r}
-boxplot(balance ~ education, outline=FALSE, xlab="education", ylab="yearly balance")
+boxplot(move ~ brand, main="Distribution of Beer Sales Volume", outline=FALSE, xlab="", ylab="weekly units sold")
 ```
 
 
-The first argument here tells R that we want to plot balance against education. Note that the numeric variable (e.g., balance) must always come before the factor variable (e.g., education). We’ve also added labels to the x and y-axes using the `xlab=` and `ylab=` options.
+The first argument tells R that we want to plot move against brand. Note that the numeric variable (e.g., move) must always come before the factor variable (e.g., brand). We’ve also added labels to the x- and y-axes using the `xlab=` and `ylab=` options.
+
+One issue with the plot above is that the labels on the x-axis are too wide. To solve this problem, we can rotate the x-axis labels by adding `las=2` as an option in the `boxplot( )` command. We will also want to slightly adjust the plot margins to allow for more space below the graph. This can be done by adding `par(mar=c(a,b,c,d))` before the `boxplot( )` command, where `a,b,c,d` denote the bottom, left, top and right margins, respectively. Lastly, we can use the `cex.axis` option to adjust the axis label sizes.
+
+```{r}
+par(mar=c(10.1,4.1,4.1,2.1))
+boxplot(move ~ brand, main="Distribution of Beer Sales Volume", outline=FALSE, xlab="", ylab="weekly units sold", las=2, cex.axis=.75)
+```
 
 We can create **scatter plots** using the `plot( )` function.
 
 ```{r}
-plot(age, balance)
+plot(price, move, main="Beer Demand Patterns")
 ```
 
 The first argument corresponds to the variable on the x-axis, while the second corresponds to the variable on the y-axis.
 
-We can also incorporate information from a third factor variable by adding color to the scatter plot. For example, suppose we wanted to see who currently has a loan with the bank.
+To modify the type or color of the points in the above plot, we can add `pch` and `col` options. For example, let's change the points to be closed circles (`pch=16`) that are red (`col=2`).
+
+```{r}
+plot(price, move, main="Beer Demand Patterns", pch=16, col=2)
+```
+
+Often times, adding color is a great way to incorporate information about other variables. For example, should the relationship between price and demand change by brand? The answer is likely yes. To see this visually, let's change the color of each point to represent the corresponding brand.
 
 
 ```{r}
-plot(age, balance, col=ifelse(loan=="no",8,4), pch=ifelse(loan=="no",1,16))
-legend("topleft", legend=c("no","yes"), pch=c(1,16), col=c(8,4), title="loan")
+palette = rainbow(20)
+colors = palette[as.numeric(as.factor(brand))]
+plot(price, move, main="Beer Demand Patterns", pch=16, col=colors)
+legend("topright", legend=sort(unique(brand)), pch=16, col=colors, cex=.5, bty="n")
 ```
 
+The first line of code generates 20 unique colors from a rainbow palette, one for each brand. Because there are hundreds of points on our scatter plot, we need to identify assign a color to each point. This is what the second line of code does. In the third line, we simply use the `colors` object we just created to specify point colors.
 
-The `col=` option in the first line adds color to each dot conditional on the value of the term deposit variable y. The `ifelse(loan=="no",8,4)` condition reads if `loan` is equal to `no`, then the color should be equal to 8 (gray) otherwise it equals 4 (blue). Conditional formatting is also applied to the point type option `pch` where a value of 1 is an open circle and a value of 16 is a closed circle.
-
-The second line adds a legend to the plot so that we know what the colors correspond to. The first argument indicates the legend position, the second argument `legend` indicates the values to be shown on the legend, the third argument `pch` is the point type, the fourth argument `col` is the color for each value, and the fifth argument `title` adds a custom title.
+The last line of code adds a legend to the plot so that we know what the colors correspond to. The first argument indicates the legend position, the second argument `legend` indicates the values to be shown on the legend, the third argument `pch` is the point type, the fourth argument `col` is the color for each value, and the fifth argument `cex` adjusts the text size.
 
 ```{r echo=FALSE}
-detach(bank)
+detach(beer)
 ```
