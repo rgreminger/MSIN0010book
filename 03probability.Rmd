@@ -55,10 +55,10 @@ Let's assume $X$ has a Exponential$(\beta)$ distribution where $\beta=1$ is a ra
 
 ```{r}
 x = rexp(n=100, rate=1)
-hist(x)
+hist(x, main="Sample Distirbution")
 ```
 
-We can see that the population distribution is clearly not normal. Rather, it appears highly skewed to the right.
+Based on this sample, it appears that the population distribution is highly asymmetric and skewed to the right.
 
 In this case, should we still expect the sampling distribution of the sample mean to be normal? Let's go through the same exercise as before.
 
