@@ -89,7 +89,7 @@ We have two ways of answering this question. First, we can recognize that $P(X>1
 ```
 
 
-A second approach is to use the `lower.tail=` option within the pnorm( ) function. When `lower.tail=TRUE` then the `pnorm( )` function returns the probability to the *left* of a given number $x$ and if `lower.tail=FALSE` then `pnorm( )` returns the probability to the *right* of $x$.
+A second approach is to use the `lower.tail=` option within the `pnorm( )` function. When `lower.tail=TRUE` then the `pnorm( )` function returns the probability to the *left* of a given number $x$ and if `lower.tail=FALSE` then `pnorm( )` returns the probability to the *right* of $x$.
 
 
 ```{r}

@@ -12,7 +12,7 @@ Let's start by letting the population distribution be normal with mean $\mu=0$ a
 ```{r}
 x = rnorm(n=100, mean=0, sd=1)
 mean(x)
-hist(x)
+hist(x, main="Sample Distribution")
 ```
 
 While we cannot generate *all possible samples* of size $n$ from this normal distribution, we can take a large number.
@@ -27,7 +27,7 @@ for(r in 1:R){
     x = rnorm(n=100, mean=0, sd=1)
     xbar[r] = mean(x)
 }
-hist(xbar)
+hist(xbar, main="Sampling Distribution of Xbar")
 ```
 
 
@@ -70,7 +70,7 @@ for(r in 1:R){
   x = rexp(n=100, rate=1)
   xbar[r] = mean(x)
 }
-hist(xbar)
+hist(xbar, main="Sampling Distribution of Xbar")
 ```
 
 The distribution of sample means again looks normal!

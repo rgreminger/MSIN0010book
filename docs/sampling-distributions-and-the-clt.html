@@ -200,7 +200,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb73-2" data-line-number="2"><span class="kw">mean</span>(x)</a></code></pre></div>
 <pre><code>## [1] 0.008768</code></pre>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">hist</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">hist</span>(x, <span class="dt">main=</span><span class="st">&quot;Sample Distribution&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
 <p>While we cannot generate <em>all possible samples</em> of size <span class="math inline">\(n\)</span> from this normal distribution, we can take a large number.</p>
 <p>Let <span class="math inline">\(R=100,000\)</span> be the number of samples we want to generate. We will construct a for loop in R to do the following: (1) generate a random sample of size <span class="math inline">\(n\)</span> from the population; (2) compute the sample mean and store the result in a vector called <code>xbar</code>.</p>
@@ -210,7 +210,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb76-4" data-line-number="4">    x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb76-5" data-line-number="5">    xbar[r] =<span class="st"> </span><span class="kw">mean</span>(x)</a>
 <a class="sourceLine" id="cb76-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb76-7" data-line-number="7"><span class="kw">hist</span>(xbar)</a></code></pre></div>
+<a class="sourceLine" id="cb76-7" data-line-number="7"><span class="kw">hist</span>(xbar, <span class="dt">main=</span><span class="st">&quot;Sampling Distribution of Xbar&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
 <p>This plot is the distribution of sample means after taking <span class="math inline">\(R=100,000\)</span> samples with size <span class="math inline">\(n=100\)</span> from the population.</p>
 <p>Notice that this again looks like a normal distribution. The mean looks the same as the distribution of <span class="math inline">\(X\)</span>, but the variance looks much smaller.</p>
@@ -234,7 +234,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <a class="sourceLine" id="cb82-4" data-line-number="4">  x =<span class="st"> </span><span class="kw">rexp</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">rate=</span><span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb82-5" data-line-number="5">  xbar[r] =<span class="st"> </span><span class="kw">mean</span>(x)</a>
 <a class="sourceLine" id="cb82-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb82-7" data-line-number="7"><span class="kw">hist</span>(xbar)</a></code></pre></div>
+<a class="sourceLine" id="cb82-7" data-line-number="7"><span class="kw">hist</span>(xbar, <span class="dt">main=</span><span class="st">&quot;Sampling Distribution of Xbar&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
 <p>The distribution of sample means again looks normal!</p>
 <p>In fact, the <strong>Central Limit Theorem</strong> guarantees that this will be the case as the sample size <span class="math inline">\(n\)</span> gets large. Then for any population distribution, we know that the distribution of <span class="math inline">\(\bar{X}\)</span> will be <em>approximately</em> normal with mean <span class="math inline">\(E(\bar{X})=E(X)\)</span> and <span class="math inline">\(Var(\bar{X})=Var(X)/n\)</span>.</p>
