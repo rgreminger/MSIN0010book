@@ -224,7 +224,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The next question to consider is what if our population distribution was not normally distributed? What if it was skewed to the right or left?</p>
 <p>Let’s assume <span class="math inline">\(X\)</span> has a Exponential<span class="math inline">\((\beta)\)</span> distribution where <span class="math inline">\(\beta=1\)</span> is a rate parameter. We can again take one individual sample from this population distribution.</p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rexp</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">rate=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb81-2" data-line-number="2"><span class="kw">hist</span>(x, <span class="dt">main=</span><span class="st">&quot;Sample Distirbution&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb81-2" data-line-number="2"><span class="kw">hist</span>(x, <span class="dt">main=</span><span class="st">&quot;Sample Distribution&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 <p>Based on this sample, it appears that the population distribution is highly asymmetric and skewed to the right.</p>
 <p>In this case, should we still expect the sampling distribution of the sample mean to be normal? Let’s go through the same exercise as before.</p>

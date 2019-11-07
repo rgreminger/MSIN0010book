@@ -55,7 +55,7 @@ Let's assume $X$ has a Exponential$(\beta)$ distribution where $\beta=1$ is a ra
 
 ```{r}
 x = rexp(n=100, rate=1)
-hist(x, main="Sample Distirbution")
+hist(x, main="Sample Distribution")
 ```
 
 Based on this sample, it appears that the population distribution is highly asymmetric and skewed to the right.
