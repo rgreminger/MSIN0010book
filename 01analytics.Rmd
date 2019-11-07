@@ -180,7 +180,6 @@ Often times, adding color is a great way to incorporate information about other 
 palette = rainbow(20)
 colors = palette[as.numeric(brand)]
 plot(price, move, main="Beer Demand Patterns", pch=16, col=colors)
-legend("topright", legend=levels(brand), pch=16, col=palette, cex=.5, bty="n")
 ```
 
 The first line of code generates 20 unique colors from a rainbow palette, one for each brand. Because there are hundreds of points on our scatter plot, we need to identify assign a color to each point. This is what the second line of code does. In the third line, we simply use the `colors` object we just created to specify point colors.
