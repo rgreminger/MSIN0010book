@@ -4,7 +4,7 @@ Classification shares many similarities with regression: We have a response vari
 
 We will focus our attention on **binary** responses $Y\in\{0,1\}$, but all of the methods we discuss can be extended to the more general case outlined above.
 
-To illustrate classification methods, we will use the Default data in the "ISLR" R library. The data set contains four variables: "default" is an indicator of whether the customer defaulted on their debt, "student" is an indicator of whether the customer is a student, "balance" is the average balance that the customer has remaining on their credit card after making their monthly payment, and "income" is the customer's income.
+To illustrate classification methods, we will use the Default data in the `ISLR` R library. The data set contains four variables: `default` is an indicator of whether the customer defaulted on their debt, `student` is an indicator of whether the customer is a student, `balance` is the average balance that the customer has remaining on their credit card after making their monthly payment, and `income` is the customer's income.
 
 
 ```{r}
@@ -27,7 +27,7 @@ test = Default[7001:10000,]
 
 The $k$-NN algorithms are built on the following idea: given a new observation $X^*$ for which we want to predict an associated response $Y^*$, we can find values of $X$ in our data that look similar to $X^*$ and then classify $Y^*$ based on the associated $Y$'s. We will use Euclidean distance is a measure of similarity (which is only defined for real-valued $X$'s).
 
-Let's take a small portion (first 10 rows) of the Default data to work through a simple example. Notice that we will exclude the "student" variable since it is a categorical rather than numeric variable. We will use the 11th observation as our "test" data $X^*$ that we want to make predictions for.
+Let's take a small portion (first 10 rows) of the Default data to work through a simple example. Notice that we will exclude the `student` variable since it is a categorical rather than numeric variable. We will use the 11th observation as our "test" data $X^*$ that we want to make predictions for.
 
 
 ```{r}
@@ -42,7 +42,7 @@ $$dist(X^*,X_i)=||X^*-X_i||=\sqrt{(X_1^*-X_{1i})^2+(X_2^*-X_{2i})^2}$$
 
 To do this in R, we can take use the apply( ) function. The first argument is the matrix of $X$ variables that we want to cycle through to compare with $X^*$.
 
-The second argument of the apply( ) function tells R whether we want to perform an operation for each row (=1) of for each column (=2). The last row tells R what function we want to compute. Here, we need to evaluate $dist(X^*,X_i)$ for each row.
+The second argument of the `apply( )` function tells R whether we want to perform an operation for each row `(=1)` of for each column `(=2)`. The last row tells R what function we want to compute. Here, we need to evaluate $dist(X^*,X_i)$ for each row.
 
 
 ```{r}
@@ -51,7 +51,7 @@ distance
 ```
 
 
-Notice that the function returns a set of 10 distances. If we wanted to use the 1st-nearest neighbor classifier to predict $Y^*$, for example, then we would need to find the $Y$ value of $X_i$ for the observation $i$ that has the smallest distance. We can find that value using the which.min( ) function.
+Notice that the function returns a set of 10 distances. If we wanted to use the 1st-nearest neighbor classifier to predict $Y^*$, for example, then we would need to find the $Y$ value of $X_i$ for the observation $i$ that has the smallest distance. We can find that value using the `which.min( )` function.
 
 
 ```{r}
@@ -79,7 +79,7 @@ library(class)
 knn1 = knn(stdtrainX, stdtestX, train$default, k=1)
 ```
 
-The "knn1" object now contains a vector of predicted $Y$'s for each value of $X$ in the test data. We can then compare the predicted response $\hat{Y}$ to the true response in the test data $Y$ to assess the performance of the classification algorithm. In particular, we will see the fraction of predictions the algorithm gets wrong.
+The `knn1` object now contains a vector of predicted $Y$'s for each value of $X$ in the test data. We can then compare the predicted response $\hat{Y}$ to the true response in the test data $Y$ to assess the performance of the classification algorithm. In particular, we will see the fraction of predictions the algorithm gets wrong.
 
 
 ```{r}
@@ -156,7 +156,7 @@ $$\text{Pr}(Y=1|X)={\exp(\beta_0+\beta_1X_1+\dotsc+\beta_pX_p)\over 1 + \exp(\be
 
 The intuition for this formula is as follows. If $Y\in\{0,1\}$, then we can assume that $Y\sim\text{Bernoulli}(\theta)$ where $\theta=\text{Pr}(Y=1)$. We can then write down a regression model for $\theta$ rather than $Y$. The only remaining problem is that $\theta\in(0,1)$, so we need to transform the linear regression function $h(X)=\beta_0+\beta_1X_1+\dotsc+\beta_pX_p)$ in a way so that it is constrained to be between 0 and 1. The function $e^{h(X)}/(1 + e^{h(X)})$ does just that. 
 
-Estimating a logistic regression model in R can be done using the `glm( )` function, which is similar to the lm( ) command we use to estimate linear regression models.
+Estimating a logistic regression model in R can be done using the `glm( )` function, which is similar to the `lm( )` command we use to estimate linear regression models.
 
 Let's illustrate with the training sample from the Default data set.
 
@@ -166,7 +166,7 @@ glm.fit = glm(default ~ student + balance + income, family="binomial", data=trai
 summary(glm.fit)
 ```
 
-Notice that we added one more option in the glm( ) function: type="binomial". This option tells R to use the logistic regression model rather than other types of *generalized linear models*.
+Notice that we added one more option in the `glm( )` function: `type="binomial"`. This option tells R to use the logistic regression model rather than other types of *generalized linear models*.
 
 The output from the logistic regression model looks fairly similar to that of linear regression models. However, the interpretation of model paramters (and their estimates) changes a bit.
 
