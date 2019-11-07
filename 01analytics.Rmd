@@ -150,7 +150,7 @@ boxplot(move ~ brand, main="Distribution of Beer Sales Volume", outline=FALSE, x
 ```
 
 
-The first argument tells R that we want to plot move against brand. Note that the numeric variable (e.g., move) must always come before the factor variable (e.g., brand). We’ve also added labels to the x- and y-axes using the `xlab=` and `ylab=` options.
+The first argument tells R that we want to plot move against brand. Note that the numeric variable (e.g., move) must always come before the factor variable (e.g., brand). We’ve also added labels to the x- and y-axes using the `xlab` and `ylab` options.
 
 One issue with the plot above is that the labels on the x-axis are too wide. To solve this problem, we can rotate the x-axis labels by adding `las=2` as an option in the `boxplot( )` command. We will also want to slightly adjust the plot margins to allow for more space below the graph. This can be done by adding `par(mar=c(a,b,c,d))` before the `boxplot( )` command, where `a,b,c,d` denote the bottom, left, top and right margins, respectively. Lastly, we can use the `cex.axis` option to adjust the axis label sizes.
 
@@ -173,7 +173,7 @@ To modify the type or color of the points in the above plot, we can add `pch` an
 plot(price, move, main="Beer Demand Patterns", pch=16, col=2)
 ```
 
-Often times, adding color is a great way to incorporate information about other variables. For example, should the relationship between price and demand change by brand? The answer is likely yes. To see this visually, let's change the color of each point to represent the corresponding brand.
+Adding color is a great way to incorporate information about other variables. For example, should the relationship between price and demand change by brand? The answer is likely yes. To see this visually, let's change the color of each point to represent the corresponding brand. This is an example of "conditional formatting".
 
 
 ```{r}
