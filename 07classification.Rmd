@@ -7,10 +7,20 @@ We will focus our attention on **binary** responses $Y\in\{0,1\}$, but all of th
 To illustrate classification methods, we will use the Default data in the `ISLR` R library. The data set contains four variables: `default` is an indicator of whether the customer defaulted on their debt, `student` is an indicator of whether the customer is a student, `balance` is the average balance that the customer has remaining on their credit card after making their monthly payment, and `income` is the customer's income.
 
 
-```{r}
+```{r results="hide"}
 library(ISLR)
+
 data(Default)
 head(Default)
+```
+
+```{r echo=FALSE}
+library(ISLR)
+
+data(Default)
+head(Default) %>%
+  kable() %>%
+  kable_styling(font_size=10)
 ```
 
 

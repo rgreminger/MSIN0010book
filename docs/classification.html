@@ -197,47 +197,145 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>We will focus our attention on <strong>binary</strong> responses <span class="math inline">\(Y\in\{0,1\}\)</span>, but all of the methods we discuss can be extended to the more general case outlined above.</p>
 <p>To illustrate classification methods, we will use the Default data in the <code>ISLR</code> R library. The data set contains four variables: <code>default</code> is an indicator of whether the customer defaulted on their debt, <code>student</code> is an indicator of whether the customer is a student, <code>balance</code> is the average balance that the customer has remaining on their credit card after making their monthly payment, and <code>income</code> is the customer’s income.</p>
 <div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" data-line-number="1"><span class="kw">library</span>(ISLR)</a>
-<a class="sourceLine" id="cb163-2" data-line-number="2"><span class="kw">data</span>(Default)</a>
-<a class="sourceLine" id="cb163-3" data-line-number="3"><span class="kw">head</span>(Default)</a></code></pre></div>
-<pre><code>##   default student balance income
-## 1      No      No   729.5  44362
-## 2      No     Yes   817.2  12106
-## 3      No      No  1073.5  31767
-## 4      No      No   529.3  35704
-## 5      No      No   785.7  38463
-## 6      No     Yes   919.6   7492</code></pre>
+<a class="sourceLine" id="cb163-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb163-3" data-line-number="3"><span class="kw">data</span>(Default)</a>
+<a class="sourceLine" id="cb163-4" data-line-number="4"><span class="kw">head</span>(Default)</a></code></pre></div>
+<table class="table" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+default
+</th>
+<th style="text-align:left;">
+student
+</th>
+<th style="text-align:right;">
+balance
+</th>
+<th style="text-align:right;">
+income
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+729.5
+</td>
+<td style="text-align:right;">
+44362
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+817.2
+</td>
+<td style="text-align:right;">
+12106
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+1073.5
+</td>
+<td style="text-align:right;">
+31767
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+529.3
+</td>
+<td style="text-align:right;">
+35704
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:right;">
+785.7
+</td>
+<td style="text-align:right;">
+38463
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+No
+</td>
+<td style="text-align:left;">
+Yes
+</td>
+<td style="text-align:right;">
+919.6
+</td>
+<td style="text-align:right;">
+7492
+</td>
+</tr>
+</tbody>
+</table>
 <p>We also need to split up the data into training and test samples in order to measure the predictive accuracy of different approaches to classification.</p>
-<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1">train =<span class="st"> </span>Default[<span class="dv">1</span><span class="op">:</span><span class="dv">7000</span>,]</a>
-<a class="sourceLine" id="cb165-2" data-line-number="2">test =<span class="st"> </span>Default[<span class="dv">7001</span><span class="op">:</span><span class="dv">10000</span>,]</a></code></pre></div>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb164-1" data-line-number="1">train =<span class="st"> </span>Default[<span class="dv">1</span><span class="op">:</span><span class="dv">7000</span>,]</a>
+<a class="sourceLine" id="cb164-2" data-line-number="2">test =<span class="st"> </span>Default[<span class="dv">7001</span><span class="op">:</span><span class="dv">10000</span>,]</a></code></pre></div>
 <div id="k-nearest-neighbors" class="section level2">
 <h2><span class="header-section-number">7.1</span> <span class="math inline">\(k\)</span>-Nearest Neighbors</h2>
 <hr>
 <p>The <span class="math inline">\(k\)</span>-NN algorithms are built on the following idea: given a new observation <span class="math inline">\(X^*\)</span> for which we want to predict an associated response <span class="math inline">\(Y^*\)</span>, we can find values of <span class="math inline">\(X\)</span> in our data that look similar to <span class="math inline">\(X^*\)</span> and then classify <span class="math inline">\(Y^*\)</span> based on the associated <span class="math inline">\(Y\)</span>’s. We will use Euclidean distance is a measure of similarity (which is only defined for real-valued <span class="math inline">\(X\)</span>’s).</p>
 <p>Let’s take a small portion (first 10 rows) of the Default data to work through a simple example. Notice that we will exclude the <code>student</code> variable since it is a categorical rather than numeric variable. We will use the 11th observation as our “test” data <span class="math inline">\(X^*\)</span> that we want to make predictions for.</p>
-<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1">X =<span class="st"> </span>Default[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>]</a>
-<a class="sourceLine" id="cb166-2" data-line-number="2">Y =<span class="st"> </span>Default[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb166-3" data-line-number="3">newX =<span class="st"> </span>Default[<span class="dv">11</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" data-line-number="1">X =<span class="st"> </span>Default[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>]</a>
+<a class="sourceLine" id="cb165-2" data-line-number="2">Y =<span class="st"> </span>Default[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb165-3" data-line-number="3">newX =<span class="st"> </span>Default[<span class="dv">11</span>,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>]</a></code></pre></div>
 <p>We now need to compute the similarity (i.e., Euclidean distance) between <span class="math inline">\(X^*=(X_1^*,X_2^*)\)</span> and <span class="math inline">\(X_i=(X_{1i},X_{2i})\)</span> for each <span class="math inline">\(i=1,\dotsc,n\)</span>.</p>
 <p><span class="math display">\[dist(X^*,X_i)=||X^*-X_i||=\sqrt{(X_1^*-X_{1i})^2+(X_2^*-X_{2i})^2}\]</span></p>
 <p>To do this in R, we can take use the apply( ) function. The first argument is the matrix of <span class="math inline">\(X\)</span> variables that we want to cycle through to compare with <span class="math inline">\(X^*\)</span>.</p>
 <p>The second argument of the <code>apply( )</code> function tells R whether we want to perform an operation for each row <code>(=1)</code> of for each column <code>(=2)</code>. The last row tells R what function we want to compute. Here, we need to evaluate <span class="math inline">\(dist(X^*,X_i)\)</span> for each row.</p>
-<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1">distance =<span class="st"> </span><span class="kw">apply</span>(X,<span class="dv">1</span>,<span class="cf">function</span>(x)<span class="kw">sqrt</span>(<span class="kw">sum</span>((x<span class="op">-</span>newX)<span class="op">^</span><span class="dv">2</span>)))</a>
-<a class="sourceLine" id="cb167-2" data-line-number="2">distance</a></code></pre></div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1">distance =<span class="st"> </span><span class="kw">apply</span>(X,<span class="dv">1</span>,<span class="cf">function</span>(x)<span class="kw">sqrt</span>(<span class="kw">sum</span>((x<span class="op">-</span>newX)<span class="op">^</span><span class="dv">2</span>)))</a>
+<a class="sourceLine" id="cb166-2" data-line-number="2">distance</a></code></pre></div>
 <pre><code>##     1     2     3     4     5     6     7     8     9    10 
 ## 22502  9799  9954 13844 16611 14409  3144  4347 15641  7404</code></pre>
 <p>Notice that the function returns a set of 10 distances. If we wanted to use the 1st-nearest neighbor classifier to predict <span class="math inline">\(Y^*\)</span>, for example, then we would need to find the <span class="math inline">\(Y\)</span> value of <span class="math inline">\(X_i\)</span> for the observation <span class="math inline">\(i\)</span> that has the smallest distance. We can find that value using the <code>which.min( )</code> function.</p>
-<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1"><span class="kw">which.min</span>(distance)</a></code></pre></div>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1"><span class="kw">which.min</span>(distance)</a></code></pre></div>
 <pre><code>## 7 
 ## 7</code></pre>
-<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1">Y[<span class="kw">which.min</span>(distance)]</a></code></pre></div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1">Y[<span class="kw">which.min</span>(distance)]</a></code></pre></div>
 <pre><code>## [1] No
 ## Levels: No Yes</code></pre>
 <p>Therefore, we would predict <span class="math inline">\(Y^*=No\)</span> having observed <span class="math inline">\(X^*\)</span>.</p>
 <p>Now let’s go back to the full data set and test the performance of the <span class="math inline">\(k\)</span>-NN classifier. The first thing we should do is standardize the <span class="math inline">\(X\)</span>’s since the nearest neighbors algorithm depends on the scale of the covariates.</p>
-<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" data-line-number="1">stdtrainX =<span class="st"> </span><span class="kw">scale</span>(train[,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>])</a>
-<a class="sourceLine" id="cb173-2" data-line-number="2">stdtestX =<span class="st"> </span><span class="kw">scale</span>(test[,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>])</a>
-<a class="sourceLine" id="cb173-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb173-4" data-line-number="4"><span class="kw">summary</span>(stdtrainX)</a></code></pre></div>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" data-line-number="1">stdtrainX =<span class="st"> </span><span class="kw">scale</span>(train[,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>])</a>
+<a class="sourceLine" id="cb172-2" data-line-number="2">stdtestX =<span class="st"> </span><span class="kw">scale</span>(test[,<span class="dv">3</span><span class="op">:</span><span class="dv">4</span>])</a>
+<a class="sourceLine" id="cb172-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb172-4" data-line-number="4"><span class="kw">summary</span>(stdtrainX)</a></code></pre></div>
 <pre><code>##     balance           income       
 ##  Min.   :-1.728   Min.   :-2.4632  
 ##  1st Qu.:-0.733   1st Qu.:-0.9207  
@@ -246,42 +344,42 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  3rd Qu.: 0.686   3rd Qu.: 0.7730  
 ##  Max.   : 3.454   Max.   : 3.0059</code></pre>
 <p>Now we can use the <code>knn( )</code> function in the <code>class</code> R library to run the algorithm on the training data and then make predictions for each observation in the test data. The first argument calls for the <span class="math inline">\(X\)</span>’s in the training data, the second calls for the <span class="math inline">\(X\)</span>’s in the test data (for which we want to predict), the third calls for the <span class="math inline">\(Y\)</span>’s in the training data, and the fourth calls for <span class="math inline">\(k\)</span>, the number of nearest neighbors we want to use to make the prediction.</p>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw">library</span>(class)</a>
-<a class="sourceLine" id="cb175-2" data-line-number="2">knn1 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">1</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1"><span class="kw">library</span>(class)</a>
+<a class="sourceLine" id="cb174-2" data-line-number="2">knn1 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">1</span>)</a></code></pre></div>
 <p>The <code>knn1</code> object now contains a vector of predicted <span class="math inline">\(Y\)</span>’s for each value of <span class="math inline">\(X\)</span> in the test data. We can then compare the predicted response <span class="math inline">\(\hat{Y}\)</span> to the true response in the test data <span class="math inline">\(Y\)</span> to assess the performance of the classification algorithm. In particular, we will see the fraction of predictions the algorithm gets wrong.</p>
-<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="kw">mean</span>(knn1 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw">mean</span>(knn1 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
 <pre><code>## [1] 0.04467</code></pre>
 <p>In this case, the 1-NN classifier as an error rate of about 4.5% (or equivalently, an accuracy of 95.5%).</p>
 <p>We can try increasing <span class="math inline">\(k\)</span> to see if there is any effect on predictive fit.</p>
-<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="co"># 5 nearest neighbors</span></a>
-<a class="sourceLine" id="cb178-2" data-line-number="2">knn5 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb178-3" data-line-number="3"><span class="kw">mean</span>(knn5 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1"><span class="co"># 5 nearest neighbors</span></a>
+<a class="sourceLine" id="cb177-2" data-line-number="2">knn5 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb177-3" data-line-number="3"><span class="kw">mean</span>(knn5 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
 <pre><code>## [1] 0.029</code></pre>
-<div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1"><span class="co"># 10 nearest neighbors</span></a>
-<a class="sourceLine" id="cb180-2" data-line-number="2">knn10 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb180-3" data-line-number="3"><span class="kw">mean</span>(knn10 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1"><span class="co"># 10 nearest neighbors</span></a>
+<a class="sourceLine" id="cb179-2" data-line-number="2">knn10 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb179-3" data-line-number="3"><span class="kw">mean</span>(knn10 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
 <pre><code>## [1] 0.026</code></pre>
-<div class="sourceCode" id="cb182"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb182-1" data-line-number="1"><span class="co"># 50 nearest neighbors</span></a>
-<a class="sourceLine" id="cb182-2" data-line-number="2">knn50 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">50</span>)</a>
-<a class="sourceLine" id="cb182-3" data-line-number="3"><span class="kw">mean</span>(knn50 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1"><span class="co"># 50 nearest neighbors</span></a>
+<a class="sourceLine" id="cb181-2" data-line-number="2">knn50 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">50</span>)</a>
+<a class="sourceLine" id="cb181-3" data-line-number="3"><span class="kw">mean</span>(knn50 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
 <pre><code>## [1] 0.024</code></pre>
-<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1"><span class="co"># 100 nearest neighbors</span></a>
-<a class="sourceLine" id="cb184-2" data-line-number="2">knn100 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb184-3" data-line-number="3"><span class="kw">mean</span>(knn100 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default) </a></code></pre></div>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1"><span class="co"># 100 nearest neighbors</span></a>
+<a class="sourceLine" id="cb183-2" data-line-number="2">knn100 =<span class="st"> </span><span class="kw">knn</span>(stdtrainX, stdtestX, train<span class="op">$</span>default, <span class="dt">k=</span><span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb183-3" data-line-number="3"><span class="kw">mean</span>(knn100 <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default) </a></code></pre></div>
 <pre><code>## [1] 0.027</code></pre>
 <p>We would then likely choose the model that predicts best (i.e., has the lowest error/misclassification rate).</p>
 <p>The last object of interest when doing classification is the <strong>confusion matrix</strong>, which allows us to decompose misclassification mistakes into two groups: <strong>false positives</strong> (predict <span class="math inline">\(\hat{Y}=1\)</span> when <span class="math inline">\(Y=0\)</span>) and <strong>false negatives</strong> (predict <span class="math inline">\(\hat{Y}=0\)</span> when <span class="math inline">\(Y=1\)</span>).</p>
 <p>Let’s produce the confusion matrix for the 10-NN classifier.</p>
-<div class="sourceCode" id="cb186"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb186-1" data-line-number="1"><span class="kw">table</span>(knn10,test<span class="op">$</span>default)</a></code></pre></div>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1"><span class="kw">table</span>(knn10,test<span class="op">$</span>default)</a></code></pre></div>
 <pre><code>##      
 ## knn10   No  Yes
 ##   No  2889   60
 ##   Yes   18   33</code></pre>
-<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb188-1" data-line-number="1"><span class="co"># false positive rate</span></a>
-<a class="sourceLine" id="cb188-2" data-line-number="2"><span class="dv">18</span><span class="op">/</span>(<span class="dv">18</span><span class="op">+</span><span class="dv">2889</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1"><span class="co"># false positive rate</span></a>
+<a class="sourceLine" id="cb187-2" data-line-number="2"><span class="dv">18</span><span class="op">/</span>(<span class="dv">18</span><span class="op">+</span><span class="dv">2889</span>)</a></code></pre></div>
 <pre><code>## [1] 0.006192</code></pre>
-<div class="sourceCode" id="cb190"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb190-1" data-line-number="1"><span class="co"># false negative rate</span></a>
-<a class="sourceLine" id="cb190-2" data-line-number="2"><span class="dv">60</span><span class="op">/</span>(<span class="dv">60</span><span class="op">+</span><span class="dv">33</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1"><span class="co"># false negative rate</span></a>
+<a class="sourceLine" id="cb189-2" data-line-number="2"><span class="dv">60</span><span class="op">/</span>(<span class="dv">60</span><span class="op">+</span><span class="dv">33</span>)</a></code></pre></div>
 <pre><code>## [1] 0.6452</code></pre>
 <p>The false negative rate is especially high, which would be concerning given the risks to the lending agency (e.g., bank).</p>
 <p><br></p>
@@ -296,8 +394,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The intuition for this formula is as follows. If <span class="math inline">\(Y\in\{0,1\}\)</span>, then we can assume that <span class="math inline">\(Y\sim\text{Bernoulli}(\theta)\)</span> where <span class="math inline">\(\theta=\text{Pr}(Y=1)\)</span>. We can then write down a regression model for <span class="math inline">\(\theta\)</span> rather than <span class="math inline">\(Y\)</span>. The only remaining problem is that <span class="math inline">\(\theta\in(0,1)\)</span>, so we need to transform the linear regression function <span class="math inline">\(h(X)=\beta_0+\beta_1X_1+\dotsc+\beta_pX_p)\)</span> in a way so that it is constrained to be between 0 and 1. The function <span class="math inline">\(e^{h(X)}/(1 + e^{h(X)})\)</span> does just that.</p>
 <p>Estimating a logistic regression model in R can be done using the <code>glm( )</code> function, which is similar to the <code>lm( )</code> command we use to estimate linear regression models.</p>
 <p>Let’s illustrate with the training sample from the Default data set.</p>
-<div class="sourceCode" id="cb192"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb192-1" data-line-number="1">glm.fit =<span class="st"> </span><span class="kw">glm</span>(default <span class="op">~</span><span class="st"> </span>student <span class="op">+</span><span class="st"> </span>balance <span class="op">+</span><span class="st"> </span>income, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="dt">data=</span>train)</a>
-<a class="sourceLine" id="cb192-2" data-line-number="2"><span class="kw">summary</span>(glm.fit)</a></code></pre></div>
+<div class="sourceCode" id="cb191"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb191-1" data-line-number="1">glm.fit =<span class="st"> </span><span class="kw">glm</span>(default <span class="op">~</span><span class="st"> </span>student <span class="op">+</span><span class="st"> </span>balance <span class="op">+</span><span class="st"> </span>income, <span class="dt">family=</span><span class="st">&quot;binomial&quot;</span>, <span class="dt">data=</span>train)</a>
+<a class="sourceLine" id="cb191-2" data-line-number="2"><span class="kw">summary</span>(glm.fit)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## glm(formula = default ~ student + balance + income, family = &quot;binomial&quot;, 
@@ -327,23 +425,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>The output from the logistic regression model looks fairly similar to that of linear regression models. However, the interpretation of model paramters (and their estimates) changes a bit.</p>
 <p>For example, we find that the coefficient on balance is estimated to be about 0.0058, which means that a one dollar increase in balance multiplies the odds of default by exp(0.0058)=1.006. Since this number is greater than 1, we can say that increasing the balance <em>increases</em> the odds of default.</p>
 <p>To predict responses in the test data, we can use the <code>predict( )</code> function in R. We again need to add one option: <code>type=&quot;response&quot;</code>, which will tell R to return the predicted probabilities that <span class="math inline">\(Y=1\)</span>.</p>
-<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" data-line-number="1">glm.probs =<span class="st"> </span><span class="kw">predict</span>(glm.fit, <span class="dt">newdata=</span>test, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb193"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb193-1" data-line-number="1">glm.probs =<span class="st"> </span><span class="kw">predict</span>(glm.fit, <span class="dt">newdata=</span>test, <span class="dt">type=</span><span class="st">&quot;response&quot;</span>)</a></code></pre></div>
 <p>Then we can compute <span class="math inline">\(\hat{Y}\)</span> by using the rule that <span class="math inline">\(\hat{Y}=\text{Yes}\)</span> if the predicted probability is greater than 0.5 and <span class="math inline">\(\hat{Y}=\text{No}\)</span> otherwise.</p>
-<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb195-1" data-line-number="1">glm.predict =<span class="st"> </span><span class="kw">ifelse</span>(glm.probs<span class="op">&gt;</span><span class="fl">0.5</span>,<span class="st">&quot;Yes&quot;</span>,<span class="st">&quot;No&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb194"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb194-1" data-line-number="1">glm.predict =<span class="st"> </span><span class="kw">ifelse</span>(glm.probs<span class="op">&gt;</span><span class="fl">0.5</span>,<span class="st">&quot;Yes&quot;</span>,<span class="st">&quot;No&quot;</span>)</a></code></pre></div>
 <p>Just as before, we can compare the model predictions with the actual <span class="math inline">\(Y\)</span>’s in the test data to compute the out-of-sample error (misclassification) rate.</p>
-<div class="sourceCode" id="cb196"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb196-1" data-line-number="1"><span class="kw">mean</span>(glm.predict <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
+<div class="sourceCode" id="cb195"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb195-1" data-line-number="1"><span class="kw">mean</span>(glm.predict <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
 <pre><code>## [1] 0.024</code></pre>
 <p>This error rate can be decomposed by producing the associated confusion matrix and computing the false positive and false negative rates.</p>
-<div class="sourceCode" id="cb198"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb198-1" data-line-number="1"><span class="kw">table</span>(glm.predict, test<span class="op">$</span>default)</a></code></pre></div>
+<div class="sourceCode" id="cb197"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb197-1" data-line-number="1"><span class="kw">table</span>(glm.predict, test<span class="op">$</span>default)</a></code></pre></div>
 <pre><code>##            
 ## glm.predict   No  Yes
 ##         No  2896   61
 ##         Yes   11   32</code></pre>
-<div class="sourceCode" id="cb200"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb200-1" data-line-number="1"><span class="co"># false positive rate</span></a>
-<a class="sourceLine" id="cb200-2" data-line-number="2"><span class="dv">11</span><span class="op">/</span>(<span class="dv">11</span><span class="op">+</span><span class="dv">2896</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" data-line-number="1"><span class="co"># false positive rate</span></a>
+<a class="sourceLine" id="cb199-2" data-line-number="2"><span class="dv">11</span><span class="op">/</span>(<span class="dv">11</span><span class="op">+</span><span class="dv">2896</span>)</a></code></pre></div>
 <pre><code>## [1] 0.003784</code></pre>
-<div class="sourceCode" id="cb202"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb202-1" data-line-number="1"><span class="co"># false negative rate</span></a>
-<a class="sourceLine" id="cb202-2" data-line-number="2"><span class="dv">61</span><span class="op">/</span>(<span class="dv">61</span><span class="op">+</span><span class="dv">32</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb201"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb201-1" data-line-number="1"><span class="co"># false negative rate</span></a>
+<a class="sourceLine" id="cb201-2" data-line-number="2"><span class="dv">61</span><span class="op">/</span>(<span class="dv">61</span><span class="op">+</span><span class="dv">32</span>)</a></code></pre></div>
 <pre><code>## [1] 0.6559</code></pre>
 <p><br></p>
 </div>
@@ -352,30 +450,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <hr>
 <p>Classification trees offer the same advantages over logistic regression that regression trees do for linear regression. That is, classification trees provide a classification rule that does not assume any form of linearity in the covariates <span class="math inline">\(X\)</span>.</p>
 <p>The nice thing is their implimentation in R is nearly identical to that of regression trees.</p>
-<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb204-1" data-line-number="1"><span class="kw">library</span>(rpart)</a>
-<a class="sourceLine" id="cb204-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb204-3" data-line-number="3"><span class="co"># estimate regression tree</span></a>
-<a class="sourceLine" id="cb204-4" data-line-number="4">tree.fit =<span class="st"> </span><span class="kw">rpart</span>(default <span class="op">~</span><span class="st"> </span>student <span class="op">+</span><span class="st"> </span>balance <span class="op">+</span><span class="st"> </span>income, <span class="dt">method=</span><span class="st">&quot;class&quot;</span>, <span class="dt">data=</span>train)</a>
-<a class="sourceLine" id="cb204-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb204-6" data-line-number="6"><span class="co"># plot estimated tree</span></a>
-<a class="sourceLine" id="cb204-7" data-line-number="7"><span class="kw">plot</span>(tree.fit,<span class="dt">uniform=</span><span class="ot">TRUE</span>,<span class="dt">margin=</span><span class="fl">0.05</span>,<span class="dt">main=</span><span class="st">&quot;DEFAULT&quot;</span>)</a>
-<a class="sourceLine" id="cb204-8" data-line-number="8"><span class="kw">text</span>(tree.fit)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-121-1.png" width="672" /></p>
+<div class="sourceCode" id="cb203"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb203-1" data-line-number="1"><span class="kw">library</span>(rpart)</a>
+<a class="sourceLine" id="cb203-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb203-3" data-line-number="3"><span class="co"># estimate regression tree</span></a>
+<a class="sourceLine" id="cb203-4" data-line-number="4">tree.fit =<span class="st"> </span><span class="kw">rpart</span>(default <span class="op">~</span><span class="st"> </span>student <span class="op">+</span><span class="st"> </span>balance <span class="op">+</span><span class="st"> </span>income, <span class="dt">method=</span><span class="st">&quot;class&quot;</span>, <span class="dt">data=</span>train)</a>
+<a class="sourceLine" id="cb203-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb203-6" data-line-number="6"><span class="co"># plot estimated tree</span></a>
+<a class="sourceLine" id="cb203-7" data-line-number="7"><span class="kw">plot</span>(tree.fit,<span class="dt">uniform=</span><span class="ot">TRUE</span>,<span class="dt">margin=</span><span class="fl">0.05</span>,<span class="dt">main=</span><span class="st">&quot;DEFAULT&quot;</span>)</a>
+<a class="sourceLine" id="cb203-8" data-line-number="8"><span class="kw">text</span>(tree.fit)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-122-1.png" width="672" /></p>
 <p>We can again use the <code>predict( )</code> function to predict the response values for the test data and compute the out-of-sample error (misclassification) rate. We need to specify the <code>type=&quot;class&quot;</code> option so that the <code>predict( )</code> function returns the predicted values <span class="math inline">\(\hat{Y}\)</span>.</p>
-<div class="sourceCode" id="cb205"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb205-1" data-line-number="1">tree.predict =<span class="st"> </span><span class="kw">predict</span>(tree.fit, <span class="dt">newdata=</span>test, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)</a>
-<a class="sourceLine" id="cb205-2" data-line-number="2"><span class="kw">mean</span>(tree.predict <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
+<div class="sourceCode" id="cb204"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb204-1" data-line-number="1">tree.predict =<span class="st"> </span><span class="kw">predict</span>(tree.fit, <span class="dt">newdata=</span>test, <span class="dt">type=</span><span class="st">&quot;class&quot;</span>)</a>
+<a class="sourceLine" id="cb204-2" data-line-number="2"><span class="kw">mean</span>(tree.predict <span class="op">!=</span><span class="st"> </span>test<span class="op">$</span>default)</a></code></pre></div>
 <pre><code>## [1] 0.027</code></pre>
 <p>Finally, the error rate can be decomposed by producing the associated confusion matrix and computing the false positive and false negative rates.</p>
-<div class="sourceCode" id="cb207"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb207-1" data-line-number="1"><span class="kw">table</span>(tree.predict, test<span class="op">$</span>default)</a></code></pre></div>
+<div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb206-1" data-line-number="1"><span class="kw">table</span>(tree.predict, test<span class="op">$</span>default)</a></code></pre></div>
 <pre><code>##             
 ## tree.predict   No  Yes
 ##          No  2880   54
 ##          Yes   27   39</code></pre>
-<div class="sourceCode" id="cb209"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb209-1" data-line-number="1"><span class="co"># false positive rate</span></a>
-<a class="sourceLine" id="cb209-2" data-line-number="2"><span class="dv">27</span><span class="op">/</span>(<span class="dv">27</span><span class="op">+</span><span class="dv">2880</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb208"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb208-1" data-line-number="1"><span class="co"># false positive rate</span></a>
+<a class="sourceLine" id="cb208-2" data-line-number="2"><span class="dv">27</span><span class="op">/</span>(<span class="dv">27</span><span class="op">+</span><span class="dv">2880</span>)</a></code></pre></div>
 <pre><code>## [1] 0.009288</code></pre>
-<div class="sourceCode" id="cb211"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb211-1" data-line-number="1"><span class="co"># false negative rate</span></a>
-<a class="sourceLine" id="cb211-2" data-line-number="2"><span class="dv">54</span><span class="op">/</span>(<span class="dv">54</span><span class="op">+</span><span class="dv">39</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb210"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb210-1" data-line-number="1"><span class="co"># false negative rate</span></a>
+<a class="sourceLine" id="cb210-2" data-line-number="2"><span class="dv">54</span><span class="op">/</span>(<span class="dv">54</span><span class="op">+</span><span class="dv">39</span>)</a></code></pre></div>
 <pre><code>## [1] 0.5806</code></pre>
 
 </div>
