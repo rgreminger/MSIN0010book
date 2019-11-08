@@ -9,18 +9,16 @@ To illustrate classification methods, we will use the Default data in the `ISLR`
 
 ```{r results="hide"}
 library(ISLR)
-
 data(Default)
 head(Default)
 ```
 
 ```{r echo=FALSE}
 library(ISLR)
-
 data(Default)
 head(Default) %>%
   kable() %>%
-  kable_styling(font_size=10)
+  kable_styling(font_size=10, full_width=FALSE)
 ```
 
 
