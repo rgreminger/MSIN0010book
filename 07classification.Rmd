@@ -13,7 +13,7 @@ library(ISLR)
 # load data
 data(Default)
 
-# inspect data
+# inspect first few rows
 head(Default)
 ```
 
