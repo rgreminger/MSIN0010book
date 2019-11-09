@@ -218,13 +218,13 @@ H_1:&amp;\ \mu&gt;50
 <p>To determine which test is appropriate, we must first address the following questions.</p>
 <ol style="list-style-type: decimal">
 <li>How many parameters do we have? (one = one-sample test, two = two-sample test)</li>
-<li>Do we know the population variance? (yes = z-test, no = t-test)</li>
+<li>Do we know the population variance? (yes = <span class="math inline">\(z\)</span>-test, no = <span class="math inline">\(t\)</span>-test)</li>
 </ol>
-<p>In our case, we only have one parameter <span class="math inline">\(\mu\)</span> (the average WTP in the population) and we do not know the population variance, but have an estimate of it in our sample. Therefore, we should use a one-sample t-test.</p>
+<p>In our case, we only have one parameter <span class="math inline">\(\mu\)</span> (the average WTP in the population) and we do not know the population variance, but have an estimate of it in our sample. Therefore, we should use a one-sample <span class="math inline">\(t\)</span>-test.</p>
 <p><span class="math display">\[t_{df} = {\bar{X}-\mu\over S/\sqrt{n}}\]</span></p>
 <p>Finally, we will choose <span class="math inline">\(\alpha=0.01\)</span> so that we are fairly confident that if we detect deviations from £50, they reflect real deviations in the population.</p>
 <p><strong>Step 3: Compute the observed test statistic</strong></p>
-<p>Since we are using a one-sample t-test, our observed test statistic is:
+<p>Since we are using a one-sample <span class="math inline">\(t\)</span>-test, our observed test statistic is:
 <span class="math display">\[t_{obs}={\bar{x}-\mu_0\over s/\sqrt{n}} = {55.7 - 50\over \sqrt{64.8}/\sqrt{30}}=3.878\]</span></p>
 <div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" data-line-number="1">t_obs =<span class="st"> </span>(xbar <span class="op">-</span><span class="st"> </span><span class="dv">50</span>)<span class="op">/</span>(<span class="kw">sqrt</span>(s2<span class="op">/</span>n))</a>
 <a class="sourceLine" id="cb133-2" data-line-number="2">t_obs</a></code></pre></div>
@@ -297,22 +297,21 @@ This last line is the exact form of a confidence interval!</p>
 <div id="hypothesis-testing-in-r" class="section level2">
 <h2><span class="header-section-number">5.3</span> Hypothesis Testing in R</h2>
 <hr>
-<p>We can use the <code>t.test( )</code> function to carry out both one and two-sample t-tests in R. (Note: There are no built-in z-test functions in R because when we work with real data, we <em>never</em> know the population variance!)</p>
+<p>We can use the <code>t.test( )</code> function to carry out both one and two-sample <span class="math inline">\(t\)</span>-tests in R. (Note: There are no built-in <span class="math inline">\(z\)</span>-test functions in R because when we work with real data, we <em>never</em> know the population variance!)</p>
 <blockquote>
-<p>ONE-SAMPLE t-TEST<br>
+<p>ONE-SAMPLE <span class="math inline">\(t\)</span>-TEST<br>
 <strong><code>t.test(mydata, alternative, mu, conf.level)</code></strong><br>
 <code>mydata</code>: data on the variable of interest<br>
 <code>alternative</code>: what type of alternative hypothesis is specified? (options: “two.sided”, “greater”, “less”) <br>
 <code>mu</code>: the value of <span class="math inline">\(\mu\)</span> under the null hypothesis<br>
 <code>conf.level</code>: confidence level of the test (<span class="math inline">\(1-\alpha\)</span>)<br>
 <br>
-TWO-SAMPLE t-TEST<br>
-<strong><code>t.test(mydata1, mydata2, alternative, mu, var.equal, conf.level)</code></strong><br>
+TWO-SAMPLE <span class="math inline">\(t\)</span>-TEST<br>
+<strong><code>t.test(mydata1, mydata2, alternative, mu, conf.level)</code></strong><br>
 <code>mydata1</code>: data on the first variable of interest<br>
 <code>mydata2</code>: data on the second variable of interest<br>
 <code>alternative</code>: what type of alternative hypothesis is specified? (options: “two.sided”, “greater”, “less”) <br>
 <code>mu</code>: the value of the difference <span class="math inline">\(\mu_1-\mu_2\)</span> under the null hypothesis<br>
-<code>var.equal</code>: do you want to assume the population variances are equal? (options: TRUE, FALSE)<br>
 <code>conf.level</code>: confidence level of the test (<span class="math inline">\(1-\alpha\)</span>)<br></p>
 </blockquote>
 <p><strong>EXAMPLE:</strong> The EuStockMarkets data set in R provides daily closing prices of four major European stock indices: Germany DAX (Ibis), Switzerland SMI, France CAC, and UK FTSE. Using this data set, test to see if there are differences in the closing prices of the SMI and CAC indices. Carry out this test at the 5% significance level and do not assume equal variances.</p>
@@ -326,7 +325,7 @@ TWO-SAMPLE t-TEST<br>
 <a class="sourceLine" id="cb139-8" data-line-number="8">CAC =<span class="st"> </span>EuStockMarkets[,<span class="dv">3</span>]</a>
 <a class="sourceLine" id="cb139-9" data-line-number="9"></a>
 <a class="sourceLine" id="cb139-10" data-line-number="10"><span class="co"># execute the two-sample t-test</span></a>
-<a class="sourceLine" id="cb139-11" data-line-number="11"><span class="kw">t.test</span>(SMI, CAC, <span class="dt">alternative=</span><span class="st">&quot;two.sided&quot;</span>, <span class="dt">mu=</span><span class="dv">0</span>, <span class="dt">var.equal=</span><span class="ot">FALSE</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb139-11" data-line-number="11"><span class="kw">t.test</span>(SMI, CAC, <span class="dt">alternative=</span><span class="st">&quot;two.sided&quot;</span>, <span class="dt">mu=</span><span class="dv">0</span>, <span class="dt">conf.level=</span><span class="fl">0.95</span>)</a></code></pre></div>
 <pre><code>## 
 ##  Welch Two Sample t-test
 ## 
