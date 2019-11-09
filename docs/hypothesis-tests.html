@@ -301,18 +301,18 @@ This last line is the exact form of a confidence interval!</p>
 <blockquote>
 <p>ONE-SAMPLE <span class="math inline">\(t\)</span>-TEST<br>
 <strong><code>t.test(mydata, alternative, mu, conf.level)</code></strong><br>
-<code>mydata</code>: data on the variable of interest<br>
-<code>alternative</code>: what type of alternative hypothesis is specified? (options: “two.sided”, “greater”, “less”) <br>
-<code>mu</code>: the value of <span class="math inline">\(\mu\)</span> under the null hypothesis<br>
-<code>conf.level</code>: confidence level of the test (<span class="math inline">\(1-\alpha\)</span>)<br>
+<code>mydata</code> data on the variable of interest<br>
+<code>alternative</code> what type of alternative hypothesis is specified? (options: “two.sided”, “greater”, “less”) <br>
+<code>mu</code> the value of <span class="math inline">\(\mu\)</span> under the null hypothesis<br>
+<code>conf.level</code> confidence level of the test (<span class="math inline">\(1-\alpha\)</span>)<br>
 <br>
 TWO-SAMPLE <span class="math inline">\(t\)</span>-TEST<br>
 <strong><code>t.test(mydata1, mydata2, alternative, mu, conf.level)</code></strong><br>
-<code>mydata1</code>: data on the first variable of interest<br>
-<code>mydata2</code>: data on the second variable of interest<br>
-<code>alternative</code>: what type of alternative hypothesis is specified? (options: “two.sided”, “greater”, “less”) <br>
-<code>mu</code>: the value of the difference <span class="math inline">\(\mu_1-\mu_2\)</span> under the null hypothesis<br>
-<code>conf.level</code>: confidence level of the test (<span class="math inline">\(1-\alpha\)</span>)<br></p>
+<code>mydata1</code> data on the first variable of interest<br>
+<code>mydata2</code> data on the second variable of interest<br>
+<code>alternative</code> what type of alternative hypothesis is specified? (options: “two.sided”, “greater”, “less”) <br>
+<code>mu</code> the value of the difference <span class="math inline">\(\mu_1-\mu_2\)</span> under the null hypothesis<br>
+<code>conf.level</code> confidence level of the test (<span class="math inline">\(1-\alpha\)</span>)<br></p>
 </blockquote>
 <p><strong>EXAMPLE:</strong> The EuStockMarkets data set in R provides daily closing prices of four major European stock indices: Germany DAX (Ibis), Switzerland SMI, France CAC, and UK FTSE. Using this data set, test to see if there are differences in the closing prices of the SMI and CAC indices. Carry out this test at the 5% significance level and do not assume equal variances.</p>
 <div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" data-line-number="1"><span class="co"># load the data</span></a>
