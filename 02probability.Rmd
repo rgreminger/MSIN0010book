@@ -89,7 +89,7 @@ We have two ways of answering this question. First, we can recognize that $P(X>1
 ```
 
 
-A second approach is to use the `lower.tail=` option within the `pnorm( )` function. When `lower.tail=TRUE` then the `pnorm( )` function returns the probability to the *left* of a given number $x$ and if `lower.tail=FALSE` then `pnorm( )` returns the probability to the *right* of $x$.
+A second approach is to use the `lower.tail` option within the `pnorm( )` function. When `lower.tail=TRUE` then the `pnorm( )` function returns the probability to the *left* of a given number $x$ and if `lower.tail=FALSE` then `pnorm( )` returns the probability to the *right* of $x$.
 
 
 ```{r}
@@ -105,7 +105,7 @@ pnorm(1, mean=0, sd=1) - pnorm(0, mean=0, sd=1)
 
 <br>
 
-Once we understand how to use the `pnorm( )` function to compute standard normal probabilities, extending the function to compute probabilities of any normal distribution is straightforward. All we have to do is change the `mean=` and `sd=` arguments. 
+Once we understand how to use the `pnorm( )` function to compute standard normal probabilities, extending the function to compute probabilities of any normal distribution is straightforward. All we have to do is change the `mean` and `sd` arguments. 
 
 **Remember that the normal functions in R call for the standard deviation $\sigma$, NOT the variance $\sigma^2$!**
 
@@ -246,7 +246,7 @@ choose(5,2)*0.5^2*(1-0.5)^(5-2)
 <br>
 **PROBLEM 2:** If you flip a coin $n=5$ times and in each flip the probability of heads is $p=0.5$, what is the chance that you get *at most* 2 successes?
 
-Now we want to find $P(X\leq2)$. We know that $P(X\leq2)=P(X=2)+P(X=1)+P(X=0)$, so we could again use the dbinom( ) function.
+Now we want to find $P(X\leq2)$. We know that $P(X\leq2)=P(X=2)+P(X=1)+P(X=0)$, so we could again use the `dbinom( )` function.
 
 
 ```{r}
@@ -254,7 +254,7 @@ dbinom(2, size=5, prob=0.5) + dbinom(1, size=5, prob=0.5) + dbinom(0, size=5, pr
 ```
 
 
-The problem is that this approach becomes cumbersome as the number of trials increases. A more efficient approach is to recognize that $P(X\leq2)$ takes the form of the CDF and use pnorm( ).
+The problem is that this approach becomes cumbersome as the number of trials increases. A more efficient approach is to recognize that $P(X\leq2)$ takes the form of the CDF and use `pnorm( )`.
 
 
 ```{r}
@@ -279,7 +279,7 @@ We have two ways to solve this problem. First, we can write $P(X\geq 20)=1-P(X<2
 ```
 
 
-Alternatively, we can use the "lower.tail=" option to tell R we want the probability *greater than* x. However, note that this is *strictly greater than*, so we must again remember than $P(X\geq 20)=P(X>19)$.
+Alternatively, we can use the `lower.tail=FALSE` option to tell R we want the probability *greater than* x. However, note that this is *strictly greater than*, so we must again remember than $P(X\geq 20)=P(X>19)$.
 
 
 ```{r}
