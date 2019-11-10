@@ -4,6 +4,7 @@ author: "Adam Smith, UCL School of Management"
 date: "`r format(Sys.Date(), format='%B %d %Y')`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
+documentclass: book
 ---
 
 <style type="text/css">
