@@ -540,13 +540,14 @@ correlation
 <pre><code>## [1] 16.33</code></pre>
 <p>An all-purpose way to compute averages across different factor levels is to use the <code>aggregate( )</code> function. The first argument specifies the variable we want to average and associated categorical/factor variable, and the second argument specifies the function we want to execute (i.e., the mean).</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">aggregate</span>(move <span class="op">~</span><span class="st"> </span>brand, <span class="dt">FUN=</span>mean)</a></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:250px; ">
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
-<th style="text-align:left;">
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
 brand
 </th>
-<th style="text-align:right;">
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
 move
 </th>
 </tr>
@@ -706,6 +707,237 @@ SAMUEL ADAMS LAGER N
 </tr>
 </tbody>
 </table>
+</div>
+<p>We can also compute the average of more than one continuous variable by binding together (i.e., concatenating) the columns of the variables of interest using the <code>cbind( )</code> command. For example, the following code will compute the average sales volume and average price by brand.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">aggregate</span>(<span class="kw">cbind</span>(move,price) <span class="op">~</span><span class="st"> </span>brand, <span class="dt">FUN=</span>mean)</a></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:250px; ">
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;position: sticky; top:0; background-color: #FFFFFF;">
+brand
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+move
+</th>
+<th style="text-align:right;position: sticky; top:0; background-color: #FFFFFF;">
+price
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+BECK’S REG BEER NR B
+</td>
+<td style="text-align:right;">
+18.35
+</td>
+<td style="text-align:right;">
+5.877
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BERGHOFF REGULAR BEE
+</td>
+<td style="text-align:right;">
+15.57
+</td>
+<td style="text-align:right;">
+3.944
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BUDWEISER BEER
+</td>
+<td style="text-align:right;">
+16.33
+</td>
+<td style="text-align:right;">
+3.814
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+BUDWEISER BEER LONG
+</td>
+<td style="text-align:right;">
+18.24
+</td>
+<td style="text-align:right;">
+3.746
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+CORONA EXTRA BEER NR
+</td>
+<td style="text-align:right;">
+15.39
+</td>
+<td style="text-align:right;">
+5.795
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+HEINEKEN BEER N.R.BT
+</td>
+<td style="text-align:right;">
+16.74
+</td>
+<td style="text-align:right;">
+6.341
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+LOWENBRAU BEER NR BT
+</td>
+<td style="text-align:right;">
+16.89
+</td>
+<td style="text-align:right;">
+4.051
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MICHELOB REGULAR BEE
+</td>
+<td style="text-align:right;">
+14.23
+</td>
+<td style="text-align:right;">
+4.040
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MILLER GEN DRFT LNNR
+</td>
+<td style="text-align:right;">
+50.96
+</td>
+<td style="text-align:right;">
+3.686
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MILLER GEN DRFT LT L
+</td>
+<td style="text-align:right;">
+20.06
+</td>
+<td style="text-align:right;">
+3.689
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MILLER GENUINE DRAFT
+</td>
+<td style="text-align:right;">
+16.37
+</td>
+<td style="text-align:right;">
+3.783
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MILLER HIGH LIFE LNN
+</td>
+<td style="text-align:right;">
+14.05
+</td>
+<td style="text-align:right;">
+3.678
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MILLER LITE BEER
+</td>
+<td style="text-align:right;">
+18.09
+</td>
+<td style="text-align:right;">
+3.820
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MILLER LITE BEER N.R
+</td>
+<td style="text-align:right;">
+18.71
+</td>
+<td style="text-align:right;">
+3.744
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MILLER LITE LONGNECK
+</td>
+<td style="text-align:right;">
+38.39
+</td>
+<td style="text-align:right;">
+3.689
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+MILLER SHARP’S N/A L
+</td>
+<td style="text-align:right;">
+11.45
+</td>
+<td style="text-align:right;">
+3.356
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+O’DOUL’S N/A LONGNEC
+</td>
+<td style="text-align:right;">
+11.96
+</td>
+<td style="text-align:right;">
+3.785
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+OLD STYLE BEER
+</td>
+<td style="text-align:right;">
+13.38
+</td>
+<td style="text-align:right;">
+3.682
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+SAMUEL ADAMS LAGER N
+</td>
+<td style="text-align:right;">
+20.62
+</td>
+<td style="text-align:right;">
+5.405
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <p><br></p>
 </div>
 <div id="graphical-summaries" class="section level2">
@@ -713,38 +945,38 @@ SAMUEL ADAMS LAGER N
 <hr>
 <p>Creating visual data summaries in R is also one of its strengths. Examples of useful graphical functions include <code>hist( )</code>, <code>boxplot( )</code>, <code>plot( )</code>, <code>pie( )</code>, <code>barplot( )</code>.</p>
 <p>An example of a <strong>histogram</strong> of weekly demand is shown below.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">hist</span>(move, <span class="dt">main=</span><span class="st">&quot;Distribution of Beer Sales Volume&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
-<p>Here the <code>main=</code> option allows us to customize the plot title. We can also use the <code>breaks=</code> option to control the bin width.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">hist</span>(move, <span class="dt">main=</span><span class="st">&quot;Distribution of Beer Sales Volume&quot;</span>, <span class="dt">breaks=</span><span class="dv">50</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
-<p>We can also use a <strong>boxplot</strong> to look at the distribution of balance. To do this, we’ll use the <code>boxplot( )</code> function.</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">boxplot</span>(move, <span class="dt">main=</span><span class="st">&quot;Distribution of Beer Sales Volume&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">hist</span>(move, <span class="dt">main=</span><span class="st">&quot;Distribution of Beer Sales Volume&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
-<p>Notice how the extreme positive values (outliers) make the boxplot hard to analyze. We can remove these outliers with the <code>outline=FALSE</code> option.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">boxplot</span>(move, <span class="dt">main=</span><span class="st">&quot;Distribution of Beer Sales Volume&quot;</span>, <span class="dt">outline=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<p>Here the <code>main=</code> option allows us to customize the plot title. We can also use the <code>breaks=</code> option to control the bin width.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">hist</span>(move, <span class="dt">main=</span><span class="st">&quot;Distribution of Beer Sales Volume&quot;</span>, <span class="dt">breaks=</span><span class="dv">50</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
-<p>We can also use the <code>boxplot( )</code> function to see how the distribution of demand changes across brands of beer.</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">boxplot</span>(move <span class="op">~</span><span class="st"> </span>brand, <span class="dt">main=</span><span class="st">&quot;Distribution of Beer Sales Volume&quot;</span>, <span class="dt">outline=</span><span class="ot">FALSE</span>, <span class="dt">xlab=</span><span class="st">&quot;&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;weekly units sold&quot;</span>)</a></code></pre></div>
+<p>We can also use a <strong>boxplot</strong> to look at the distribution of balance. To do this, we’ll use the <code>boxplot( )</code> function.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">boxplot</span>(move, <span class="dt">main=</span><span class="st">&quot;Distribution of Beer Sales Volume&quot;</span>)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Notice how the extreme positive values (outliers) make the boxplot hard to analyze. We can remove these outliers with the <code>outline=FALSE</code> option.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">boxplot</span>(move, <span class="dt">main=</span><span class="st">&quot;Distribution of Beer Sales Volume&quot;</span>, <span class="dt">outline=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>We can also use the <code>boxplot( )</code> function to see how the distribution of demand changes across brands of beer.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">boxplot</span>(move <span class="op">~</span><span class="st"> </span>brand, <span class="dt">main=</span><span class="st">&quot;Distribution of Beer Sales Volume&quot;</span>, <span class="dt">outline=</span><span class="ot">FALSE</span>, <span class="dt">xlab=</span><span class="st">&quot;&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;weekly units sold&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
 <p>The first argument tells R that we want to plot move against brand. Note that the numeric variable (e.g., move) must always come before the factor variable (e.g., brand). We’ve also added labels to the x- and y-axes using the <code>xlab</code> and <code>ylab</code> options.</p>
 <p>One issue with the plot above is that the labels on the x-axis are too wide. To solve this problem, we can rotate the x-axis labels by adding <code>las=2</code> as an option in the <code>boxplot( )</code> command. We will also want to slightly adjust the plot margins to allow for more space below the graph. This can be done by adding <code>par(mar=c(a,b,c,d))</code> before the <code>boxplot( )</code> command, where <code>a,b,c,d</code> denote the bottom, left, top and right margins, respectively. Lastly, we can use the <code>cex.axis</code> option to adjust the axis label sizes.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="fl">10.1</span>,<span class="fl">4.1</span>,<span class="fl">4.1</span>,<span class="fl">2.1</span>))</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="kw">boxplot</span>(move <span class="op">~</span><span class="st"> </span>brand, <span class="dt">main=</span><span class="st">&quot;Distribution of Beer Sales Volume&quot;</span>, <span class="dt">outline=</span><span class="ot">FALSE</span>, <span class="dt">xlab=</span><span class="st">&quot;&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;weekly units sold&quot;</span>, <span class="dt">las=</span><span class="dv">2</span>, <span class="dt">cex.axis=</span>.<span class="dv">75</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mar=</span><span class="kw">c</span>(<span class="fl">10.1</span>,<span class="fl">4.1</span>,<span class="fl">4.1</span>,<span class="fl">2.1</span>))</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="kw">boxplot</span>(move <span class="op">~</span><span class="st"> </span>brand, <span class="dt">main=</span><span class="st">&quot;Distribution of Beer Sales Volume&quot;</span>, <span class="dt">outline=</span><span class="ot">FALSE</span>, <span class="dt">xlab=</span><span class="st">&quot;&quot;</span>, <span class="dt">ylab=</span><span class="st">&quot;weekly units sold&quot;</span>, <span class="dt">las=</span><span class="dv">2</span>, <span class="dt">cex.axis=</span>.<span class="dv">75</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
 <p>We can create <strong>scatter plots</strong> using the <code>plot( )</code> function.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">plot</span>(price, move, <span class="dt">main=</span><span class="st">&quot;Beer Demand Patterns&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">plot</span>(price, move, <span class="dt">main=</span><span class="st">&quot;Beer Demand Patterns&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
 <p>The first argument corresponds to the variable on the x-axis, while the second corresponds to the variable on the y-axis.</p>
 <p>To modify the type or color of the points in the above plot, we can add <code>pch</code> and <code>col</code> options. For example, let’s change the points to be closed circles (<code>pch=16</code>) that are red (<code>col=2</code>).</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">plot</span>(price, move, <span class="dt">main=</span><span class="st">&quot;Beer Demand Patterns&quot;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="dv">2</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">plot</span>(price, move, <span class="dt">main=</span><span class="st">&quot;Beer Demand Patterns&quot;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span><span class="dv">2</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-21-1.png" width="672" /></p>
 <p>Adding color is a great way to incorporate information about other variables. For example, should the relationship between price and demand change by brand? The answer is likely yes. To see this visually, let’s change the color of each point to represent the corresponding brand. This is an example of “conditional formatting”.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">palette =<span class="st"> </span><span class="kw">rainbow</span>(<span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">colors =<span class="st"> </span>palette[<span class="kw">as.numeric</span>(brand)]</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="kw">plot</span>(price, move, <span class="dt">main=</span><span class="st">&quot;Beer Demand Patterns&quot;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span>colors)</a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend=</span><span class="kw">levels</span>(brand), <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span>palette, <span class="dt">cex=</span>.<span class="dv">5</span>, <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">palette =<span class="st"> </span><span class="kw">rainbow</span>(<span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2">colors =<span class="st"> </span>palette[<span class="kw">as.numeric</span>(brand)]</a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="kw">plot</span>(price, move, <span class="dt">main=</span><span class="st">&quot;Beer Demand Patterns&quot;</span>, <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span>colors)</a>
+<a class="sourceLine" id="cb21-4" data-line-number="4"><span class="kw">legend</span>(<span class="st">&quot;topright&quot;</span>, <span class="dt">legend=</span><span class="kw">levels</span>(brand), <span class="dt">pch=</span><span class="dv">16</span>, <span class="dt">col=</span>palette, <span class="dt">cex=</span>.<span class="dv">5</span>, <span class="dt">bty=</span><span class="st">&quot;n&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-22-1.png" width="672" /></p>
 <p>The first line of code generates 20 unique colors from a rainbow palette, one for each brand. Because there are hundreds of points on our scatter plot, we need to identify assign a color to each point. This is what the second line of code does. In the third line, we simply use the <code>colors</code> object we just created to specify point colors.</p>
 <p>The last line of code adds a legend to the plot so that we know what the colors correspond to. The first argument indicates the legend position, the second argument <code>legend</code> indicates the values to be shown on the legend, the third argument <code>pch</code> is the point type, the fourth argument <code>col</code> is the color for each value, and the fifth argument <code>cex</code> adjusts the text size.</p>
 

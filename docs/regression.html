@@ -207,21 +207,21 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li>error term: <span class="math inline">\(\varepsilon\sim N(0,1)\)</span></li>
 </ul>
 <p>Once we have fixed the true values of the parameters and generated predictor variables and the error term, the regression formula above tells us how to generate the response variable <span class="math inline">\(Y\)</span>.</p>
-<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" data-line-number="1">n =<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb141-2" data-line-number="2">beta0 =<span class="st"> </span><span class="dv">-5</span></a>
-<a class="sourceLine" id="cb141-3" data-line-number="3">beta1 =<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb141-4" data-line-number="4">beta2 =<span class="st"> </span><span class="dv">-1</span></a>
-<a class="sourceLine" id="cb141-5" data-line-number="5">X1 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb141-6" data-line-number="6">X2 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb141-7" data-line-number="7">epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n)</a>
-<a class="sourceLine" id="cb141-8" data-line-number="8">Y =<span class="st"> </span>beta0 <span class="op">+</span><span class="st"> </span>beta1<span class="op">*</span>X1 <span class="op">+</span><span class="st"> </span>beta2<span class="op">*</span>X2 <span class="op">+</span><span class="st"> </span>epsilon</a></code></pre></div>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1">n =<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb142-2" data-line-number="2">beta0 =<span class="st"> </span><span class="dv">-5</span></a>
+<a class="sourceLine" id="cb142-3" data-line-number="3">beta1 =<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb142-4" data-line-number="4">beta2 =<span class="st"> </span><span class="dv">-1</span></a>
+<a class="sourceLine" id="cb142-5" data-line-number="5">X1 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb142-6" data-line-number="6">X2 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb142-7" data-line-number="7">epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n)</a>
+<a class="sourceLine" id="cb142-8" data-line-number="8">Y =<span class="st"> </span>beta0 <span class="op">+</span><span class="st"> </span>beta1<span class="op">*</span>X1 <span class="op">+</span><span class="st"> </span>beta2<span class="op">*</span>X2 <span class="op">+</span><span class="st"> </span>epsilon</a></code></pre></div>
 <p>Now let’s inspect the data.</p>
-<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="kw">pairs</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-84-1.png" width="672" /></p>
+<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1"><span class="kw">pairs</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-86-1.png" width="672" /></p>
 <p>As we should expect, we find a positive relationship between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_1\)</span>, a negative relationship between <span class="math inline">\(Y\)</span> and <span class="math inline">\(X_2\)</span>, and no relationship between <span class="math inline">\(X_1\)</span> and <span class="math inline">\(X_2\)</span> (since they are uncorrelated).</p>
 <p>Now let’s formally estimate the model parameters <span class="math inline">\((\beta_0,\beta_1,\beta_2)\)</span> using R’s built-in linear model function <code>lm( )</code>.</p>
-<div class="sourceCode" id="cb143"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb143-1" data-line-number="1">lm.fit =<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2)</a>
-<a class="sourceLine" id="cb143-2" data-line-number="2"><span class="kw">summary</span>(lm.fit)</a></code></pre></div>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1">lm.fit =<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2)</a>
+<a class="sourceLine" id="cb144-2" data-line-number="2"><span class="kw">summary</span>(lm.fit)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Y ~ X1 + X2)
@@ -255,7 +255,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span class="math display">\[\hat{Y}=\hat{\beta}_0 + \hat{\beta}_1X_1 + \hat{\beta}_2X_2 =-4.914 + 1.666(0) - 1.004(0.5)=-5.416\]</span>
 where we use the “hat” notation to denote estimates or predicted values.</p>
 <p>We can also use built-in prediction tools in R (where any differences would just be due to rounding error).</p>
-<div class="sourceCode" id="cb145"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb145-1" data-line-number="1"><span class="kw">predict</span>(lm.fit, <span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">X1=</span><span class="dv">0</span>,<span class="dt">X2=</span><span class="fl">0.5</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" data-line-number="1"><span class="kw">predict</span>(lm.fit, <span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">X1=</span><span class="dv">0</span>,<span class="dt">X2=</span><span class="fl">0.5</span>))</a></code></pre></div>
 <pre><code>##      1 
 ## -5.415</code></pre>
 <p>The first argument of the <code>predict( )</code> function is the regression object we created using the <code>lm( )</code> function. The second argument is the new set of covariates for which we want to predict a new response <span class="math inline">\(Y\)</span>. (Note: the names of variables in <code>newdata</code> must be the same names used in the original data.)</p>
@@ -268,19 +268,19 @@ where we use the “hat” notation to denote estimates or predicted values.</p>
 <p><span class="math display">\[Y_i = \beta_0 + {\beta_1X_{1i} \over\beta_2 + X_{2i}} + \varepsilon_i\]</span></p>
 <p>Here we still have three model parameters (<span class="math inline">\(\beta_0,\beta_1,\beta_2\)</span>), but they enter the regression function in a nonlinear fashion.</p>
 <p>If we generate data from this model and then estimate the linear regression model from section 1, what will happen?</p>
-<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1"><span class="co"># generate data</span></a>
-<a class="sourceLine" id="cb147-2" data-line-number="2">n =<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb147-3" data-line-number="3">beta0 =<span class="st"> </span><span class="dv">-5</span></a>
-<a class="sourceLine" id="cb147-4" data-line-number="4">beta1 =<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb147-5" data-line-number="5">beta2 =<span class="st"> </span><span class="dv">-1</span></a>
-<a class="sourceLine" id="cb147-6" data-line-number="6">X1 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb147-7" data-line-number="7">X2 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb147-8" data-line-number="8">epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n)</a>
-<a class="sourceLine" id="cb147-9" data-line-number="9">Y =<span class="st"> </span>beta0 <span class="op">+</span><span class="st"> </span>beta1<span class="op">*</span>X1<span class="op">/</span>(beta2<span class="op">+</span>X2) <span class="op">+</span><span class="st"> </span>epsilon</a>
-<a class="sourceLine" id="cb147-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb147-11" data-line-number="11"><span class="co"># estimate linear regression model</span></a>
-<a class="sourceLine" id="cb147-12" data-line-number="12">lm.fit =<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2)</a>
-<a class="sourceLine" id="cb147-13" data-line-number="13"><span class="kw">summary</span>(lm.fit)</a></code></pre></div>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" data-line-number="1"><span class="co"># generate data</span></a>
+<a class="sourceLine" id="cb148-2" data-line-number="2">n =<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb148-3" data-line-number="3">beta0 =<span class="st"> </span><span class="dv">-5</span></a>
+<a class="sourceLine" id="cb148-4" data-line-number="4">beta1 =<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb148-5" data-line-number="5">beta2 =<span class="st"> </span><span class="dv">-1</span></a>
+<a class="sourceLine" id="cb148-6" data-line-number="6">X1 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb148-7" data-line-number="7">X2 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb148-8" data-line-number="8">epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n)</a>
+<a class="sourceLine" id="cb148-9" data-line-number="9">Y =<span class="st"> </span>beta0 <span class="op">+</span><span class="st"> </span>beta1<span class="op">*</span>X1<span class="op">/</span>(beta2<span class="op">+</span>X2) <span class="op">+</span><span class="st"> </span>epsilon</a>
+<a class="sourceLine" id="cb148-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb148-11" data-line-number="11"><span class="co"># estimate linear regression model</span></a>
+<a class="sourceLine" id="cb148-12" data-line-number="12">lm.fit =<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2)</a>
+<a class="sourceLine" id="cb148-13" data-line-number="13"><span class="kw">summary</span>(lm.fit)</a></code></pre></div>
 <pre><code>## 
 ## Call:
 ## lm(formula = Y ~ X1 + X2)
@@ -303,21 +303,21 @@ where we use the “hat” notation to denote estimates or predicted values.</p>
 <p>The answer is that we get incorrect estimates of model parameters! (Remember <span class="math inline">\(\beta=-5,\beta_1=2,\beta_2=-1\)</span>.)</p>
 <p>A more flexible approach to regression modeling is provided by <strong>regression trees</strong>. The idea is to split up the covariate space into homogeneous regions (with respect to the response <span class="math inline">\(Y\)</span>) and then fit simple linear models within each region.</p>
 <p>We can use the <code>rpart</code> library in R to fit and plot regression trees. You’ll actually notice a similar syntax between <code>lm( )</code> and <code>rpart( )</code>.</p>
-<div class="sourceCode" id="cb149"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb149-1" data-line-number="1"><span class="kw">library</span>(rpart)</a>
-<a class="sourceLine" id="cb149-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb149-3" data-line-number="3"><span class="co"># estimate regression tree</span></a>
-<a class="sourceLine" id="cb149-4" data-line-number="4">tree.fit =<span class="st"> </span><span class="kw">rpart</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2)</a>
-<a class="sourceLine" id="cb149-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb149-6" data-line-number="6"><span class="co"># plot the estimated tree</span></a>
-<a class="sourceLine" id="cb149-7" data-line-number="7"><span class="kw">plot</span>(tree.fit, <span class="dt">uniform=</span><span class="ot">TRUE</span>, <span class="dt">margin=</span>.<span class="dv">05</span>)</a>
-<a class="sourceLine" id="cb149-8" data-line-number="8"><span class="kw">text</span>(tree.fit)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-89-1.png" width="672" /></p>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1"><span class="kw">library</span>(rpart)</a>
+<a class="sourceLine" id="cb150-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb150-3" data-line-number="3"><span class="co"># estimate regression tree</span></a>
+<a class="sourceLine" id="cb150-4" data-line-number="4">tree.fit =<span class="st"> </span><span class="kw">rpart</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2)</a>
+<a class="sourceLine" id="cb150-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb150-6" data-line-number="6"><span class="co"># plot the estimated tree</span></a>
+<a class="sourceLine" id="cb150-7" data-line-number="7"><span class="kw">plot</span>(tree.fit, <span class="dt">uniform=</span><span class="ot">TRUE</span>, <span class="dt">margin=</span>.<span class="dv">05</span>)</a>
+<a class="sourceLine" id="cb150-8" data-line-number="8"><span class="kw">text</span>(tree.fit)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-91-1.png" width="672" /></p>
 <p>The output from a regression tree model looks very different from the output of a linear regression model. This is mostly because we had real-valued parameters in the linear model, but have much more complicated parameters in the tree model.</p>
 <p>The top node is called the <strong>root node</strong> and indicates the most important variable for predicting <span class="math inline">\(Y\)</span>. Each subsequent node is called an <strong>interior node</strong> until you get to the last node showing a numeric value which is called a <strong>terminal node</strong>.</p>
 <p>Tree models should be interpreted as a sequence of decisions for the purposes of making a prediction. Each node will present a logical statement and if that statement is true, we move <em>down and to the left</em> whereas if that statement is false, we move <em>down and to the right</em>.</p>
 <p>For example, if you wanted to predict <span class="math inline">\(Y\)</span> when <span class="math inline">\(X_1=0\)</span> and <span class="math inline">\(X_2=0.5\)</span>, the root note first asks “Is <span class="math inline">\(X_1\geq -0.9113\)</span>?” If yes, then left and if no then right. Here our answer is yes, so we go to the next node to the left and ask “Is <span class="math inline">\(X_1\geq0.264\)</span>?” Our answer is no so we go to the right and ask <span class="math inline">\(X_2&lt;0.6835\)</span>?&quot; Our answer is yes so we go to the left. Since this represents the terminal node, we’re left with our predition of <span class="math inline">\(\hat{Y}=-4.037\)</span>. That is, if <span class="math inline">\(X_1=1\)</span> and <span class="math inline">\(X_2=9\)</span> then the model predicts <span class="math inline">\(\hat{Y}=-4.037\)</span>.</p>
 <p>We can also use the <code>predict( )</code> function as we did with the linear regression model above.</p>
-<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" data-line-number="1"><span class="kw">predict</span>(tree.fit, <span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">X1=</span><span class="dv">0</span>,<span class="dt">X2=</span><span class="fl">0.5</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="kw">predict</span>(tree.fit, <span class="dt">newdata=</span><span class="kw">data.frame</span>(<span class="dt">X1=</span><span class="dv">0</span>,<span class="dt">X2=</span><span class="fl">0.5</span>))</a></code></pre></div>
 <pre><code>##      1 
 ## -4.037</code></pre>
 </div>
@@ -334,60 +334,60 @@ The true model is a nonlinear model
 <p><br>
 <font size="4"> <strong>CASE A: TRUE MODEL IS LINEAR</strong> </font></p>
 <p>First, we’ll generate a training and test data set from a linear regression model as in section 1. The training data set will be used for estimation and the test data will be used for prediction.</p>
-<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" data-line-number="1">n =<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb152-2" data-line-number="2">beta0 =<span class="st"> </span><span class="dv">-5</span></a>
-<a class="sourceLine" id="cb152-3" data-line-number="3">beta1 =<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb152-4" data-line-number="4">beta2 =<span class="st"> </span><span class="dv">-1</span></a>
-<a class="sourceLine" id="cb152-5" data-line-number="5">X1 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb152-6" data-line-number="6">X2 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb152-7" data-line-number="7">epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n)</a>
-<a class="sourceLine" id="cb152-8" data-line-number="8">Y =<span class="st"> </span>beta0 <span class="op">+</span><span class="st"> </span>beta1<span class="op">*</span>X1 <span class="op">+</span><span class="st"> </span>beta2<span class="op">*</span>X2 <span class="op">+</span><span class="st"> </span>epsilon</a>
-<a class="sourceLine" id="cb152-9" data-line-number="9">train =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Y=</span>Y[<span class="dv">1</span><span class="op">:</span><span class="dv">70</span>], <span class="dt">X1=</span>X1[<span class="dv">1</span><span class="op">:</span><span class="dv">70</span>], <span class="dt">X2=</span>X2[<span class="dv">1</span><span class="op">:</span><span class="dv">70</span>])</a>
-<a class="sourceLine" id="cb152-10" data-line-number="10">test =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Y=</span>Y[<span class="dv">71</span><span class="op">:</span><span class="dv">100</span>], <span class="dt">X1=</span>X1[<span class="dv">71</span><span class="op">:</span><span class="dv">100</span>], <span class="dt">X2=</span>X2[<span class="dv">71</span><span class="op">:</span><span class="dv">100</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1">n =<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb153-2" data-line-number="2">beta0 =<span class="st"> </span><span class="dv">-5</span></a>
+<a class="sourceLine" id="cb153-3" data-line-number="3">beta1 =<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb153-4" data-line-number="4">beta2 =<span class="st"> </span><span class="dv">-1</span></a>
+<a class="sourceLine" id="cb153-5" data-line-number="5">X1 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb153-6" data-line-number="6">X2 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb153-7" data-line-number="7">epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n)</a>
+<a class="sourceLine" id="cb153-8" data-line-number="8">Y =<span class="st"> </span>beta0 <span class="op">+</span><span class="st"> </span>beta1<span class="op">*</span>X1 <span class="op">+</span><span class="st"> </span>beta2<span class="op">*</span>X2 <span class="op">+</span><span class="st"> </span>epsilon</a>
+<a class="sourceLine" id="cb153-9" data-line-number="9">train =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Y=</span>Y[<span class="dv">1</span><span class="op">:</span><span class="dv">70</span>], <span class="dt">X1=</span>X1[<span class="dv">1</span><span class="op">:</span><span class="dv">70</span>], <span class="dt">X2=</span>X2[<span class="dv">1</span><span class="op">:</span><span class="dv">70</span>])</a>
+<a class="sourceLine" id="cb153-10" data-line-number="10">test =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Y=</span>Y[<span class="dv">71</span><span class="op">:</span><span class="dv">100</span>], <span class="dt">X1=</span>X1[<span class="dv">71</span><span class="op">:</span><span class="dv">100</span>], <span class="dt">X2=</span>X2[<span class="dv">71</span><span class="op">:</span><span class="dv">100</span>])</a></code></pre></div>
 <p>Now let’s estimate both the linear regression and regression tree models on the training data.</p>
-<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" data-line-number="1"><span class="co"># estimate linear regression model</span></a>
-<a class="sourceLine" id="cb153-2" data-line-number="2">lm.fit =<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2, <span class="dt">data=</span>train)</a>
-<a class="sourceLine" id="cb153-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb153-4" data-line-number="4"><span class="co"># estimate regression tree model</span></a>
-<a class="sourceLine" id="cb153-5" data-line-number="5">tree.fit =<span class="st"> </span><span class="kw">rpart</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2, <span class="dt">data=</span>train)</a></code></pre></div>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1"><span class="co"># estimate linear regression model</span></a>
+<a class="sourceLine" id="cb154-2" data-line-number="2">lm.fit =<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2, <span class="dt">data=</span>train)</a>
+<a class="sourceLine" id="cb154-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb154-4" data-line-number="4"><span class="co"># estimate regression tree model</span></a>
+<a class="sourceLine" id="cb154-5" data-line-number="5">tree.fit =<span class="st"> </span><span class="kw">rpart</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2, <span class="dt">data=</span>train)</a></code></pre></div>
 <p>To compare out-of-sample model performance, we’ll compute the root mean squared error (RMSE).
 <span class="math display">\[\text{RMSE}=\sqrt{{1\over n}\sum_{i=1}^n (\hat{y}_i-y_i)^2}\]</span></p>
-<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" data-line-number="1"><span class="co"># linear regression model</span></a>
-<a class="sourceLine" id="cb154-2" data-line-number="2">lm.predict =<span class="st"> </span><span class="kw">predict</span>(lm.fit, <span class="dt">newdata=</span>test)</a>
-<a class="sourceLine" id="cb154-3" data-line-number="3">lm.rmse =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((lm.predict<span class="op">-</span>test<span class="op">$</span>Y)<span class="op">^</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb154-4" data-line-number="4">lm.rmse</a></code></pre></div>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" data-line-number="1"><span class="co"># linear regression model</span></a>
+<a class="sourceLine" id="cb155-2" data-line-number="2">lm.predict =<span class="st"> </span><span class="kw">predict</span>(lm.fit, <span class="dt">newdata=</span>test)</a>
+<a class="sourceLine" id="cb155-3" data-line-number="3">lm.rmse =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((lm.predict<span class="op">-</span>test<span class="op">$</span>Y)<span class="op">^</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb155-4" data-line-number="4">lm.rmse</a></code></pre></div>
 <pre><code>## [1] 0.9157</code></pre>
-<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" data-line-number="1"><span class="co"># regression tree model</span></a>
-<a class="sourceLine" id="cb156-2" data-line-number="2">tree.predict =<span class="st"> </span><span class="kw">predict</span>(tree.fit, <span class="dt">newdata=</span>test)</a>
-<a class="sourceLine" id="cb156-3" data-line-number="3">tree.rmse =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((tree.predict <span class="op">-</span><span class="st"> </span>test<span class="op">$</span>Y)<span class="op">^</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb156-4" data-line-number="4">tree.rmse</a></code></pre></div>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" data-line-number="1"><span class="co"># regression tree model</span></a>
+<a class="sourceLine" id="cb157-2" data-line-number="2">tree.predict =<span class="st"> </span><span class="kw">predict</span>(tree.fit, <span class="dt">newdata=</span>test)</a>
+<a class="sourceLine" id="cb157-3" data-line-number="3">tree.rmse =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((tree.predict <span class="op">-</span><span class="st"> </span>test<span class="op">$</span>Y)<span class="op">^</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb157-4" data-line-number="4">tree.rmse</a></code></pre></div>
 <pre><code>## [1] 1.149</code></pre>
 <p>In this case the linear regression model has better predictive performance, which is not too surprising because we simulated the data from that model!</p>
 <p><br>
 <font size="4"> <strong>CASE B: TRUE MODEL IS NONLINEAR</strong> </font></p>
 <p>We will again generate a training and test data set, but now from the nonlinear regression model we used in section 2.</p>
-<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" data-line-number="1">n =<span class="st"> </span><span class="dv">100</span></a>
-<a class="sourceLine" id="cb158-2" data-line-number="2">beta0 =<span class="st"> </span><span class="dv">-5</span></a>
-<a class="sourceLine" id="cb158-3" data-line-number="3">beta1 =<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb158-4" data-line-number="4">beta2 =<span class="st"> </span><span class="dv">-1</span></a>
-<a class="sourceLine" id="cb158-5" data-line-number="5">X1 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb158-6" data-line-number="6">X2 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb158-7" data-line-number="7">epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n)</a>
-<a class="sourceLine" id="cb158-8" data-line-number="8">Y =<span class="st"> </span>beta0 <span class="op">+</span><span class="st"> </span>beta1<span class="op">*</span>X1<span class="op">/</span>(beta2<span class="op">+</span>X2) <span class="op">+</span><span class="st"> </span>epsilon</a>
-<a class="sourceLine" id="cb158-9" data-line-number="9">train =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Y=</span>Y[<span class="dv">1</span><span class="op">:</span><span class="dv">70</span>], <span class="dt">X1=</span>X1[<span class="dv">1</span><span class="op">:</span><span class="dv">70</span>], <span class="dt">X2=</span>X2[<span class="dv">1</span><span class="op">:</span><span class="dv">70</span>])</a>
-<a class="sourceLine" id="cb158-10" data-line-number="10">test =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Y=</span>Y[<span class="dv">71</span><span class="op">:</span><span class="dv">100</span>], <span class="dt">X1=</span>X1[<span class="dv">71</span><span class="op">:</span><span class="dv">100</span>], <span class="dt">X2=</span>X2[<span class="dv">71</span><span class="op">:</span><span class="dv">100</span>])</a></code></pre></div>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1">n =<span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb159-2" data-line-number="2">beta0 =<span class="st"> </span><span class="dv">-5</span></a>
+<a class="sourceLine" id="cb159-3" data-line-number="3">beta1 =<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb159-4" data-line-number="4">beta2 =<span class="st"> </span><span class="dv">-1</span></a>
+<a class="sourceLine" id="cb159-5" data-line-number="5">X1 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb159-6" data-line-number="6">X2 =<span class="st"> </span><span class="kw">runif</span>(n,<span class="dt">min=</span><span class="op">-</span><span class="dv">1</span>,<span class="dt">max=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb159-7" data-line-number="7">epsilon =<span class="st"> </span><span class="kw">rnorm</span>(n)</a>
+<a class="sourceLine" id="cb159-8" data-line-number="8">Y =<span class="st"> </span>beta0 <span class="op">+</span><span class="st"> </span>beta1<span class="op">*</span>X1<span class="op">/</span>(beta2<span class="op">+</span>X2) <span class="op">+</span><span class="st"> </span>epsilon</a>
+<a class="sourceLine" id="cb159-9" data-line-number="9">train =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Y=</span>Y[<span class="dv">1</span><span class="op">:</span><span class="dv">70</span>], <span class="dt">X1=</span>X1[<span class="dv">1</span><span class="op">:</span><span class="dv">70</span>], <span class="dt">X2=</span>X2[<span class="dv">1</span><span class="op">:</span><span class="dv">70</span>])</a>
+<a class="sourceLine" id="cb159-10" data-line-number="10">test =<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">Y=</span>Y[<span class="dv">71</span><span class="op">:</span><span class="dv">100</span>], <span class="dt">X1=</span>X1[<span class="dv">71</span><span class="op">:</span><span class="dv">100</span>], <span class="dt">X2=</span>X2[<span class="dv">71</span><span class="op">:</span><span class="dv">100</span>])</a></code></pre></div>
 <p>Let’s again estimate both the linear regression and regression tree models on the training data and compute the predictive RMSE.</p>
-<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" data-line-number="1"><span class="co"># linear regression model</span></a>
-<a class="sourceLine" id="cb159-2" data-line-number="2">lm.fit =<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2, <span class="dt">data=</span>train)</a>
-<a class="sourceLine" id="cb159-3" data-line-number="3">lm.predict =<span class="st"> </span><span class="kw">predict</span>(lm.fit, <span class="dt">newdata=</span>test)</a>
-<a class="sourceLine" id="cb159-4" data-line-number="4">lm.rmse =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((lm.predict <span class="op">-</span><span class="st"> </span>test<span class="op">$</span>Y)<span class="op">^</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb159-5" data-line-number="5">lm.rmse</a></code></pre></div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" data-line-number="1"><span class="co"># linear regression model</span></a>
+<a class="sourceLine" id="cb160-2" data-line-number="2">lm.fit =<span class="st"> </span><span class="kw">lm</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2, <span class="dt">data=</span>train)</a>
+<a class="sourceLine" id="cb160-3" data-line-number="3">lm.predict =<span class="st"> </span><span class="kw">predict</span>(lm.fit, <span class="dt">newdata=</span>test)</a>
+<a class="sourceLine" id="cb160-4" data-line-number="4">lm.rmse =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((lm.predict <span class="op">-</span><span class="st"> </span>test<span class="op">$</span>Y)<span class="op">^</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb160-5" data-line-number="5">lm.rmse</a></code></pre></div>
 <pre><code>## [1] 18.76</code></pre>
-<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" data-line-number="1"><span class="co"># regression tree model</span></a>
-<a class="sourceLine" id="cb161-2" data-line-number="2">tree.fit =<span class="st"> </span><span class="kw">rpart</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2, <span class="dt">data=</span>train)</a>
-<a class="sourceLine" id="cb161-3" data-line-number="3">tree.predict =<span class="st"> </span><span class="kw">predict</span>(tree.fit, <span class="dt">newdata=</span>test)</a>
-<a class="sourceLine" id="cb161-4" data-line-number="4">tree.rmse =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((tree.predict <span class="op">-</span><span class="st"> </span>test<span class="op">$</span>Y)<span class="op">^</span><span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb161-5" data-line-number="5">tree.rmse</a></code></pre></div>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" data-line-number="1"><span class="co"># regression tree model</span></a>
+<a class="sourceLine" id="cb162-2" data-line-number="2">tree.fit =<span class="st"> </span><span class="kw">rpart</span>(Y <span class="op">~</span><span class="st"> </span>X1 <span class="op">+</span><span class="st"> </span>X2, <span class="dt">data=</span>train)</a>
+<a class="sourceLine" id="cb162-3" data-line-number="3">tree.predict =<span class="st"> </span><span class="kw">predict</span>(tree.fit, <span class="dt">newdata=</span>test)</a>
+<a class="sourceLine" id="cb162-4" data-line-number="4">tree.rmse =<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">mean</span>((tree.predict <span class="op">-</span><span class="st"> </span>test<span class="op">$</span>Y)<span class="op">^</span><span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb162-5" data-line-number="5">tree.rmse</a></code></pre></div>
 <pre><code>## [1] 17.35</code></pre>
 <p>Now the regression tree model has better predictive performance (but notice that the linear model still does relatively well!) In general, regression trees suffer from a problem called <strong>overfitting</strong>: the trees learn <em>too much</em> from the training data that they don’t generalize well to test data. There are ways of correcting for this, and you will learn more about them in Data Analyics II!</p>
 

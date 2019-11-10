@@ -104,7 +104,21 @@ aggregate(move ~ brand, FUN=mean)
 ```{r echo=FALSE}
 aggregate(move ~ brand, FUN=mean) %>%
   kable() %>%
-  kable_styling(full_width=F)
+  kable_styling(full_width=F) %>%
+  scroll_box(height = "250px")
+```
+
+We can also compute the average of more than one continuous variable by binding together (i.e., concatenating) the columns of the variables of interest using the `cbind( )` command. For example, the following code will compute the average sales volume and average price by brand.
+
+```{r results="hide"}
+aggregate(cbind(move,price) ~ brand, FUN=mean)
+```
+
+```{r echo=FALSE}
+aggregate(cbind(move,price) ~ brand, FUN=mean) %>%
+  kable() %>%
+  kable_styling(full_width=F) %>%
+  scroll_box(height = "250px")
 ```
 
 <br>
