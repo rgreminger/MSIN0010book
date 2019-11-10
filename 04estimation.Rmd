@@ -166,7 +166,10 @@ Notice how these values approach $z_{0.025}\approx1.96$ as the degrees of freedo
 
 **PROBLEM 1:** A wine importer needs to report the average percentage of alcohol in bottles of French wine. From experience with previous kinds of wine, the importer believes that alcolhol percentages are normally distributed and the population standard deviation is 1.2%. The importer randomly samples 60 bottles of the new wine and obtains a sample mean $\bar{x}=9.3\%$. Give a 90% confidence interval for the average percentage of alcohol in all bottles of the new wine.
 
-ANSWER: From the problem, we know the following.
+<details>
+  <summary>Solution:</summary>
+
+From the problem, we know the following.
 \begin{align*}
 n = 60\\
 \sigma=1.2\\
@@ -188,9 +191,16 @@ xbar + zalpha*sigma/sqrt(n)
 
 Therefore, we are 90% confident that the true average alcohol content in all new bottles of wine is between 9.05% and 9.55%.
 
+</details>
+
+<br>
+
 **PROBLEM 2:** An economist wants to estimate the average amount in checking accounts at banks in a given region. A random sample of 100 accounts gives $\bar{x}=£357.60$ and $s=£140.00$. Give a 95% confidence interval for $\mu$, the average amount in any checking account at a bank in the given region.
 
-ANSWER: From the problem, we know the following.
+<details>
+  <summary>Solution:</summary>
+
+From the problem, we know the following.
 \begin{align*}
 n &= 100\\
 \bar{x} &=357.60\\
@@ -212,9 +222,16 @@ xbar + talpha*s/sqrt(n)
 
 Therefore, we are 95% confident that the true average account checking account value in the given region is between £329.82 and £385.38.
 
+</details>
+
+<br>
+
 **PROBLEM 3:** The EuStockMarkets data set in R provides daily closing prices of four major European stock indices: Germany DAX (Ibis), Switzerland SMI, France CAC, and UK FTSE. Using this data set, produce a 99% confidence interval for the average closing price of the UK FTSE.
 
-ANSWER: First, let's load in the data from R.
+<details>
+  <summary>Solution:</summary>
+
+First, let's load in the data from R.
 
 ```{r results="hide"}
 data(EuStockMarkets)
@@ -253,3 +270,5 @@ Finally, notice that we can use the `t.test( )` function to perform the same ana
 ```{r}
 t.test(uk, conf.level=0.99)
 ```
+
+</details>

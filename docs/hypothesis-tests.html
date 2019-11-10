@@ -319,7 +319,9 @@ TWO-SAMPLE <span class="math inline">\(t\)</span>-TEST<br>
 <code>mu</code> the value of the difference <span class="math inline">\(\mu_1-\mu_2\)</span> under the null hypothesis<br>
 <code>conf.level</code> confidence level of the test (<span class="math inline">\(1-\alpha\)</span>)<br></p>
 </blockquote>
-<p><strong>EXAMPLE:</strong> The EuStockMarkets data set in R provides daily closing prices of four major European stock indices: Germany DAX (Ibis), Switzerland SMI, France CAC, and UK FTSE. Using this data set, test to see if there are differences in the closing prices of the SMI and CAC indices. Carry out this test at the 5% significance level and do not assume equal variances.</p>
+<p><strong>PROBLEM 1:</strong> The EuStockMarkets data set in R provides daily closing prices of four major European stock indices: Germany DAX (Ibis), Switzerland SMI, France CAC, and UK FTSE. Using this data set, test to see if there are differences in the closing prices of the SMI and CAC indices. Carry out this test at the 5% significance level and do not assume equal variances.</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" data-line-number="1"><span class="co"># load the data</span></a>
 <a class="sourceLine" id="cb142-2" data-line-number="2"><span class="kw">data</span>(EuStockMarkets)</a>
 <a class="sourceLine" id="cb142-3" data-line-number="3"></a>
@@ -343,6 +345,7 @@ TWO-SAMPLE <span class="math inline">\(t\)</span>-TEST<br>
 ## mean of x mean of y 
 ##      3376      2228</code></pre>
 <p>We find a p-value much smaller than <span class="math inline">\(\alpha=0.05\)</span>, so we can reject the null and conclude that there are differences in the closing prices between the Swiss SMI and French CAC stock indices.</p>
+</details>
 
 </div>
 </div>

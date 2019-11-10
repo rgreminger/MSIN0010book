@@ -366,7 +366,9 @@ Critical Value <span class="math inline">\(z_{\alpha/2}\)</span>
 <div id="examples" class="section level3">
 <h3><span class="header-section-number">4.2.2</span> Examples</h3>
 <p><strong>PROBLEM 1:</strong> A wine importer needs to report the average percentage of alcohol in bottles of French wine. From experience with previous kinds of wine, the importer believes that alcolhol percentages are normally distributed and the population standard deviation is 1.2%. The importer randomly samples 60 bottles of the new wine and obtains a sample mean <span class="math inline">\(\bar{x}=9.3\%\)</span>. Give a 90% confidence interval for the average percentage of alcohol in all bottles of the new wine.</p>
-<p>ANSWER: From the problem, we know the following.
+<details>
+<p><summary>Solution:</summary></p>
+<p>From the problem, we know the following.
 <span class="math display">\[\begin{align*}
 n = 60\\
 \sigma=1.2\\
@@ -385,8 +387,12 @@ We can now define each object in R and construct the confidence interval.</p>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1">xbar <span class="op">+</span><span class="st"> </span>zalpha<span class="op">*</span>sigma<span class="op">/</span><span class="kw">sqrt</span>(n)</a></code></pre></div>
 <pre><code>## [1] 9.555</code></pre>
 <p>Therefore, we are 90% confident that the true average alcohol content in all new bottles of wine is between 9.05% and 9.55%.</p>
+</details>
+<p><br></p>
 <p><strong>PROBLEM 2:</strong> An economist wants to estimate the average amount in checking accounts at banks in a given region. A random sample of 100 accounts gives <span class="math inline">\(\bar{x}=£357.60\)</span> and <span class="math inline">\(s=£140.00\)</span>. Give a 95% confidence interval for <span class="math inline">\(\mu\)</span>, the average amount in any checking account at a bank in the given region.</p>
-<p>ANSWER: From the problem, we know the following.
+<details>
+<p><summary>Solution:</summary></p>
+<p>From the problem, we know the following.
 <span class="math display">\[\begin{align*}
 n &amp;= 100\\
 \bar{x} &amp;=357.60\\
@@ -405,8 +411,12 @@ We can again define each object in R and construct the confidence interval.</p>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1">xbar <span class="op">+</span><span class="st"> </span>talpha<span class="op">*</span>s<span class="op">/</span><span class="kw">sqrt</span>(n)</a></code></pre></div>
 <pre><code>## [1] 385.4</code></pre>
 <p>Therefore, we are 95% confident that the true average account checking account value in the given region is between £329.82 and £385.38.</p>
+</details>
+<p><br></p>
 <p><strong>PROBLEM 3:</strong> The EuStockMarkets data set in R provides daily closing prices of four major European stock indices: Germany DAX (Ibis), Switzerland SMI, France CAC, and UK FTSE. Using this data set, produce a 99% confidence interval for the average closing price of the UK FTSE.</p>
-<p>ANSWER: First, let’s load in the data from R.</p>
+<details>
+<p><summary>Solution:</summary></p>
+<p>First, let’s load in the data from R.</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1"><span class="kw">data</span>(EuStockMarkets)</a>
 <a class="sourceLine" id="cb127-2" data-line-number="2"><span class="kw">head</span>(EuStockMarkets)</a></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -540,6 +550,7 @@ Next, let’s compute each component necessary to construct the 99% confidence i
 ## sample estimates:
 ## mean of x 
 ##      3566</code></pre>
+</details>
 
 </div>
 </div>

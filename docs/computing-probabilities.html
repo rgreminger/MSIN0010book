@@ -227,77 +227,101 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p>More information is also accessible in R if you type <code>?dnorm</code>, <code>?pnorm</code>, <code>?qnorm</code>, or <code>?rnorm</code>.</p>
 <p>To learn how to use these functions, we’ll start with a few exercises on the <strong>standard normal distribution</strong> which is a normal distribution with mean 0 and standard deviation of 1. We will then move on to the more general <span class="math inline">\(N(\mu,\sigma^2)\)</span> distribution.</p>
-<p><br></p>
 <div id="probability-density-function-dnorm" class="section level3">
 <h3><span class="header-section-number">2.1.1</span> Probability Density Function (<code>dnorm</code>)</h3>
 <p>When <span class="math inline">\(X\)</span> is a continuous random variable, we know that <span class="math inline">\(P(X=x)=0\)</span>. Therefore, dnorm( ) does not return a probability, but rather the <em>height</em> of the PDF. Even though the height of the PDF is not a probability, we can still interpret density evaluations as the relatively likelihood of observing a certain value <span class="math inline">\(x\)</span>.</p>
-<p><br>
-<strong>PROBLEM 1:</strong> Let <span class="math inline">\(X\sim N(0,1)\)</span>. Is the value <span class="math inline">\(x=1\)</span> or <span class="math inline">\(x=-0.5\)</span> more likely to occur under this normal distribution?</p>
+<p><strong>PROBLEM 1:</strong> Let <span class="math inline">\(X\sim N(0,1)\)</span>. Is the value <span class="math inline">\(x=1\)</span> or <span class="math inline">\(x=-0.5\)</span> more likely to occur under this normal distribution?</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">dnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## [1] 0.242</code></pre>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw">dnorm</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## [1] 0.3521</code></pre>
-<p>The results show that <span class="math inline">\(x=-0.5\)</span> is more likely, since <span class="math inline">\(f(-0.5)&gt;f(1)\)</span>. This should be expected because we know that density function is symmetric and peaks at the mean value which is 0 here. Since <span class="math inline">\(x=-0.5\)</span> is closer to 0 than <span class="math inline">\(x=1\)</span>, it should have higher likelihood under <span class="math inline">\(N(0,1)\)</span> distribution.</p>
-<p><br></p>
+The results show that <span class="math inline">\(x=-0.5\)</span> is more likely, since <span class="math inline">\(f(-0.5)&gt;f(1)\)</span>. This should be expected because we know that density function is symmetric and peaks at the mean value which is 0 here. Since <span class="math inline">\(x=-0.5\)</span> is closer to 0 than <span class="math inline">\(x=1\)</span>, it should have higher likelihood under <span class="math inline">\(N(0,1)\)</span> distribution.
+</details>
 </div>
 <div id="cumulative-distribution-function-pnorm" class="section level3">
 <h3><span class="header-section-number">2.1.2</span> Cumulative Distribution Function (<code>pnorm</code>)</h3>
 <p>The <code>pnorm( )</code> function is useful for evaluating probabilities of the form <span class="math inline">\(P(X\leq x)\)</span> or <span class="math inline">\(P(X \geq x)\)</span>.</p>
-<p><br>
-<strong>PROBLEM 2:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, what is <span class="math inline">\(P(X&lt;0)\)</span>?</p>
+<p><strong>PROBLEM 2:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, what is <span class="math inline">\(P(X&lt;0)\)</span>?</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## [1] 0.5</code></pre>
+</details>
 <p><br>
 <strong>PROBLEM 3:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, what is <span class="math inline">\(P(X&lt;1)\)</span>?</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## [1] 0.8413</code></pre>
+</details>
 <p><br>
 <strong>PROBLEM 4:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, what is <span class="math inline">\(P(X&gt;1)\)</span>?</p>
+<details>
+<p><summary>Solution:</summary></p>
 <p>We have two ways of answering this question. First, we can recognize that <span class="math inline">\(P(X&gt;1)=1-P(X\geq 1)\)</span>.</p>
 <div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1"><span class="dv">1</span><span class="op">-</span><span class="kw">pnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## [1] 0.1587</code></pre>
 <p>A second approach is to use the <code>lower.tail</code> option within the <code>pnorm( )</code> function. When <code>lower.tail=TRUE</code> then the <code>pnorm( )</code> function returns the probability to the <em>left</em> of a given number <span class="math inline">\(x\)</span> and if <code>lower.tail=FALSE</code> then <code>pnorm( )</code> returns the probability to the <em>right</em> of <span class="math inline">\(x\)</span>.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>## [1] 0.1587</code></pre>
+</details>
 <p><br>
 <strong>PROBLEM 5:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, what is <span class="math inline">\(P(0&lt;X&lt;1)\)</span></p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## [1] 0.3413</code></pre>
+</details>
 <p><br></p>
 <p>Once we understand how to use the <code>pnorm( )</code> function to compute standard normal probabilities, extending the function to compute probabilities of any normal distribution is straightforward. All we have to do is change the <code>mean</code> and <code>sd</code> arguments.</p>
 <p><strong>Remember that the normal functions in R call for the standard deviation <span class="math inline">\(\sigma\)</span>, NOT the variance <span class="math inline">\(\sigma^2\)</span>!</strong></p>
 <p><br>
 <strong>PROBLEM 6:</strong> If <span class="math inline">\(X\sim N(4,9)\)</span>, what is <span class="math inline">\(P(X&lt;0)\)</span>?</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dt">mean=</span><span class="dv">4</span>, <span class="dt">sd=</span><span class="dv">3</span>)</a></code></pre></div>
 <pre><code>## [1] 0.09121</code></pre>
+</details>
 <p><br>
 <strong>PROBLEM 7:</strong> If <span class="math inline">\(X\sim N(2,3)\)</span>, what is <span class="math inline">\(P(X&gt;5)\)</span>?</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">2</span>, <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="dv">3</span>), <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>## [1] 0.04163</code></pre>
-<p><br></p>
+</details>
 </div>
 <div id="quantile-function-qnorm" class="section level3">
 <h3><span class="header-section-number">2.1.3</span> Quantile Function (<code>qnorm</code>)</h3>
 <p>Next, let’s use the <code>qnorm( )</code> function to find quantiles of the normal distribution.</p>
-<p><br>
-<strong>PROBLEM 8:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, find the value <span class="math inline">\(q\)</span> such that <span class="math inline">\(P(X&lt;q)=0.05\)</span>.</p>
+<p><strong>PROBLEM 8:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, find the value <span class="math inline">\(q\)</span> such that <span class="math inline">\(P(X&lt;q)=0.05\)</span>.</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="kw">qnorm</span>(<span class="fl">0.05</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## [1] -1.645</code></pre>
+</details>
 <p><br>
 <strong>PROBLEM 9:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, find the value <span class="math inline">\(q\)</span> such that <span class="math inline">\(P(X&gt;q)=0.025\)</span>. That is, <span class="math inline">\(q\)</span> is the value such that 2.5% of the area under the standard normal PDF is to its right.</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">qnorm</span>(<span class="fl">0.025</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>## [1] 1.96</code></pre>
+</details>
 <p><br>
 <strong>PROBLEM 10:</strong> If <span class="math inline">\(X\sim N(-4,2)\)</span>, find the value <span class="math inline">\(q\)</span> such that <span class="math inline">\(P(X&gt;q)=0.1\)</span>. That is, <span class="math inline">\(q\)</span> is the value such that 10% of the area under the <span class="math inline">\(N(-4,2)\)</span> PDF is to its right.</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="kw">qnorm</span>(<span class="fl">0.1</span>, <span class="dt">mean=</span><span class="op">-</span><span class="dv">4</span>, <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="dv">2</span>), <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>## [1] -2.188</code></pre>
-<p><br></p>
+</details>
 </div>
 <div id="random-number-generator-rnorm" class="section level3">
 <h3><span class="header-section-number">2.1.4</span> Random Number Generator (<code>rnorm</code>)</h3>
 <p>Finally, let’s use <code>rnorm( )</code> to generate random samples of size <span class="math inline">\(n\)</span> from a normal distribution.</p>
-<p><br>
-<strong>PROBLEM 11:</strong> Generate <span class="math inline">\(n=20\)</span> random variables from a standard normal distribution.</p>
+<p><strong>PROBLEM 11:</strong> Generate <span class="math inline">\(n=20\)</span> random variables from a standard normal distribution.</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb48-2" data-line-number="2">x</a></code></pre></div>
 <pre><code>##  [1] -0.62645  0.18364 -0.83563  1.59528  0.32951 -0.82047  0.48743
@@ -305,8 +329,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## [15]  1.12493 -0.04493 -0.01619  0.94384  0.82122  0.59390</code></pre>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw">hist</span>(x)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="672" /></p>
+</details>
 <p><br>
 <strong>PROBLEM 12:</strong> Generate <span class="math inline">\(n=100\)</span> random variables from a <span class="math inline">\(N(10,2)\)</span> distribution.</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean=</span><span class="dv">10</span>, <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb51-2" data-line-number="2">x</a></code></pre></div>
 <pre><code>##   [1] 11.300 11.106 10.105  7.187 10.877  9.921  9.780  7.920  9.324 10.591
@@ -321,7 +348,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [91]  9.101  9.347 12.026  9.080  9.707  9.444  9.547  9.605 10.699  9.749</code></pre>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">hist</span>(x)</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-39-1.png" width="672" /></p>
-<p><br></p>
+</details>
 </div>
 </div>
 <div id="bernoulli-and-binomial-distributions" class="section level2">
@@ -352,63 +379,75 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </blockquote>
 <p><strong>Note: To use these functions to compute Bernoulli probabilities, set <code>size=1</code>.</strong></p>
 <p>More information is also accessible in R if you type <code>?dbinom</code>, <code>?pbinom</code>, <code>?qbinom</code>, or <code>?rbinom</code>.</p>
-<p><br></p>
 <div id="probability-mass-function-dbinom" class="section level3">
 <h3><span class="header-section-number">2.2.1</span> Probability Mass Function (<code>dbinom</code>)</h3>
-<p><br>
-<strong>PROBLEM 1:</strong> If you flip a coin <span class="math inline">\(n=5\)</span> times and in each flip the probability of heads is <span class="math inline">\(p=0.5\)</span>, what is the chance that you get 2 successes?</p>
+<p><strong>PROBLEM 13:</strong> If you flip a coin <span class="math inline">\(n=5\)</span> times and in each flip the probability of heads is <span class="math inline">\(p=0.5\)</span>, what is the chance that you get 2 successes?</p>
+<details>
+<p><summary>Solution:</summary></p>
 <p>Here, our random variable <span class="math inline">\(X\)</span> is the number of successes in <span class="math inline">\(n\)</span> independent trials, so <span class="math inline">\(X\sim\text{Binomial}(n,p)\)</span> with <span class="math inline">\(n=5\)</span> and <span class="math inline">\(p=0.5\)</span>.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" data-line-number="1"><span class="kw">dbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">prob=</span><span class="fl">0.5</span>)</a></code></pre></div>
 <pre><code>## [1] 0.3125</code></pre>
 <p>We can also check our answer using the Binomial probability mass function: <span class="math inline">\(P(X=x)={n\choose x}p^x(1-p)^{n-x}\)</span>.</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" data-line-number="1"><span class="kw">choose</span>(<span class="dv">5</span>,<span class="dv">2</span>)<span class="op">*</span><span class="fl">0.5</span><span class="op">^</span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span><span class="fl">-0.5</span>)<span class="op">^</span>(<span class="dv">5-2</span>)</a></code></pre></div>
 <pre><code>## [1] 0.3125</code></pre>
-<p><br></p>
+</details>
 </div>
 <div id="cumulative-distribution-function-pbinom" class="section level3">
 <h3><span class="header-section-number">2.2.2</span> Cumulative Distribution Function (<code>pbinom</code>)</h3>
-<p><br>
-<strong>PROBLEM 2:</strong> If you flip a coin <span class="math inline">\(n=5\)</span> times and in each flip the probability of heads is <span class="math inline">\(p=0.5\)</span>, what is the chance that you get <em>at most</em> 2 successes?</p>
+<p><strong>PROBLEM 14:</strong> If you flip a coin <span class="math inline">\(n=5\)</span> times and in each flip the probability of heads is <span class="math inline">\(p=0.5\)</span>, what is the chance that you get <em>at most</em> 2 successes?</p>
+<details>
+<p><summary>Solution:</summary></p>
 <p>Now we want to find <span class="math inline">\(P(X\leq2)\)</span>. We know that <span class="math inline">\(P(X\leq2)=P(X=2)+P(X=1)+P(X=0)\)</span>, so we could again use the <code>dbinom( )</code> function.</p>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" data-line-number="1"><span class="kw">dbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">prob=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">dbinom</span>(<span class="dv">1</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">prob=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">dbinom</span>(<span class="dv">0</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">prob=</span><span class="fl">0.5</span>)</a></code></pre></div>
 <pre><code>## [1] 0.5</code></pre>
 <p>The problem is that this approach becomes cumbersome as the number of trials increases. A more efficient approach is to recognize that <span class="math inline">\(P(X\leq2)\)</span> takes the form of the CDF and use <code>pnorm( )</code>.</p>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" data-line-number="1"><span class="kw">pbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">prob=</span><span class="fl">0.5</span>)</a></code></pre></div>
 <pre><code>## [1] 0.5</code></pre>
-<p><br>
-<strong>PROBLEM 3:</strong> If you flip a coin <span class="math inline">\(n=100\)</span> times and in each flip the probability of heads is <span class="math inline">\(p=0.25\)</span>, what is the chance that you get <em>at most</em> 20 successes?</p>
+</details>
+<p><br></p>
+<p><strong>PROBLEM 15:</strong> If you flip a coin <span class="math inline">\(n=100\)</span> times and in each flip the probability of heads is <span class="math inline">\(p=0.25\)</span>, what is the chance that you get <em>at most</em> 20 successes?</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="kw">pbinom</span>(<span class="dv">20</span>, <span class="dt">size=</span><span class="dv">100</span>, <span class="dt">prob=</span><span class="fl">0.25</span>)</a></code></pre></div>
 <pre><code>## [1] 0.1488</code></pre>
-<p><br>
-<strong>PROBLEM 4:</strong> If you flip a coin <span class="math inline">\(n=100\)</span> times and in each flip the probability of heads is <span class="math inline">\(p=0.25\)</span>, what is the chance that you get <em>at least</em> 20 successes?</p>
+</details>
+<p><br></p>
+<p><strong>PROBLEM 16:</strong> If you flip a coin <span class="math inline">\(n=100\)</span> times and in each flip the probability of heads is <span class="math inline">\(p=0.25\)</span>, what is the chance that you get <em>at least</em> 20 successes?</p>
+<details>
+<p><summary>Solution:</summary></p>
 <p>We have two ways to solve this problem. First, we can write <span class="math inline">\(P(X\geq 20)=1-P(X&lt;20)=1-P(X\leq 19)\)</span> where <span class="math inline">\(P(X&lt;20)=P(X\leq 19)\)</span> since <span class="math inline">\(X\)</span> is discrete.</p>
 <div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" data-line-number="1"><span class="dv">1</span><span class="op">-</span><span class="kw">pbinom</span>(<span class="dv">19</span>, <span class="dt">size=</span><span class="dv">100</span>, <span class="dt">prob=</span><span class="fl">0.25</span>)</a></code></pre></div>
 <pre><code>## [1] 0.9005</code></pre>
 <p>Alternatively, we can use the <code>lower.tail=FALSE</code> option to tell R we want the probability <em>greater than</em> x. However, note that this is <em>strictly greater than</em>, so we must again remember than <span class="math inline">\(P(X\geq 20)=P(X&gt;19)\)</span>.</p>
 <div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" data-line-number="1"><span class="kw">pbinom</span>(<span class="dv">19</span>, <span class="dt">size=</span><span class="dv">100</span>, <span class="dt">prob=</span><span class="fl">0.25</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
 <pre><code>## [1] 0.9005</code></pre>
-<p><br></p>
+</details>
 </div>
 <div id="quantile-function-qbinom" class="section level3">
 <h3><span class="header-section-number">2.2.3</span> Quantile Function (<code>qbinom</code>)</h3>
-<p><br>
-<strong>PROBLEM 5:</strong> Suppose you flip a coin <span class="math inline">\(n=20\)</span> times where each flip has a probability of heads equal to <span class="math inline">\(p=0.5\)</span>. Find the value <span class="math inline">\(q\)</span> such that the probability of getting at most <span class="math inline">\(q\)</span> successes is equal to 0.25.</p>
+<p><strong>PROBLEM 17:</strong> Suppose you flip a coin <span class="math inline">\(n=20\)</span> times where each flip has a probability of heads equal to <span class="math inline">\(p=0.5\)</span>. Find the value <span class="math inline">\(q\)</span> such that the probability of getting at most <span class="math inline">\(q\)</span> successes is equal to 0.25.</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" data-line-number="1"><span class="kw">qbinom</span>(<span class="fl">0.25</span>, <span class="dt">size=</span><span class="dv">20</span>, <span class="dt">prob=</span><span class="fl">0.5</span>)</a></code></pre></div>
 <pre><code>## [1] 8</code></pre>
-<p><br></p>
+</details>
 </div>
 <div id="random-number-generator-rbinom" class="section level3">
 <h3><span class="header-section-number">2.2.4</span> Random Number Generator (<code>rbinom</code>)</h3>
-<p><br>
-<strong>PROBLEM 5:</strong> Generate <span class="math inline">\(n=50\)</span> Bernoulli<span class="math inline">\((p)\)</span> random variables with <span class="math inline">\(p=0.2\)</span>.</p>
+<p><strong>PROBLEM 18:</strong> Generate <span class="math inline">\(n=50\)</span> Bernoulli<span class="math inline">\((p)\)</span> random variables with <span class="math inline">\(p=0.2\)</span>.</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">50</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.2</span>)</a>
 <a class="sourceLine" id="cb70-2" data-line-number="2">x</a></code></pre></div>
 <pre><code>##  [1] 0 0 1 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
 ## [36] 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0</code></pre>
 <div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1"><span class="kw">barplot</span>(<span class="kw">table</span>(x))</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-48-1.png" width="672" /></p>
-<p><br>
-<strong>PROBLEM 6:</strong> Generate <span class="math inline">\(n=100\)</span> Binomial<span class="math inline">\((n,p)\)</span> random variables with <span class="math inline">\(p=0.4\)</span>.</p>
+</details>
+<p><br></p>
+<p><strong>PROBLEM 19:</strong> Generate <span class="math inline">\(n=100\)</span> Binomial<span class="math inline">\((n,p)\)</span> random variables with <span class="math inline">\(p=0.4\)</span>.</p>
+<details>
+<p><summary>Solution:</summary></p>
 <div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">100</span>, <span class="dt">size=</span><span class="dv">100</span>, <span class="dt">prob=</span><span class="fl">0.2</span>)</a>
 <a class="sourceLine" id="cb73-2" data-line-number="2">x</a></code></pre></div>
 <pre><code>##   [1] 17 16 29 18 20 22 15 15 14 26 22 15 20 20 19 30 16 24 14 19 16 17 24
@@ -418,6 +457,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ##  [93] 22 28 17 17 23 24 15 27</code></pre>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw">barplot</span>(<span class="kw">table</span>(x))</a></code></pre></div>
 <p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+</details>
 
 </div>
 </div>

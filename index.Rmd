@@ -30,6 +30,7 @@ blockquote{
   font-size: 12px;
   line-height:1.75;
 }
+details:hover { cursor: pointer }
 </style>
 
 ```{r setup, include=FALSE}
