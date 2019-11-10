@@ -4,11 +4,11 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Data Analytics with R</title>
-  <meta name="description" content="Data Analytics with R" />
+  <title>Getting Started with R | Data Analytics with R</title>
+  <meta name="description" content="Getting Started with R | Data Analytics with R" />
   <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="Data Analytics with R" />
+  <meta property="og:title" content="Getting Started with R | Data Analytics with R" />
   <meta property="og:type" content="book" />
   
   
@@ -16,7 +16,7 @@
   
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="Data Analytics with R" />
+  <meta name="twitter:title" content="Getting Started with R | Data Analytics with R" />
   
   
   
@@ -30,7 +30,7 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-
+<link rel="prev" href="index.html"/>
 <link rel="next" href="introduction-to-data-analytics.html"/>
 <script src="libs/jquery-2.2.3/jquery.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -49,8 +49,71 @@
 
 
 
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
 
 
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
 
 </head>
 
@@ -65,6 +128,11 @@
 
 <ul class="summary">
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i>Getting Started with R</a><ul>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#why-use-r"><i class="fa fa-check"></i>Why use R?</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#downloading-r-and-rstudio"><i class="fa fa-check"></i>Downloading R and RStudio</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#installing-and-loading-packages"><i class="fa fa-check"></i>Installing and Loading Packages</a></li>
+</ul></li>
 <li class="chapter" data-level="1" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html"><i class="fa fa-check"></i><b>1</b> Introduction to Data Analytics</a><ul>
 <li class="chapter" data-level="1.1" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#loading-and-inspecting-data-sets"><i class="fa fa-check"></i><b>1.1</b> Loading and Inspecting Data Sets</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#statistical-summaries"><i class="fa fa-check"></i><b>1.2</b> Statistical Summaries</a></li>
@@ -128,23 +196,54 @@
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="header">
-<h1 class="title">Data Analytics with R</h1>
-<p class="author"><em>Adam Smith, UCL School of Management</em></p>
-<p class="date"><em>November 07 2019</em></p>
+<div id="getting-started-with-r" class="section level1 unnumbered">
+<h1>Getting Started with R</h1>
+<hr>
+<div id="why-use-r" class="section level2 unnumbered">
+<h2>Why use R?</h2>
+<p>R is a statistical software environment that is widely used by statisticians, social scientists, and data analysts. R is different from “point-and-click” software packages like Microsoft Excel, SPSS, or Tableau in that it requires the user to write code via a command line interface. For this reason, R is also often referred to as a programming language. However, the R environment is much more interactive than other programming languages like C or Java which makes it easier to learn and use.</p>
+<p>Here are a few key advantages of R.</p>
+<ul>
+<li>R is <strong>free</strong> and <strong>open source</strong><a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></li>
+<li>R is available on Windows, Mac OS, and UNIX/Linux</li>
+<li>R is <strong>flexible</strong>: you can write, modify, save, and share your own code</li>
+<li>R is <strong>powerful</strong>: you can do everything from making <a href="https://www.r-graph-gallery.com">high-quality graphics</a> to running <a href="https://www.r-bloggers.com/101-machine-learning-algorithms-for-data-science-with-cheat-sheets/">sophisticated statistical machine learning models</a></li>
+<li>R is <strong>popular</strong>: there is a large and growing online community of users making it easy to find answers to any problem you run into</li>
+</ul>
+<p>Lastly, learning R is a tangible and highly-valued skill you can put on your CV!</p>
 </div>
-<div id="preface" class="section level1 unnumbered">
-<h1>Preface</h1>
-<p>This book is written for use in MSIN0010: Data Analytics I at the UCL School of Management. It is meant to serve as a supplement to lecture and seminar materials and specifically focuses on applications in R.</p>
+<div id="downloading-r-and-rstudio" class="section level2 unnumbered">
+<h2>Downloading R and RStudio</h2>
+<p>To download R, go to <a href="http://cran.r-project.org/mirrors.html" class="uri">http://cran.r-project.org/mirrors.html</a> and choose the CRAN mirror closest to your physical location. Then select “Download R for…” and choose your operating system. For other questions, see the <a href="https://cran.r-project.org/doc/FAQ/R-FAQ.html">R FAQ</a>.</p>
+<p>After downloading R, you should also download <a href="https://rstudio.com">RStudio</a>, which is an integrated development enviroment (IDE) for R. In short, it provides a much more interactive and user-friendly interface for using R. To download, go <a href="https://rstudio.com/products/rstudio/download/?utm_source=downloadrstudio&amp;utm_medium=Site&amp;utm_campaign=home-hero-cta">here</a>, select “RStudio Desktop - Free”, and select the installer corresponding to your operating system.</p>
+</div>
+<div id="installing-and-loading-packages" class="section level2 unnumbered">
+<h2>Installing and Loading Packages</h2>
+<p>As you will see, one of the most attractive features of R is its library of over 10,000 packages. R packages – which are collections of R functions, code, and data sets – allow us to use code written by others in order to use certain data sets, make certain graphs, or run certain models.</p>
+<p>For example, in this course we will discuss a variety of regression models including linear regression models and regression trees. While the R function to estimate a linear regression model (called <code>lm</code>) is included in “base” R, the function to estimate a regression tree is not. Rather than writing the code ourselves, we can download an R package!</p>
+<p>One package that provides code for estimating regression trees is called <code>rpart</code>. To use functions within the <code>rpart</code> package, we must first install it.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;rpart&quot;</span>)</a></code></pre></div>
+<p>Alternatively, you can navigate to the “Packages” tab in RStudio (likely in the lower right panel), click “Install”, and search for <strong>rpart</strong>.</p>
+<p><strong>Note: You only need to install a package once!</strong> After a package is installed, it will remain installed until you upgrade your version of R/RStudio.</p>
+<p>However, in each R session (i.e., each time you open RStudio), you will need to <em>load the package</em>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(<span class="st">&quot;rpart&quot;</span>)</a></code></pre></div>
+<p>Again, an alternative is to navigate to the “Packages” tab in RStudio, find the package name, and click on the box to the left of the name.</p>
 
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p><a href="https://opensource.org" class="uri">https://opensource.org</a><a href="getting-started-with-r.html#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-
-<a href="introduction-to-data-analytics.html" class="navigation navigation-next navigation-unique" aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="introduction-to-data-analytics.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
