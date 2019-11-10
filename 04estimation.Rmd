@@ -1,6 +1,6 @@
 # Estimation
 
-## Point Estimation
+## Point Estimation and the MLE
 <hr>
 
 Point estimation is all about using one single number (statistic) to estimate a population parameter of interest. One question is how do we actually come up with those statistics?
