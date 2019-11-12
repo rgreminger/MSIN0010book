@@ -11,22 +11,22 @@ R has four normal distribution functions: `dnorm( )`, `pnorm( )`, `qnorm( )`, an
 
 <blockquote>
 
-**`dnorm(x,mean,sd)`** probability density function (PDF)<br> 
+**`dnorm(x,mean,sd)` probability density function (PDF)**<br> 
 - *input*: `x` is the value at which you want to evaluate the normal PDF<br>
 - *output*: a positive number since the PDF $f(x)$ must be positive<br>
 - *example*: evaluate $f(x)$<br>
 <br>
-**`pnorm(q,mean,sd)`** cumulative distribution function (CDF)<br>
+**`pnorm(q,mean,sd)` cumulative distribution function (CDF)**<br>
 - *input*: `q` is the value for which you want to find the area below/above<br>
 - *output*: a probability<br>
 - *example*: compute $P(X<q)$<br>
 <br>
-**`qnorm(p,mean,sd)`** quantile function<br>
+**`qnorm(p,mean,sd)` quantile function**<br>
 - *input*: `p` is a probability<br>
 - *output*: a real number since $X\in(-\infty,\infty)$<br>
 - *example*: find the value $q$ such that $P(X<q)=p$<br>
 <br>
-**`rnorm(n,mean,sd)`** random number generator<br>
+**`rnorm(n,mean,sd)` random number generator**<br>
 - *input*: `n` is the number of observations you want to generate<br>
 - *output*: a vector of n real numbers<br>
 - *example*: generate n independent $N(\mu,\sigma^2)$ random variables<br>
@@ -39,7 +39,7 @@ To learn how to use these functions, we'll start with a few exercises on the **s
 
 ### Probability Density Function (`dnorm`)
 
-When $X$ is a continuous random variable, we know that $P(X=x)=0$. Therefore, dnorm( ) does not return a probability, but rather the *height* of the PDF. Even though the height of the PDF is not a probability, we can still interpret density evaluations as the relatively likelihood of observing a certain value $x$.
+When $X$ is a continuous random variable, we know that $P(X=x)=0$. Therefore, `dnorm( )` does not return a probability, but rather the *height* of the PDF. Even though the height of the PDF is not a probability, we can still interpret density evaluations as the relatively likelihood of observing a certain value $x$.
 
 **PROBLEM 1:** Let $X\sim N(0,1)$. Is the value $x=1$ or $x=-0.5$ more likely to occur under this normal distribution?
 
@@ -223,30 +223,30 @@ The Bernoulli and Binomial distributions are intimately related: a Binomial rand
 R has four functions that can be used to compute both Bernoulli and Binomial probabilities: `dbinom( )`, `pbinom( )`, `qbinom( )`, `rbinom( )`.
 
 <blockquote>
-**`dbinom(x,size,prob)`** probability mass function (PMF)<br>
+**`dbinom(x,size,prob)` probability mass function (PMF)**<br>
 - *input*: `x` is the number of successes, `size` is the number of trials $n$, `prob` is the probability of success $p$<br>
 - *output*: a probability since $0\leq P(X=x)\leq1$<br>
 - *example*: evaluate $P(X=x)$<br>
 <br>
 
-**`pbinom(q,size,prob)`** probability distribution function (CDF)<br>
+**`pbinom(q,size,prob)` probability distribution function (CDF)**<br>
 - *input*: `q` is the value for which you want to find the area below/above, `size` is the number of trials $n$, `prob` is the probability of success $p$<br>
 - *output*: a probability <br>
 - *example*: evaluate $P(X\leq x)$<br>
 <br>
-**`qbinom(p,size,prob)`** quantile function <br> 
+**`qbinom(p,size,prob)` quantile function** <br> 
 - *input*: `p` is a probability, `size` is the number of trials $n$, `prob` is the probability of success $p$<br>
 - *output*: a positive integer since $X\in\{0,1,\dotsc,n\}$ <br>
 - *example*: find $q$ s.t. $P(X\leq q)=p$<br>
 <br>
-**`rbinom(n,size,prob)`** random number generator <br> 
+**`rbinom(n,size,prob)` random number generator** <br> 
 - *input*: `n` is the number of observations you want to generate, `size` is the number of trials $n$, `prob` is the probability of success $p$<br>
 - *output*: a vector of n positive integers <br>
 - *example*: generate $n$ independent Binomial$(n,p)$ random variables
 
 </blockquote>
 
-**Note: To use these functions to compute Bernoulli probabilities, set `size=1`.**
+**Note: These functions correspond to the Bernoulli distribution whenever `size=1`.**
 
 More information is also accessible in R if you type `?dbinom`, `?pbinom`, `?qbinom`, or `?rbinom`.
 

@@ -203,18 +203,18 @@ We can use the `t.test( )` function to carry out both one and two-sample $t$-tes
 <blockquote>
 ONE-SAMPLE $t$-TEST<br>
 **`t.test(mydata, alternative, mu, conf.level)`**<br>
-`mydata` data on the variable of interest<br>
-`alternative` what type of alternative hypothesis is specified? (options: "two.sided", "greater", "less") <br>
-`mu` the value of $\mu$ under the null hypothesis<br>
-`conf.level` confidence level of the test ($1-\alpha$)<br>
+`mydata`: data on the variable of interest<br>
+`alternative`: what type of alternative hypothesis is specified? (options: "two.sided", "greater", "less") <br>
+`mu`: the value of $\mu$ under the null hypothesis<br>
+`conf.level`: confidence level of the test ($1-\alpha$)<br>
 <br>
 TWO-SAMPLE $t$-TEST<br>
 **`t.test(mydata1, mydata2, alternative, mu, conf.level)`**<br>
-`mydata1` data on the first variable of interest<br>
-`mydata2` data on the second variable of interest<br>
-`alternative` what type of alternative hypothesis is specified? (options: "two.sided", "greater", "less") <br>
-`mu` the value of the difference $\mu_1-\mu_2$ under the null hypothesis<br>
-`conf.level` confidence level of the test ($1-\alpha$)<br>
+`mydata1`: data on the first variable of interest<br>
+`mydata2`: data on the second variable of interest<br>
+`alternative`: what type of alternative hypothesis is specified? (options: "two.sided", "greater", "less") <br>
+`mu`: the value of the difference $\mu_1-\mu_2$ under the null hypothesis<br>
+`conf.level`: confidence level of the test ($1-\alpha$)<br>
 
 </blockquote>
 
