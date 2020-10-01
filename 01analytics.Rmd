@@ -1,9 +1,3 @@
-```{r load-packages, include=FALSE}
-library(tidyverse)
-library(knitr)
-library(kableExtra)
-```
-
 # Introduction to Data Analytics
 
 In this chapter, we will get acclimated to working with data using a suite of packages in R called the `tidyverse`.^[https://www.tidyverse.org/] 

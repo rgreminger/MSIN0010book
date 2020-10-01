@@ -34,6 +34,7 @@ details:hover { cursor: pointer }
 </style>
 
 ```{r setup, include=FALSE}
+library(tidyverse)
 library(knitr)
 library(kableExtra)
 set.seed(1)
