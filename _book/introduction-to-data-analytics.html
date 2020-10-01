@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 1 Introduction to Data Analytics | Data Analytics with R</title>
+  <meta name="description" content="Chapter 1 Introduction to Data Analytics | Data Analytics with R" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 1 Introduction to Data Analytics | Data Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 1 Introduction to Data Analytics | Data Analytics with R" />
+  
+  
+  
+
+<meta name="author" content="Adam Smith, UCL School of Management" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="getting-started-with-r.html"/>
+<link rel="next" href="computing-probabilities.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i>Getting Started with R</a><ul>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#why-use-r"><i class="fa fa-check"></i>Why use R?</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#downloading-r-and-rstudio"><i class="fa fa-check"></i>Downloading R and RStudio</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#installing-and-loading-packages"><i class="fa fa-check"></i>Installing and Loading Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html"><i class="fa fa-check"></i><b>1</b> Introduction to Data Analytics</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#loading-and-inspecting-data-sets"><i class="fa fa-check"></i><b>1.1</b> Loading and Inspecting Data Sets</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#statistical-summaries"><i class="fa fa-check"></i><b>1.2</b> Statistical Summaries</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#graphical-summaries"><i class="fa fa-check"></i><b>1.3</b> Graphical Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="computing-probabilities.html"><a href="computing-probabilities.html"><i class="fa fa-check"></i><b>2</b> Computing Probabilities</a><ul>
+<li class="chapter" data-level="2.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#normal-distribution"><i class="fa fa-check"></i><b>2.1</b> Normal Distribution</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#probability-density-function-dnorm"><i class="fa fa-check"></i><b>2.1.1</b> Probability Density Function (<code>dnorm</code>)</a></li>
+<li class="chapter" data-level="2.1.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#cumulative-distribution-function-pnorm"><i class="fa fa-check"></i><b>2.1.2</b> Cumulative Distribution Function (<code>pnorm</code>)</a></li>
+<li class="chapter" data-level="2.1.3" data-path="computing-probabilities.html"><a href="computing-probabilities.html#quantile-function-qnorm"><i class="fa fa-check"></i><b>2.1.3</b> Quantile Function (<code>qnorm</code>)</a></li>
+<li class="chapter" data-level="2.1.4" data-path="computing-probabilities.html"><a href="computing-probabilities.html#random-number-generator-rnorm"><i class="fa fa-check"></i><b>2.1.4</b> Random Number Generator (<code>rnorm</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#bernoulli-and-binomial-distributions"><i class="fa fa-check"></i><b>2.2</b> Bernoulli and Binomial Distributions</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#probability-mass-function-dbinom"><i class="fa fa-check"></i><b>2.2.1</b> Probability Mass Function (<code>dbinom</code>)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#cumulative-distribution-function-pbinom"><i class="fa fa-check"></i><b>2.2.2</b> Cumulative Distribution Function (<code>pbinom</code>)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="computing-probabilities.html"><a href="computing-probabilities.html#quantile-function-qbinom"><i class="fa fa-check"></i><b>2.2.3</b> Quantile Function (<code>qbinom</code>)</a></li>
+<li class="chapter" data-level="2.2.4" data-path="computing-probabilities.html"><a href="computing-probabilities.html#random-number-generator-rbinom"><i class="fa fa-check"></i><b>2.2.4</b> Random Number Generator (<code>rbinom</code>)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sampling-distributions-and-the-clt.html"><a href="sampling-distributions-and-the-clt.html"><i class="fa fa-check"></i><b>3</b> Sampling Distributions and the CLT</a></li>
+<li class="chapter" data-level="4" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>4</b> Estimation</a><ul>
+<li class="chapter" data-level="4.1" data-path="estimation.html"><a href="estimation.html#point-estimation-and-the-mle"><i class="fa fa-check"></i><b>4.1</b> Point Estimation and the MLE</a></li>
+<li class="chapter" data-level="4.2" data-path="estimation.html"><a href="estimation.html#confidence-intervals"><i class="fa fa-check"></i><b>4.2</b> Confidence Intervals</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="estimation.html"><a href="estimation.html#types-of-confidence-intervals"><i class="fa fa-check"></i><b>4.2.1</b> Types of Confidence Intervals</a></li>
+<li class="chapter" data-level="4.2.2" data-path="estimation.html"><a href="estimation.html#examples"><i class="fa fa-check"></i><b>4.2.2</b> Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i><b>5</b> Hypothesis Tests</a><ul>
+<li class="chapter" data-level="5.1" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#steps-of-hypothesis-testing"><i class="fa fa-check"></i><b>5.1</b> Steps of Hypothesis Testing</a></li>
+<li class="chapter" data-level="5.2" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#connection-to-confidence-intervals"><i class="fa fa-check"></i><b>5.2</b> Connection to Confidence Intervals</a></li>
+<li class="chapter" data-level="5.3" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#hypothesis-testing-in-r"><i class="fa fa-check"></i><b>5.3</b> Hypothesis Testing in R</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a><ul>
+<li class="chapter" data-level="6.1" data-path="regression.html"><a href="regression.html#linear-regression"><i class="fa fa-check"></i><b>6.1</b> Linear Regression</a></li>
+<li class="chapter" data-level="6.2" data-path="regression.html"><a href="regression.html#regression-trees"><i class="fa fa-check"></i><b>6.2</b> Regression Trees</a></li>
+<li class="chapter" data-level="6.3" data-path="regression.html"><a href="regression.html#model-selection"><i class="fa fa-check"></i><b>6.3</b> Model Selection</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>7</b> Classification</a><ul>
+<li class="chapter" data-level="7.1" data-path="classification.html"><a href="classification.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>7.1</b> <span class="math inline">\(k\)</span>-Nearest Neighbors</a></li>
+<li class="chapter" data-level="7.2" data-path="classification.html"><a href="classification.html#logistic-regression"><i class="fa fa-check"></i><b>7.2</b> Logistic Regression</a></li>
+<li class="chapter" data-level="7.3" data-path="classification.html"><a href="classification.html#classification-trees"><i class="fa fa-check"></i><b>7.3</b> Classification Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>8</b> Clustering</a><ul>
+<li class="chapter" data-level="8.1" data-path="clustering.html"><a href="clustering.html#k-means"><i class="fa fa-check"></i><b>8.1</b> <span class="math inline">\(k\)</span>-Means</a></li>
+<li class="chapter" data-level="8.2" data-path="clustering.html"><a href="clustering.html#hierarchical-clustering"><i class="fa fa-check"></i><b>8.2</b> Hierarchical Clustering</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="introduction-to-data-analytics" class="section level1">
+<h1><span class="header-section-number">Chapter 1</span> Introduction to Data Analytics</h1>
+<p>In this chapter, we will get acclimated to working with data using a suite of packages in R called the <code>tidyverse</code>.<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a></p>
+<div id="loading-and-inspecting-data-sets" class="section level2">
+<h2><span class="header-section-number">1.1</span> Loading and Inspecting Data Sets</h2>
+<hr>
+<p>The following line of code reads in a data set that contains weekly prices, promotional activity, and sales for 20 different brands of beer. The data set comes from many stores within one Chicago grocery retail chain – Dominick’s Finer Foods – and spans more than five years of transactions. The complete raw data are publically available from the Kilts Center for Marketing at the University of Chicago.<a href="#fn2" class="footnote-ref" id="fnref2"><sup>2</sup></a></p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">beer =<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;beer.csv&quot;</span>)</a></code></pre></div>
+<p>We always want to view the data after importing to make sure all the values were read-in correctly. To inspect the first few lines of a data set, use the <code>head( )</code> command.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">head</span>(beer)</a></code></pre></div>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table class="table" style="font-size: 10px; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:right;">
+store
+</th>
+<th style="text-align:right;">
+upc
+</th>
+<th style="text-align:right;">
+week
+</th>
+<th style="text-align:right;">
+move
+</th>
+<th style="text-align:right;">
+price
+</th>
+<th style="text-align:left;">
+sale
+</th>
+<th style="text-align:right;">
+profit
+</th>
+<th style="text-align:left;">
+brand
+</th>
+<th style="text-align:right;">
+packsize
+</th>
+<th style="text-align:right;">
+itemsize
+</th>
+<th style="text-align:left;">
+units
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+1820000016
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+23
+</td>
+<td style="text-align:right;">
+3.49
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+19.05
+</td>
+<td style="text-align:left;">
+BUDWEISER BEER
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+oz
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+1820000784
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+3.79
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+28.23
+</td>
+<td style="text-align:left;">
+O’DOUL’S N/A LONGNEC
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+oz
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+1820000834
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+9
+</td>
+<td style="text-align:right;">
+3.69
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+22.03
+</td>
+<td style="text-align:left;">
+BUDWEISER BEER LONG
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+oz
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+1820000987
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+78
+</td>
+<td style="text-align:right;">
+3.29
+</td>
+<td style="text-align:left;">
+B
+</td>
+<td style="text-align:right;">
+5.78
+</td>
+<td style="text-align:left;">
+MICHELOB REGULAR BEE
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+oz
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+3410000354
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+35
+</td>
+<td style="text-align:right;">
+3.69
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+22.98
+</td>
+<td style="text-align:left;">
+MILLER LITE BEER
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+oz
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+86
+</td>
+<td style="text-align:right;">
+3410000554
+</td>
+<td style="text-align:right;">
+91
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:right;">
+3.69
+</td>
+<td style="text-align:left;">
+NA
+</td>
+<td style="text-align:right;">
+22.98
+</td>
+<td style="text-align:left;">
+MILLER GENUINE DRAFT
+</td>
+<td style="text-align:right;">
+6
+</td>
+<td style="text-align:right;">
+12
+</td>
+<td style="text-align:left;">
+oz
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We can see that our data set contains 11 different variables (i.e., columns). A brief summary of each variable is provided below.</p>
+<ul>
+<li><code>store</code>: unique store ID number</li>
+<li><code>upc</code>: Universal Product Code</li>
+<li><code>week</code>: week ID number</li>
+<li><code>move</code>: number of units sold</li>
+<li><code>price</code>: retail price in US dollars</li>
+<li><code>sale</code>: indicator of promotional activity</li>
+<li><code>profit</code>: gross profit margin</li>
+<li><code>brand</code>: brand name</li>
+<li><code>packsize</code>: number of items in one package</li>
+<li><code>itemsize</code>: size of items in one package</li>
+<li><code>units</code>: units of items</li>
+</ul>
+</div>
+<div id="statistical-summaries" class="section level2">
+<h2><span class="header-section-number">1.2</span> Statistical Summaries</h2>
+<hr>
+<p>We can compute summary statistics in the tidyverse by combining the <code>summarise</code> operator with any one (or many!) of R’s built-in statistics functions. A few of the most common are listed below.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Statistic
+</th>
+<th style="text-align:left;">
+R Function
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+mean
+</td>
+<td style="text-align:left;">
+<code>mean( )</code>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+median
+</td>
+<td style="text-align:left;">
+<code>median( )</code>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+variance
+</td>
+<td style="text-align:left;">
+<code>var( )</code>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+standard deviation
+</td>
+<td style="text-align:left;">
+<code>sd( )</code>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+correlation
+</td>
+<td style="text-align:left;">
+<code>cor( )</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p>For example, let’s compute the average price across all products and weeks.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">beer <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw">summarise</span>(<span class="kw">mean</span>(price))</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##   `mean(price)`
+##           &lt;dbl&gt;
+## 1          4.28</code></pre>
+<p>Now suppose we wanted to find the average price for only one brand of beer, say Budweiser. To do this, we can use the <code>filter( )</code> operator to select rows in the data that satisfy certain conditions. Here we want Budweiser beers so the condition is that <code>brand</code> is equal to <code>BUDWEISER BEER</code>, or <code>brand==&quot;BUDWEISER BEER&quot;</code>. Note that a double equals sign <code>==</code> is always used when writing logical statements to check equality.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">beer <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(brand<span class="op">==</span><span class="st">&quot;BUDWEISER BEER&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="kw">mean</span>(price))</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##   `mean(price)`
+##           &lt;dbl&gt;
+## 1          3.81</code></pre>
+<p>To compute summary statistics for multiple brands, we can use the <code>group_by( )</code> operator. As the name suggests, this operator tells R to first group by a certain categorical variable, and to compute a summary for each level that the given variable takes on.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">beer <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(brand) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="kw">mean</span>(price))</a></code></pre></div>
+<pre><code>## # A tibble: 19 x 2
+##    brand                `mean(price)`
+##    &lt;chr&gt;                        &lt;dbl&gt;
+##  1 BECK&#39;S REG BEER NR B          5.88
+##  2 BERGHOFF REGULAR BEE          3.94
+##  3 BUDWEISER BEER                3.81
+##  4 BUDWEISER BEER LONG           3.75
+##  5 CORONA EXTRA BEER NR          5.80
+##  6 HEINEKEN BEER N.R.BT          6.34
+##  7 LOWENBRAU BEER NR BT          4.05
+##  8 MICHELOB REGULAR BEE          4.04
+##  9 MILLER GEN DRFT LNNR          3.69
+## 10 MILLER GEN DRFT LT L          3.69
+## 11 MILLER GENUINE DRAFT          3.78
+## 12 MILLER HIGH LIFE LNN          3.68
+## 13 MILLER LITE BEER              3.82
+## 14 MILLER LITE BEER N.R          3.74
+## 15 MILLER LITE LONGNECK          3.69
+## 16 MILLER SHARP&#39;S N/A L          3.36
+## 17 O&#39;DOUL&#39;S N/A LONGNEC          3.78
+## 18 OLD STYLE BEER                3.68
+## 19 SAMUEL ADAMS LAGER N          5.41</code></pre>
+<p>We can also easily extend the code above to compute multiple summary statistics across groups.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">beer <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(brand) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="kw">mean</span>(price), <span class="kw">mean</span>(move))</a></code></pre></div>
+<pre><code>## # A tibble: 19 x 3
+##    brand                `mean(price)` `mean(move)`
+##    &lt;chr&gt;                        &lt;dbl&gt;        &lt;dbl&gt;
+##  1 BECK&#39;S REG BEER NR B          5.88         18.3
+##  2 BERGHOFF REGULAR BEE          3.94         15.6
+##  3 BUDWEISER BEER                3.81         16.3
+##  4 BUDWEISER BEER LONG           3.75         18.2
+##  5 CORONA EXTRA BEER NR          5.80         15.4
+##  6 HEINEKEN BEER N.R.BT          6.34         16.7
+##  7 LOWENBRAU BEER NR BT          4.05         16.9
+##  8 MICHELOB REGULAR BEE          4.04         14.2
+##  9 MILLER GEN DRFT LNNR          3.69         51.0
+## 10 MILLER GEN DRFT LT L          3.69         20.1
+## 11 MILLER GENUINE DRAFT          3.78         16.4
+## 12 MILLER HIGH LIFE LNN          3.68         14.1
+## 13 MILLER LITE BEER              3.82         18.1
+## 14 MILLER LITE BEER N.R          3.74         18.7
+## 15 MILLER LITE LONGNECK          3.69         38.4
+## 16 MILLER SHARP&#39;S N/A L          3.36         11.5
+## 17 O&#39;DOUL&#39;S N/A LONGNEC          3.78         12.0
+## 18 OLD STYLE BEER                3.68         13.4
+## 19 SAMUEL ADAMS LAGER N          5.41         20.6</code></pre>
+<p><br></p>
+</div>
+<div id="graphical-summaries" class="section level2">
+<h2><span class="header-section-number">1.3</span> Graphical Summaries</h2>
+<hr>
+<p>Data visualization is one of the strengths of the <code>tidyverse</code>. A fairly exhaustive list of graph types can be found at <a href="https://www.r-graph-gallery.com" class="uri">https://www.r-graph-gallery.com</a>. For our purposes, we will start with a few of the most commonly used graphs.</p>
+<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+Graph
+</th>
+<th style="text-align:left;">
+Operator
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+histogram
+</td>
+<td style="text-align:left;">
+<code>geom_histogram( )</code>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+box plot
+</td>
+<td style="text-align:left;">
+<code>geom_boxplot( )</code>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+bar plot
+</td>
+<td style="text-align:left;">
+<code>geom_bar( )</code>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+line plot
+</td>
+<td style="text-align:left;">
+<code>geom_line( )</code>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+scatter plot
+</td>
+<td style="text-align:left;">
+<code>geom_point( )</code>
+</td>
+</tr>
+</tbody>
+</table>
+<p>Let’s start be looking at the distribution of weekly prices across all products.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">beer <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>price)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_histogram</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Distribution of Weekly Prices&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>This is an example of a <strong>histogram</strong>. The variable on the x-axis (price) is split into different bins, and the y-axis counts the number of observations that fall withiin each bin.</p>
+<p>We can also inspect the distribution of a variable like prices using a <strong>boxplot</strong>.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">beer <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">y=</span>price)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Distribution of Weekly Prices&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Notice that the focal variable of interest is now on the y-axis. The rectangular box shown in the middle of the plot indicates three key summary statistics: the bottom line is the 25th percentile, the middle line is the 50th percentile (or median), and the top line is the 75th percentile. The vertical line starting around 2.5 and ending around 7 indicates the full range of prices in the data.</p>
+<p>The figure above shows the distribution of prices across all prodcuts. However, we may want to explore whether the distribution of prices is <em>different across products</em>. This can be done by defining <code>x=brand</code> within the <code>ggplot( )</code> function.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">beer <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>brand, <span class="dt">y=</span>price)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Distribution of Weekly Prices&quot;</span>)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>We have succeeded in creating a box plot for each brand, but the brand labels are impossible to read! As easy fix is to rotate the x-axis labels, which can be controlled using the <code>theme()</code> operator. The <code>theme()</code> operator is generally what we use to change plot formatting, such as the size of the axis labels or the position of the title.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">beer <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>brand, <span class="dt">y=</span>price)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_boxplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Distribution of Weekly Prices&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb14-5" data-line-number="5"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_text</span>(<span class="dt">angle=</span><span class="dv">90</span>, <span class="dt">hjust=</span><span class="dv">1</span>),</a>
+<a class="sourceLine" id="cb14-6" data-line-number="6">        <span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>Much better!</p>
+<p>Next, let’s explore the variation of prices over time. We can make a time series plot (or line plot) to do this, where we specify <code>group=brand</code> so that R makes a separate line for each brand.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">beer <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>week, <span class="dt">y=</span>price, <span class="dt">group=</span>brand)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Beer Prices over Time&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>This was a good attempt, but the plot is not especially useful! While we do notice that the prices are changing over time, we can’t identify the products themselves so we don’t know which products are changing more or less than others.</p>
+<p>We can fix this in a couple ways. The first thing we will try is to simply add color to the plot above, so that we can identify a product by the color of its line.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">beer <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>week, <span class="dt">y=</span>price, <span class="dt">group=</span>brand, <span class="dt">color=</span>brand)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Beer Prices over Time&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-5" data-line-number="5"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>This is better, but it is still hard to identify products because of how much overlap there is in prices. So maybe the best thing to do is create a separate plot for each brand. This can be easily accomplished using <code>facet_wrap( )</code>.</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">beer <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>week,<span class="dt">y=</span>price,<span class="dt">group=</span>brand,<span class="dt">color=</span>brand)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_line</span>(<span class="dt">show.legend=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Beer Prices over Time&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5"><span class="st">  </span><span class="kw">facet_wrap</span>(brand <span class="op">~</span><span class="st"> </span>.) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb17-7" data-line-number="7">        <span class="dt">strip.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">6</span>))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>Note that we added <code>show.legend=FALSE</code> to <code>geom_line( )</code> since we no longer need the color to identify products. We also added an option to <code>theme( )</code> to control the size of the text to ensure that the labels are all legible.</p>
+<p>Finally, let’s explore the relationship between <em>two variables</em> like price and demand.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">beer <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>price, <span class="dt">y=</span>move)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Beer Prices over Time&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>This figure matches our intuition from economics, which is that as price increases, demand seems to fall. We can even imagine a line going through these points – this line would be a demand curve!</p>
+<p>As before, it would be interesting to know how the relationship between price and demand changes across products. Let’s apply the same techniques above – adding color and using separate plots – to investigate.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">beer <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>price, <span class="dt">y=</span>move, <span class="dt">color=</span>brand)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Price vs. Demand&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb19-5" data-line-number="5"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">beer <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(<span class="dt">x=</span>price, <span class="dt">y=</span>move, <span class="dt">color=</span>brand)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">show.legend=</span><span class="ot">FALSE</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title=</span><span class="st">&quot;Price vs. Demand&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-5" data-line-number="5"><span class="st">  </span><span class="kw">facet_wrap</span>(brand<span class="op">~</span>.,<span class="dt">scales=</span><span class="st">&quot;free&quot;</span>) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">plot.title =</span> <span class="kw">element_text</span>(<span class="dt">hjust=</span><span class="fl">0.5</span>),</a>
+<a class="sourceLine" id="cb20-7" data-line-number="7">        <span class="dt">strip.text.x =</span> <span class="kw">element_text</span>(<span class="dt">size=</span><span class="dv">6</span>))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-19-1.png" width="672" /></p>
+<p>These last two plots indeed show that demand is negatively related to price (as price increases, demand falls) and that the magnitude of this relationship may change across products.</p>
+
+</div>
+</div>
+<div class="footnotes">
+<hr />
+<ol start="1">
+<li id="fn1"><p><a href="https://www.tidyverse.org/" class="uri">https://www.tidyverse.org/</a><a href="introduction-to-data-analytics.html#fnref1" class="footnote-back">↩</a></p></li>
+<li id="fn2"><p><a href="https://www.chicagobooth.edu/research/kilts/datasets/dominicks" class="uri">https://www.chicagobooth.edu/research/kilts/datasets/dominicks</a><a href="introduction-to-data-analytics.html#fnref2" class="footnote-back">↩</a></p></li>
+</ol>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="getting-started-with-r.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="computing-probabilities.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
