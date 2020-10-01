@@ -188,7 +188,7 @@ Finally, let's explore the relationship between *two variables* like price and d
 beer %>%
   ggplot(aes(x=price, y=move)) +
   geom_point() + 
-  labs(title="Beer Prices over Time") + 
+  labs(title="Price vs. Demand") + 
   theme(plot.title = element_text(hjust=0.5))
 ```
 
