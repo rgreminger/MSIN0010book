@@ -1,0 +1,370 @@
+# Computing Probabilities
+
+There are many common families of probability distributions and we have discussed six so far. The discrete distributions include the discrete Uniform, Bernoulli, and Binomial. The continuous distributions include the continuous Uniform, Normal, and t.
+
+This chapter provides a set of examples to show you how to compute probabilities from a few of these distributions in R.
+
+## Normal Distribution
+<hr>
+
+R has four normal distribution functions: `dnorm( )`, `pnorm( )`, `qnorm( )`, and `rnorm( )`.
+
+<blockquote>
+
+**`dnorm(x,mean,sd)` probability density function (PDF)**<br> 
+- *input*: `x` is the value at which you want to evaluate the normal PDF<br>
+- *output*: a positive number since the PDF $f(x)$ must be positive<br>
+- *example*: evaluate $f(x)$<br>
+<br>
+**`pnorm(q,mean,sd)` cumulative distribution function (CDF)**<br>
+- *input*: `q` is the value for which you want to find the area below/above<br>
+- *output*: a probability<br>
+- *example*: compute $P(X<q)$<br>
+<br>
+**`qnorm(p,mean,sd)` quantile function**<br>
+- *input*: `p` is a probability<br>
+- *output*: a real number since $X\in(-\infty,\infty)$<br>
+- *example*: find the value $q$ such that $P(X<q)=p$<br>
+<br>
+**`rnorm(n,mean,sd)` random number generator**<br>
+- *input*: `n` is the number of observations you want to generate<br>
+- *output*: a vector of n real numbers<br>
+- *example*: generate n independent $N(\mu,\sigma^2)$ random variables<br>
+
+</blockquote>
+
+More information is also accessible in R if you type `?dnorm`, `?pnorm`, `?qnorm`, or `?rnorm`.
+
+To learn how to use these functions, we'll start with a few exercises on the **standard normal distribution** which is a normal distribution with mean 0 and standard deviation of 1. We will then move on to the more general $N(\mu,\sigma^2)$ distribution.
+
+### Probability Density Function (`dnorm`)
+
+When $X$ is a continuous random variable, we know that $P(X=x)=0$. Therefore, `dnorm( )` does not return a probability, but rather the *height* of the PDF. Even though the height of the PDF is not a probability, we can still interpret density evaluations as the relatively likelihood of observing a certain value $x$.
+
+**PROBLEM 1:** Let $X\sim N(0,1)$. Is the value $x=1$ or $x=-0.5$ more likely to occur under this normal distribution?
+
+<details>
+  <summary>Solution:</summary>
+```{r}
+dnorm(1, mean=0, sd=1)
+```
+
+```{r}
+dnorm(-0.5, mean=0, sd=1)
+```
+
+The results show that $x=-0.5$ is more likely, since $f(-0.5)>f(1)$. This should be expected because we know that density function is symmetric and peaks at the mean value which is 0 here. Since $x=-0.5$ is closer to 0 than $x=1$, it should have higher likelihood under $N(0,1)$ distribution. 
+</details>
+
+### Cumulative Distribution Function (`pnorm`)
+
+The `pnorm( )` function is useful for evaluating probabilities of the form $P(X\leq x)$ or $P(X \geq x)$.
+
+**PROBLEM 2:** If $X\sim N(0,1)$, what is $P(X<0)$?
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+pnorm(0, mean=0, sd=1)
+```
+
+</details>
+
+<br>
+**PROBLEM 3:** If $X\sim N(0,1)$, what is $P(X<1)$?
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+pnorm(1, mean=0, sd=1)
+```
+
+</details>
+
+<br>
+**PROBLEM 4:** If $X\sim N(0,1)$, what is $P(X>1)$?
+
+<details>
+  <summary>Solution:</summary>
+
+We have two ways of answering this question. First, we can recognize that $P(X>1)=1-P(X\geq 1)$.
+
+```{r}
+1-pnorm(1, mean=0, sd=1)
+```
+
+A second approach is to use the `lower.tail` option within the `pnorm( )` function. When `lower.tail=TRUE` then the `pnorm( )` function returns the probability to the *left* of a given number $x$ and if `lower.tail=FALSE` then `pnorm( )` returns the probability to the *right* of $x$.
+
+```{r}
+pnorm(1, mean=0, sd=1, lower.tail=FALSE)
+```
+
+</details>
+
+<br>
+**PROBLEM 5:** If $X\sim N(0,1)$, what is $P(0<X<1)$
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+pnorm(1, mean=0, sd=1) - pnorm(0, mean=0, sd=1)
+```
+
+</details>
+
+<br>
+
+Once we understand how to use the `pnorm( )` function to compute standard normal probabilities, extending the function to compute probabilities of any normal distribution is straightforward. All we have to do is change the `mean` and `sd` arguments. 
+
+**Remember that the normal functions in R call for the standard deviation $\sigma$, NOT the variance $\sigma^2$!**
+
+<br>
+**PROBLEM 6:** If $X\sim N(4,9)$, what is $P(X<0)$?
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+pnorm(0, mean=4, sd=3)
+```
+
+</details>
+
+<br>
+**PROBLEM 7:** If $X\sim N(2,3)$, what is $P(X>5)$?
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+pnorm(5, mean=2, sd=sqrt(3), lower.tail=FALSE)
+```
+
+</details>
+
+### Quantile Function (`qnorm`)
+
+Next, let's use the `qnorm( )` function to find quantiles of the normal distribution.
+
+**PROBLEM 8:** If $X\sim N(0,1)$, find the value $q$ such that $P(X<q)=0.05$.
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+qnorm(0.05, mean=0, sd=1)
+```
+
+</details>
+
+<br>
+**PROBLEM 9:** If $X\sim N(0,1)$, find the value $q$ such that $P(X>q)=0.025$. That is, $q$ is the value such that 2.5% of the area under the standard normal PDF is to its right.
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+qnorm(0.025, mean=0, sd=1, lower.tail=FALSE)
+```
+
+</details>
+
+<br>
+**PROBLEM 10:** If $X\sim N(-4,2)$, find the value $q$ such that $P(X>q)=0.1$. That is, $q$ is the value such that 10% of the area under the $N(-4,2)$ PDF is to its right.
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+qnorm(0.1, mean=-4, sd=sqrt(2), lower.tail=FALSE)
+```
+
+</details>
+
+### Random Number Generator (`rnorm`)
+
+Finally, let's use `rnorm( )` to generate random samples of size $n$ from a normal distribution.
+
+**PROBLEM 11:** Generate $n=20$ random variables from a standard normal distribution.
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+x = rnorm(20, mean=0, sd=1)
+x
+hist(x)
+```
+
+</details>
+
+<br>
+**PROBLEM 12:** Generate $n=100$ random variables from a $N(10,2)$ distribution.
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+x = rnorm(100, mean=10, sd=sqrt(2))
+x
+hist(x)
+```
+
+</details>
+
+## Bernoulli and Binomial Distributions
+<hr>
+
+The Bernoulli and Binomial distributions are intimately related: a Binomial random variable corresponds to the number of successes in $n$ independent Bernoulli trials. For example, consider flipping a coin. Each coin flip can be modelled as a Bernoulli$(p)$ random variable with probability of success (heads) equal to $p$. If you flipped a coin $n=10$ times and wanted to model the number of sucesses (heads) in $n=10$ trials, that would be a Binomial($n,p$) random variable.
+
+R has four functions that can be used to compute both Bernoulli and Binomial probabilities: `dbinom( )`, `pbinom( )`, `qbinom( )`, `rbinom( )`.
+
+<blockquote>
+**`dbinom(x,size,prob)` probability mass function (PMF)**<br>
+- *input*: `x` is the number of successes, `size` is the number of trials $n$, `prob` is the probability of success $p$<br>
+- *output*: a probability since $0\leq P(X=x)\leq1$<br>
+- *example*: evaluate $P(X=x)$<br>
+<br>
+
+**`pbinom(q,size,prob)` probability distribution function (CDF)**<br>
+- *input*: `q` is the value for which you want to find the area below/above, `size` is the number of trials $n$, `prob` is the probability of success $p$<br>
+- *output*: a probability <br>
+- *example*: evaluate $P(X\leq x)$<br>
+<br>
+**`qbinom(p,size,prob)` quantile function** <br> 
+- *input*: `p` is a probability, `size` is the number of trials $n$, `prob` is the probability of success $p$<br>
+- *output*: a positive integer since $X\in\{0,1,\dotsc,n\}$ <br>
+- *example*: find $q$ s.t. $P(X\leq q)=p$<br>
+<br>
+**`rbinom(n,size,prob)` random number generator** <br> 
+- *input*: `n` is the number of observations you want to generate, `size` is the number of trials $n$, `prob` is the probability of success $p$<br>
+- *output*: a vector of n positive integers <br>
+- *example*: generate $n$ independent Binomial$(n,p)$ random variables
+
+</blockquote>
+
+**Note: These functions correspond to the Bernoulli distribution whenever `size=1`.**
+
+More information is also accessible in R if you type `?dbinom`, `?pbinom`, `?qbinom`, or `?rbinom`.
+
+### Probability Mass Function (`dbinom`)
+
+**PROBLEM 13:** If you flip a coin $n=5$ times and in each flip the probability of heads is $p=0.5$, what is the chance that you get 2 successes?
+
+<details>
+  <summary>Solution:</summary>
+
+Here, our random variable $X$ is the number of successes in $n$ independent trials, so $X\sim\text{Binomial}(n,p)$ with $n=5$ and $p=0.5$.
+
+```{r}
+dbinom(2, size=5, prob=0.5)
+```
+
+We can also check our answer using the Binomial probability mass function: $P(X=x)={n\choose x}p^x(1-p)^{n-x}$.
+
+```{r}
+choose(5,2)*0.5^2*(1-0.5)^(5-2)
+```
+
+</details>
+
+### Cumulative Distribution Function (`pbinom`)
+
+**PROBLEM 14:** If you flip a coin $n=5$ times and in each flip the probability of heads is $p=0.5$, what is the chance that you get *at most* 2 successes?
+
+<details>
+  <summary>Solution:</summary>
+
+Now we want to find $P(X\leq2)$. We know that $P(X\leq2)=P(X=2)+P(X=1)+P(X=0)$, so we could again use the `dbinom( )` function.
+
+```{r}
+dbinom(2, size=5, prob=0.5) + dbinom(1, size=5, prob=0.5) + dbinom(0, size=5, prob=0.5)
+```
+
+The problem is that this approach becomes cumbersome as the number of trials increases. A more efficient approach is to recognize that $P(X\leq2)$ takes the form of the CDF and use `pnorm( )`.
+
+```{r}
+pbinom(2, size=5, prob=0.5)
+```
+
+</details>
+
+<br>
+
+**PROBLEM 15:** If you flip a coin $n=100$ times and in each flip the probability of heads is $p=0.25$, what is the chance that you get *at most* 20 successes?
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+pbinom(20, size=100, prob=0.25)
+```
+
+</details>
+
+<br>
+
+**PROBLEM 16:** If you flip a coin $n=100$ times and in each flip the probability of heads is $p=0.25$, what is the chance that you get *at least* 20 successes?
+
+<details>
+  <summary>Solution:</summary>
+
+We have two ways to solve this problem. First, we can write $P(X\geq 20)=1-P(X<20)=1-P(X\leq 19)$ where $P(X<20)=P(X\leq 19)$ since $X$ is discrete.
+
+```{r}
+1-pbinom(19, size=100, prob=0.25)
+```
+
+Alternatively, we can use the `lower.tail=FALSE` option to tell R we want the probability *greater than* x. However, note that this is *strictly greater than*, so we must again remember than $P(X\geq 20)=P(X>19)$.
+
+```{r}
+pbinom(19, size=100, prob=0.25, lower.tail=FALSE)
+```
+
+</details>
+
+### Quantile Function (`qbinom`)
+
+**PROBLEM 17:** Suppose you flip a coin $n=20$ times where each flip has a probability of heads equal to $p=0.5$. Find the value $q$ such that the probability of getting at most $q$ successes is equal to 0.25.
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+qbinom(0.25, size=20, prob=0.5)
+```
+
+</details>
+
+### Random Number Generator (`rbinom`)
+
+**PROBLEM 18:** Generate $n=50$ Bernoulli$(p)$ random variables with $p=0.2$.
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+x = rbinom(50, size=1, prob=0.2)
+x
+barplot(table(x))
+```
+
+</details>
+
+<br>
+
+**PROBLEM 19:** Generate $n=100$ Binomial$(n,p)$ random variables with $p=0.4$.
+
+<details>
+  <summary>Solution:</summary>
+
+```{r}
+x = rbinom(100, size=100, prob=0.2)
+x
+barplot(table(x))
+```
+
+</details>

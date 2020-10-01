@@ -1,0 +1,274 @@
+# Estimation
+
+## Point Estimation and the MLE
+<hr>
+
+Point estimation is all about using one single number (statistic) to estimate a population parameter of interest. One question is how do we actually come up with those statistics?
+
+In this section, we will illustrate the concept of **maximum likelihood estimation**. The idea of maximum likelihood estimation is to first assume our data come from a known family of distributions (e.g., normal) that contain parameters (e.g., mean $\mu$, variance $\sigma^2$). Then the maximum likelihood estimates (MLEs) of the parameters will be the parameter values that are most likely to have generated our data, where "most likely" is measured by the likelihood function.
+
+To start, let's create a simple data set. We will generate $n=25$ normal random variables with mean $\mu=5$ and variance $\sigma^2=1$. 
+
+```{r}
+x = rnorm(25, mean=5, sd=1)
+```
+
+Now we will pretend as if we do not know the mean parameter of the population distribution $\mu$ and then use the method of maximum likelihood to estimate $\mu$. 
+
+Remember that the MLE of $\mu$ is defined as $\hat{\mu}^{\text{MLE}}=\arg\max f(x_1,\dotsc,x_n|\mu,\sigma^2)$. That is, $\hat{\mu}^{\text{MLE}}$ is the value of $\mu$ that maximizes the likelihood function.
+
+Once we have made the assumption that are our data are normally distributed, the likelihood function takes the form  $$f(x_1,\dotsc,x_n|\mu,\sigma^2)=\prod_{i=1}^n f(x_i|\mu,\sigma^2)=\prod_{i=1}^n{1\over\sqrt{2\pi\sigma^2}}\exp\left(-{1\over2\sigma^2}(x_i-\mu)^2\right)$$
+where the right-most term is the PDF of the normal distribution.
+
+If we use calculus to formally maximize the likelihood function, we will find that $\hat{\mu}^{\text{MLE}}=\bar{X}$.
+
+Since the MLE of $\mu$ is the sample mean, computing the MLE in R becomes straightforward.
+
+```{r}
+mean(x)
+```
+
+Therefore, the MLE of $\mu$ is about 5.16. 
+
+To help provide some intuition for how the maximum likelihood method works, let's work through an example. Rather than try to work through the calculus to show that $\hat{\mu}^{\text{MLE}}=\bar{x}=5.16$, we can plot the likelihood function against many candidate values of $\mu$ and see where the curve is highest.
+
+Since the likelihood function is a product of positive numbers (many of which can be very small), it's more convenient and numerically stable to work with the *log-likelihood function*.
+$$\log f(x_1,\dotsc,x_n|\mu,\sigma^2)=\log\left(\prod_{i=1}^n f(x_i|\mu,\sigma^2)\right)=\sum_{i=1}^n \log f(x_i|\mu,\sigma^2)$$
+
+To compute the log-likelihood function for each $x_i$, we can use the `dnorm( )` function. 
+
+Let's start by evaluating the log-likelihood for each observation. To do this we need to plug in a value for the mean (which we will fix to its true value $\mu=5$).
+
+```{r}
+dnorm(x, mean=5, sd=1, log=TRUE)
+```
+
+The entire log-likelihood function is the sum of the individual log-likelihood evaluations. Therefore, the log-likelihood for $\mu=5$ can be found as follows.
+
+```{r}
+sum(dnorm(x, mean=5, sd=1, log=TRUE))
+```
+
+This number now represents a measure of the relative likelihood that our data x were generated from a normal distribution with mean 5. We can the imagine using the likelihood function as a way of finding "good" estimates of $\mu$. The "best" estimate of $\mu$ would correspond to the value that is *most* likely to have generated our data.
+
+As a simple example, we could say: is it more likely that our data come from a distribution with mean $\mu=5$ or $\mu=6$?
+
+To test this, we could evaluate the log likelihood function for $\mu=6$ and compare.
+
+```{r}
+sum(dnorm(x, mean=6, sd=1, log=TRUE))
+```
+
+Given that the likelihood function is higher (less negative) for $\mu=5$, we say that $\hat{\mu}=5$ is our estimate of $\mu$. 
+
+Since $\mu$ can be any real number, there is no reason to restrict plausible values of $\mu$ to the set of integers. Instead, we can lay out a grid of candidate parameter values of any desired level of granularity.
+
+```{r}
+index = seq(3, 7, by=.01)
+index
+```
+
+We now want to step through each value in the index and evaluate the log-likelihood function. The MLE will be the value in the index that yields the highest log-likelihood function.
+
+To do this, we will use a "for loop" in R.
+
+```{r}
+R = length(index)
+loglike = double(R)
+for(r in 1:R){
+  loglike[r] = sum(dnorm(x, mean=index[r], sd=1, log=TRUE))
+}
+```
+
+Here R counts the number of elements in the index variable and loglike is a vector of R elements that are initially set to be zero but are then filled in in each iteration of the for loop.
+
+```{r}
+plot(index, loglike, type="l")
+abline(v=index[which.max(loglike)], col=2, lty=2)
+```
+
+Once we have evaluated the log-likelihood function for each value in the index, we can plot the log-likelihood against the index.
+
+Based on this plot, it looks like the value that maximizes the log-likehood functin is a little bit greater than 5. We formally check this in R.
+
+```{r}
+index[which.max(loglike)]
+```
+
+This matches the MLE that we initially computed using the sample mean. 
+
+```{r}
+mean(x)
+```
+
+The only difference is the fact that our estimate using the plot is rounded to two decimal places because of the grid that we selected when creating the index variable.
+
+<br>
+
+## Confidence Intervals
+<hr>
+
+Ultimately, point estimates are insufficient because the estimators themselves are random variables and subject to variation across different samples. Rather than provide a single point estimate, it will be better to provide a *range of plausible values* for the parameter of interest. This is the idea of **confidence intervals**.
+
+A confidence interval for any parameter $\theta$ will always take the form:
+$$\hat{\theta}\pm \text{(critical value)}\times \text{SD}(\hat{\theta})$$
+where $\hat{\theta}$ is an estimator of $\theta$, the critical value is a quantile of a normal or t distribution, and $\text{SD}(\hat{\theta})$ is the standard deviation of the estimator.
+
+### Types of Confidence Intervals
+We will consider four types of $(1-\alpha)100\%$ confidence intervals.
+
+1. Confidence interval for mean $\mu$, data are normally distributed, variance $\sigma^2$ is known
+$$\bar{x}\pm z_{\alpha/2}{\sigma\over\sqrt{n}}$$
+
+2. Confidence interval for mean $\mu$, data are normally distributed, variance $\sigma^2$ is unknown
+$$\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}$$
+
+3. Confidence interval for mean $\mu$, data are not normally distributed
+$$\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}$$
+
+4. Confidence interval for proportion $p$, data are binary (0s and 1s)
+$$\hat{p}\pm z_{\alpha/2}\sqrt{\hat{p}(1-\hat{p})\over n}$$
+
+Notice that we can compute the critical values in R. If we need $z_{\alpha/2}$, then we must find the value of a standard normal random variable such that $\alpha/2$ percent of the area is to its right. This is can be found using the normal quantile function `qnorm( )`! 
+
+For example, if $\alpha=0.05$ let's use `qnorm( )` to find $z_{0.025}$.
+
+```{r}
+qnorm(0.025, mean=0, sd=1, lower.tail=FALSE)
+```
+
+A summary of the most commonly used normal critical values are provided below.
+
+```{r results = 'asis',echo=FALSE}
+dt = data.frame(cbind(c("99%","95%","90%"),c(2.576,1.96,1.645)))
+kable(dt,align = "c",col.names = c("Confidence Level $(1-\\alpha)$","Critical Value $z_{\\alpha/2}$")) %>%
+  kable_styling(full_width = F, position = "center")
+```
+
+Similarly, if we need to compute $t_{n-1,\alpha/2}$ with $\alpha=0.05$ and our data have $n=50$ observations, we can use the `qt( )` function. 
+
+```{r}
+qt(0.025, df=50-1, lower.tail=FALSE)
+```
+
+Notice this critical value is larger than $z_{0.025}$ -- this comes from the fact that the t-distribution has fatter tails than the normal distribution. But, it also turns out that a t distribution (which only has one parameter $\nu$ called the "degrees of freedom") converges to a normal distribution as $\nu\to\infty$. We can formally check this using `qt( )`.
+
+```{r}
+qt(0.025, df=50, lower.tail=FALSE)
+qt(0.025, df=100, lower.tail=FALSE)
+qt(0.025, df=1000, lower.tail=FALSE)
+qt(0.025, df=10000, lower.tail=FALSE)
+```
+
+Notice how these values approach $z_{0.025}\approx1.96$ as the degrees of freedom parameter gets large.
+
+### Examples
+
+**PROBLEM 1:** A wine importer needs to report the average percentage of alcohol in bottles of French wine. From experience with previous kinds of wine, the importer believes that alcolhol percentages are normally distributed and the population standard deviation is 1.2%. The importer randomly samples 60 bottles of the new wine and obtains a sample mean $\bar{x}=9.3\%$. Give a 90% confidence interval for the average percentage of alcohol in all bottles of the new wine.
+
+<details>
+  <summary>Solution:</summary>
+
+From the problem, we know the following.
+\begin{align*}
+n = 60\\
+\sigma=1.2\\
+\bar{x} =9.3\\
+\alpha=0.10
+\end{align*}
+We must first figure out which type of confidence interval to use. Notice that we are trying to estimate the *average* percentage of alcohol, so our parameter is a mean $\mu$. Moreover, we are told to assume that the data are normally distributed and the population standard deviation $\sigma$ is known. Thefore, our confidence interval will be of the form: 
+$$\bar{x}\pm z_{\alpha/2}{\sigma\over\sqrt{n}}.$$
+We can now define each object in R and construct the confidence interval.
+
+```{r}
+n = 60
+sigma = 1.2
+xbar = 9.3
+zalpha = qnorm(0.05, mean=0, sd=1, lower.tail=FALSE)
+xbar - zalpha*sigma/sqrt(n)
+xbar + zalpha*sigma/sqrt(n)
+```
+
+Therefore, we are 90% confident that the true average alcohol content in all new bottles of wine is between 9.05% and 9.55%.
+
+</details>
+
+<br>
+
+**PROBLEM 2:** An economist wants to estimate the average amount in checking accounts at banks in a given region. A random sample of 100 accounts gives $\bar{x}=£357.60$ and $s=£140.00$. Give a 95% confidence interval for $\mu$, the average amount in any checking account at a bank in the given region.
+
+<details>
+  <summary>Solution:</summary>
+
+From the problem, we know the following.
+\begin{align*}
+n &= 100\\
+\bar{x} &=357.60\\
+s &= 140\\
+\alpha&=0.5
+\end{align*}
+Here we are not told whether the data are normally distributed. However, it won't matter because we only have an estimate of $\sigma$ (remember that among the four types of confidence intervals we considered earlier, there are no differences between case II and III). Therefore, our confidence interval will be of the form:
+$$\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}.$$
+We can again define each object in R and construct the confidence interval.
+
+```{r}
+n = 100
+xbar = 357.60
+s = 140
+talpha = qt(0.025, df=n-1, lower.tail=FALSE)
+xbar - talpha*s/sqrt(n)
+xbar + talpha*s/sqrt(n)
+```
+
+Therefore, we are 95% confident that the true average account checking account value in the given region is between £329.82 and £385.38.
+
+</details>
+
+<br>
+
+**PROBLEM 3:** The EuStockMarkets data set in R provides daily closing prices of four major European stock indices: Germany DAX (Ibis), Switzerland SMI, France CAC, and UK FTSE. Using this data set, produce a 99% confidence interval for the average closing price of the UK FTSE.
+
+<details>
+  <summary>Solution:</summary>
+
+First, let's load in the data from R.
+
+```{r results="hide"}
+data(EuStockMarkets)
+head(EuStockMarkets)
+```
+
+```{r echo=FALSE}
+head(EuStockMarkets) %>%
+  kable() %>%
+  kable_styling(full_width=FALSE)
+```
+
+Now let's pull the subset of data we care about (i.e., the UK FTSE column).
+
+```{r}
+uk = EuStockMarkets[,4]
+```
+
+Notice that we are not told anything about the true distribution of the data. Therefore, our confidence interval will be of the form:
+$$\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}.$$
+Next, let's compute each component necessary to construct the 99% confidence interval.
+
+```{r}
+n = length(uk)
+xbar = mean(uk)
+s = sd(uk)
+talpha = qt(0.005, df=n-1, lower.tail=FALSE)
+xbar - talpha*s/sqrt(n)
+xbar + talpha*s/sqrt(n)
+```
+
+Therefore, we are 99% confident that the true closing price for the UK FTSE index is between £3,507.25 and £3,624.04.
+
+Finally, notice that we can use the `t.test( )` function to perform the same analysis but with fewer steps.
+
+```{r}
+t.test(uk, conf.level=0.99)
+```
+
+</details>
