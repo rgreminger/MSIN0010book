@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 2 Computing Probabilities | Data Analytics with R</title>
+  <meta name="description" content="Chapter 2 Computing Probabilities | Data Analytics with R" />
+  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 2 Computing Probabilities | Data Analytics with R" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 2 Computing Probabilities | Data Analytics with R" />
+  
+  
+  
+
+<meta name="author" content="Adam Smith, UCL School of Management" />
+
+
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="introduction-to-data-analytics.html"/>
+<link rel="next" href="sampling-distributions-and-the-clt.html"/>
+<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
+
+
+<style type="text/css">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i>Getting Started with R</a><ul>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#why-use-r"><i class="fa fa-check"></i>Why use R?</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#downloading-r-and-rstudio"><i class="fa fa-check"></i>Downloading R and RStudio</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#installing-and-loading-packages"><i class="fa fa-check"></i>Installing and Loading Packages</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html"><i class="fa fa-check"></i><b>1</b> Introduction to Data Analytics</a><ul>
+<li class="chapter" data-level="1.1" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#loading-and-inspecting-data-sets"><i class="fa fa-check"></i><b>1.1</b> Loading and Inspecting Data Sets</a></li>
+<li class="chapter" data-level="1.2" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#statistical-summaries"><i class="fa fa-check"></i><b>1.2</b> Statistical Summaries</a></li>
+<li class="chapter" data-level="1.3" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#graphical-summaries"><i class="fa fa-check"></i><b>1.3</b> Graphical Summaries</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="computing-probabilities.html"><a href="computing-probabilities.html"><i class="fa fa-check"></i><b>2</b> Computing Probabilities</a><ul>
+<li class="chapter" data-level="2.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#normal-distribution"><i class="fa fa-check"></i><b>2.1</b> Normal Distribution</a><ul>
+<li class="chapter" data-level="2.1.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#probability-density-function-dnorm"><i class="fa fa-check"></i><b>2.1.1</b> Probability Density Function (<code>dnorm</code>)</a></li>
+<li class="chapter" data-level="2.1.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#cumulative-distribution-function-pnorm"><i class="fa fa-check"></i><b>2.1.2</b> Cumulative Distribution Function (<code>pnorm</code>)</a></li>
+<li class="chapter" data-level="2.1.3" data-path="computing-probabilities.html"><a href="computing-probabilities.html#quantile-function-qnorm"><i class="fa fa-check"></i><b>2.1.3</b> Quantile Function (<code>qnorm</code>)</a></li>
+<li class="chapter" data-level="2.1.4" data-path="computing-probabilities.html"><a href="computing-probabilities.html#random-number-generator-rnorm"><i class="fa fa-check"></i><b>2.1.4</b> Random Number Generator (<code>rnorm</code>)</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#bernoulli-and-binomial-distributions"><i class="fa fa-check"></i><b>2.2</b> Bernoulli and Binomial Distributions</a><ul>
+<li class="chapter" data-level="2.2.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#probability-mass-function-dbinom"><i class="fa fa-check"></i><b>2.2.1</b> Probability Mass Function (<code>dbinom</code>)</a></li>
+<li class="chapter" data-level="2.2.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#cumulative-distribution-function-pbinom"><i class="fa fa-check"></i><b>2.2.2</b> Cumulative Distribution Function (<code>pbinom</code>)</a></li>
+<li class="chapter" data-level="2.2.3" data-path="computing-probabilities.html"><a href="computing-probabilities.html#quantile-function-qbinom"><i class="fa fa-check"></i><b>2.2.3</b> Quantile Function (<code>qbinom</code>)</a></li>
+<li class="chapter" data-level="2.2.4" data-path="computing-probabilities.html"><a href="computing-probabilities.html#random-number-generator-rbinom"><i class="fa fa-check"></i><b>2.2.4</b> Random Number Generator (<code>rbinom</code>)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="sampling-distributions-and-the-clt.html"><a href="sampling-distributions-and-the-clt.html"><i class="fa fa-check"></i><b>3</b> Sampling Distributions and the CLT</a></li>
+<li class="chapter" data-level="4" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>4</b> Estimation</a><ul>
+<li class="chapter" data-level="4.1" data-path="estimation.html"><a href="estimation.html#point-estimation-and-the-mle"><i class="fa fa-check"></i><b>4.1</b> Point Estimation and the MLE</a></li>
+<li class="chapter" data-level="4.2" data-path="estimation.html"><a href="estimation.html#confidence-intervals"><i class="fa fa-check"></i><b>4.2</b> Confidence Intervals</a><ul>
+<li class="chapter" data-level="4.2.1" data-path="estimation.html"><a href="estimation.html#types-of-confidence-intervals"><i class="fa fa-check"></i><b>4.2.1</b> Types of Confidence Intervals</a></li>
+<li class="chapter" data-level="4.2.2" data-path="estimation.html"><a href="estimation.html#examples"><i class="fa fa-check"></i><b>4.2.2</b> Examples</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i><b>5</b> Hypothesis Tests</a><ul>
+<li class="chapter" data-level="5.1" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#steps-of-hypothesis-testing"><i class="fa fa-check"></i><b>5.1</b> Steps of Hypothesis Testing</a></li>
+<li class="chapter" data-level="5.2" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#connection-to-confidence-intervals"><i class="fa fa-check"></i><b>5.2</b> Connection to Confidence Intervals</a></li>
+<li class="chapter" data-level="5.3" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#hypothesis-testing-in-r"><i class="fa fa-check"></i><b>5.3</b> Hypothesis Testing in R</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a><ul>
+<li class="chapter" data-level="6.1" data-path="regression.html"><a href="regression.html#linear-regression"><i class="fa fa-check"></i><b>6.1</b> Linear Regression</a></li>
+<li class="chapter" data-level="6.2" data-path="regression.html"><a href="regression.html#regression-trees"><i class="fa fa-check"></i><b>6.2</b> Regression Trees</a></li>
+<li class="chapter" data-level="6.3" data-path="regression.html"><a href="regression.html#model-selection"><i class="fa fa-check"></i><b>6.3</b> Model Selection</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>7</b> Classification</a><ul>
+<li class="chapter" data-level="7.1" data-path="classification.html"><a href="classification.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>7.1</b> <span class="math inline">\(k\)</span>-Nearest Neighbors</a></li>
+<li class="chapter" data-level="7.2" data-path="classification.html"><a href="classification.html#logistic-regression"><i class="fa fa-check"></i><b>7.2</b> Logistic Regression</a></li>
+<li class="chapter" data-level="7.3" data-path="classification.html"><a href="classification.html#classification-trees"><i class="fa fa-check"></i><b>7.3</b> Classification Trees</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>8</b> Clustering</a><ul>
+<li class="chapter" data-level="8.1" data-path="clustering.html"><a href="clustering.html#k-means"><i class="fa fa-check"></i><b>8.1</b> <span class="math inline">\(k\)</span>-Means</a></li>
+<li class="chapter" data-level="8.2" data-path="clustering.html"><a href="clustering.html#hierarchical-clustering"><i class="fa fa-check"></i><b>8.2</b> Hierarchical Clustering</a></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Data Analytics with R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="computing-probabilities" class="section level1">
+<h1><span class="header-section-number">Chapter 2</span> Computing Probabilities</h1>
+<p>There are many common families of probability distributions and we have discussed six so far. The discrete distributions include the discrete Uniform, Bernoulli, and Binomial. The continuous distributions include the continuous Uniform, Normal, and t.</p>
+<p>This chapter provides a set of examples to show you how to compute probabilities from a few of these distributions in R.</p>
+<div id="normal-distribution" class="section level2">
+<h2><span class="header-section-number">2.1</span> Normal Distribution</h2>
+<hr>
+<p>R has four normal distribution functions: <code>dnorm( )</code>, <code>pnorm( )</code>, <code>qnorm( )</code>, and <code>rnorm( )</code>.</p>
+<blockquote>
+<p><strong><code>dnorm(x,mean,sd)</code> probability density function (PDF)</strong><br>
+- <em>input</em>: <code>x</code> is the value at which you want to evaluate the normal PDF<br>
+- <em>output</em>: a positive number since the PDF <span class="math inline">\(f(x)\)</span> must be positive<br>
+- <em>example</em>: evaluate <span class="math inline">\(f(x)\)</span><br>
+<br>
+<strong><code>pnorm(q,mean,sd)</code> cumulative distribution function (CDF)</strong><br>
+- <em>input</em>: <code>q</code> is the value for which you want to find the area below/above<br>
+- <em>output</em>: a probability<br>
+- <em>example</em>: compute <span class="math inline">\(P(X&lt;q)\)</span><br>
+<br>
+<strong><code>qnorm(p,mean,sd)</code> quantile function</strong><br>
+- <em>input</em>: <code>p</code> is a probability<br>
+- <em>output</em>: a real number since <span class="math inline">\(X\in(-\infty,\infty)\)</span><br>
+- <em>example</em>: find the value <span class="math inline">\(q\)</span> such that <span class="math inline">\(P(X&lt;q)=p\)</span><br>
+<br>
+<strong><code>rnorm(n,mean,sd)</code> random number generator</strong><br>
+- <em>input</em>: <code>n</code> is the number of observations you want to generate<br>
+- <em>output</em>: a vector of n real numbers<br>
+- <em>example</em>: generate n independent <span class="math inline">\(N(\mu,\sigma^2)\)</span> random variables<br></p>
+</blockquote>
+<p>More information is also accessible in R if you type <code>?dnorm</code>, <code>?pnorm</code>, <code>?qnorm</code>, or <code>?rnorm</code>.</p>
+<p>To learn how to use these functions, we’ll start with a few exercises on the <strong>standard normal distribution</strong> which is a normal distribution with mean 0 and standard deviation of 1. We will then move on to the more general <span class="math inline">\(N(\mu,\sigma^2)\)</span> distribution.</p>
+<div id="probability-density-function-dnorm" class="section level3">
+<h3><span class="header-section-number">2.1.1</span> Probability Density Function (<code>dnorm</code>)</h3>
+<p>When <span class="math inline">\(X\)</span> is a continuous random variable, we know that <span class="math inline">\(P(X=x)=0\)</span>. Therefore, <code>dnorm( )</code> does not return a probability, but rather the <em>height</em> of the PDF. Even though the height of the PDF is not a probability, we can still interpret density evaluations as the relatively likelihood of observing a certain value <span class="math inline">\(x\)</span>.</p>
+<p><strong>PROBLEM 1:</strong> Let <span class="math inline">\(X\sim N(0,1)\)</span>. Is the value <span class="math inline">\(x=1\)</span> or <span class="math inline">\(x=-0.5\)</span> more likely to occur under this normal distribution?</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw">dnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## [1] 0.242</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1"><span class="kw">dnorm</span>(<span class="op">-</span><span class="fl">0.5</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## [1] 0.3521</code></pre>
+The results show that <span class="math inline">\(x=-0.5\)</span> is more likely, since <span class="math inline">\(f(-0.5)&gt;f(1)\)</span>. This should be expected because we know that density function is symmetric and peaks at the mean value which is 0 here. Since <span class="math inline">\(x=-0.5\)</span> is closer to 0 than <span class="math inline">\(x=1\)</span>, it should have higher likelihood under <span class="math inline">\(N(0,1)\)</span> distribution.
+</details>
+</div>
+<div id="cumulative-distribution-function-pnorm" class="section level3">
+<h3><span class="header-section-number">2.1.2</span> Cumulative Distribution Function (<code>pnorm</code>)</h3>
+<p>The <code>pnorm( )</code> function is useful for evaluating probabilities of the form <span class="math inline">\(P(X\leq x)\)</span> or <span class="math inline">\(P(X \geq x)\)</span>.</p>
+<p><strong>PROBLEM 2:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, what is <span class="math inline">\(P(X&lt;0)\)</span>?</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## [1] 0.5</code></pre>
+</details>
+<p><br>
+<strong>PROBLEM 3:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, what is <span class="math inline">\(P(X&lt;1)\)</span>?</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## [1] 0.8413</code></pre>
+</details>
+<p><br>
+<strong>PROBLEM 4:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, what is <span class="math inline">\(P(X&gt;1)\)</span>?</p>
+<details>
+<p><summary>Solution:</summary></p>
+<p>We have two ways of answering this question. First, we can recognize that <span class="math inline">\(P(X&gt;1)=1-P(X\geq 1)\)</span>.</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1"><span class="dv">1</span><span class="op">-</span><span class="kw">pnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## [1] 0.1587</code></pre>
+<p>A second approach is to use the <code>lower.tail</code> option within the <code>pnorm( )</code> function. When <code>lower.tail=TRUE</code> then the <code>pnorm( )</code> function returns the probability to the <em>left</em> of a given number <span class="math inline">\(x\)</span> and if <code>lower.tail=FALSE</code> then <code>pnorm( )</code> returns the probability to the <em>right</em> of <span class="math inline">\(x\)</span>.</p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] 0.1587</code></pre>
+</details>
+<p><br>
+<strong>PROBLEM 5:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, what is <span class="math inline">\(P(0&lt;X&lt;1)\)</span></p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">1</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>) <span class="op">-</span><span class="st"> </span><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## [1] 0.3413</code></pre>
+</details>
+<p><br></p>
+<p>Once we understand how to use the <code>pnorm( )</code> function to compute standard normal probabilities, extending the function to compute probabilities of any normal distribution is straightforward. All we have to do is change the <code>mean</code> and <code>sd</code> arguments.</p>
+<p><strong>Remember that the normal functions in R call for the standard deviation <span class="math inline">\(\sigma\)</span>, NOT the variance <span class="math inline">\(\sigma^2\)</span>!</strong></p>
+<p><br>
+<strong>PROBLEM 6:</strong> If <span class="math inline">\(X\sim N(4,9)\)</span>, what is <span class="math inline">\(P(X&lt;0)\)</span>?</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">0</span>, <span class="dt">mean=</span><span class="dv">4</span>, <span class="dt">sd=</span><span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## [1] 0.09121</code></pre>
+</details>
+<p><br>
+<strong>PROBLEM 7:</strong> If <span class="math inline">\(X\sim N(2,3)\)</span>, what is <span class="math inline">\(P(X&gt;5)\)</span>?</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1"><span class="kw">pnorm</span>(<span class="dv">5</span>, <span class="dt">mean=</span><span class="dv">2</span>, <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="dv">3</span>), <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] 0.04163</code></pre>
+</details>
+</div>
+<div id="quantile-function-qnorm" class="section level3">
+<h3><span class="header-section-number">2.1.3</span> Quantile Function (<code>qnorm</code>)</h3>
+<p>Next, let’s use the <code>qnorm( )</code> function to find quantiles of the normal distribution.</p>
+<p><strong>PROBLEM 8:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, find the value <span class="math inline">\(q\)</span> such that <span class="math inline">\(P(X&lt;q)=0.05\)</span>.</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1"><span class="kw">qnorm</span>(<span class="fl">0.05</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## [1] -1.645</code></pre>
+</details>
+<p><br>
+<strong>PROBLEM 9:</strong> If <span class="math inline">\(X\sim N(0,1)\)</span>, find the value <span class="math inline">\(q\)</span> such that <span class="math inline">\(P(X&gt;q)=0.025\)</span>. That is, <span class="math inline">\(q\)</span> is the value such that 2.5% of the area under the standard normal PDF is to its right.</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw">qnorm</span>(<span class="fl">0.025</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] 1.96</code></pre>
+</details>
+<p><br>
+<strong>PROBLEM 10:</strong> If <span class="math inline">\(X\sim N(-4,2)\)</span>, find the value <span class="math inline">\(q\)</span> such that <span class="math inline">\(P(X&gt;q)=0.1\)</span>. That is, <span class="math inline">\(q\)</span> is the value such that 10% of the area under the <span class="math inline">\(N(-4,2)\)</span> PDF is to its right.</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1"><span class="kw">qnorm</span>(<span class="fl">0.1</span>, <span class="dt">mean=</span><span class="op">-</span><span class="dv">4</span>, <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="dv">2</span>), <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] -2.188</code></pre>
+</details>
+</div>
+<div id="random-number-generator-rnorm" class="section level3">
+<h3><span class="header-section-number">2.1.4</span> Random Number Generator (<code>rnorm</code>)</h3>
+<p>Finally, let’s use <code>rnorm( )</code> to generate random samples of size <span class="math inline">\(n\)</span> from a normal distribution.</p>
+<p><strong>PROBLEM 11:</strong> Generate <span class="math inline">\(n=20\)</span> random variables from a standard normal distribution.</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">20</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb47-2" data-line-number="2">x</a></code></pre></div>
+<pre><code>##  [1] -0.62645  0.18364 -0.83563  1.59528  0.32951 -0.82047  0.48743
+##  [8]  0.73832  0.57578 -0.30539  1.51178  0.38984 -0.62124 -2.21470
+## [15]  1.12493 -0.04493 -0.01619  0.94384  0.82122  0.59390</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" data-line-number="1"><span class="kw">hist</span>(x)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+</details>
+<p><br>
+<strong>PROBLEM 12:</strong> Generate <span class="math inline">\(n=100\)</span> random variables from a <span class="math inline">\(N(10,2)\)</span> distribution.</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dv">100</span>, <span class="dt">mean=</span><span class="dv">10</span>, <span class="dt">sd=</span><span class="kw">sqrt</span>(<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb50-2" data-line-number="2">x</a></code></pre></div>
+<pre><code>##   [1] 11.300 11.106 10.105  7.187 10.877  9.921  9.780  7.920  9.324 10.591
+##  [11] 11.921  9.855 10.548  9.924  8.053  9.413  9.442  9.916 11.556 11.079
+##  [21]  9.767  9.642 10.986 10.787  9.026  8.999 10.516 11.087  9.841 11.246
+##  [31] 10.563  9.134 10.482  8.403 12.027 12.801  9.481  8.523 10.806  9.809
+##  [41] 13.396  9.945 10.975 10.040  8.949 10.267  7.447 12.073 10.217 13.073
+##  [51] 10.672  8.996 10.864  8.679  8.227 10.412  9.373 10.002 10.105  9.166
+##  [61]  9.196  9.809 11.666  7.845 10.840 10.471 11.503  9.570 10.523 10.378
+##  [71]  9.233 11.708 11.641 10.990 12.244 10.790  8.195  9.189  8.268  9.331
+##  [81]  9.123 10.060  8.712 10.223  9.074 12.499 11.014 11.287 10.543 12.379
+##  [91]  9.101  9.347 12.026  9.080  9.707  9.444  9.547  9.605 10.699  9.749</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" data-line-number="1"><span class="kw">hist</span>(x)</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+</details>
+</div>
+</div>
+<div id="bernoulli-and-binomial-distributions" class="section level2">
+<h2><span class="header-section-number">2.2</span> Bernoulli and Binomial Distributions</h2>
+<hr>
+<p>The Bernoulli and Binomial distributions are intimately related: a Binomial random variable corresponds to the number of successes in <span class="math inline">\(n\)</span> independent Bernoulli trials. For example, consider flipping a coin. Each coin flip can be modelled as a Bernoulli<span class="math inline">\((p)\)</span> random variable with probability of success (heads) equal to <span class="math inline">\(p\)</span>. If you flipped a coin <span class="math inline">\(n=10\)</span> times and wanted to model the number of sucesses (heads) in <span class="math inline">\(n=10\)</span> trials, that would be a Binomial(<span class="math inline">\(n,p\)</span>) random variable.</p>
+<p>R has four functions that can be used to compute both Bernoulli and Binomial probabilities: <code>dbinom( )</code>, <code>pbinom( )</code>, <code>qbinom( )</code>, <code>rbinom( )</code>.</p>
+<blockquote>
+<p><strong><code>dbinom(x,size,prob)</code> probability mass function (PMF)</strong><br>
+- <em>input</em>: <code>x</code> is the number of successes, <code>size</code> is the number of trials <span class="math inline">\(n\)</span>, <code>prob</code> is the probability of success <span class="math inline">\(p\)</span><br>
+- <em>output</em>: a probability since <span class="math inline">\(0\leq P(X=x)\leq1\)</span><br>
+- <em>example</em>: evaluate <span class="math inline">\(P(X=x)\)</span><br>
+<br></p>
+<p><strong><code>pbinom(q,size,prob)</code> probability distribution function (CDF)</strong><br>
+- <em>input</em>: <code>q</code> is the value for which you want to find the area below/above, <code>size</code> is the number of trials <span class="math inline">\(n\)</span>, <code>prob</code> is the probability of success <span class="math inline">\(p\)</span><br>
+- <em>output</em>: a probability <br>
+- <em>example</em>: evaluate <span class="math inline">\(P(X\leq x)\)</span><br>
+<br>
+<strong><code>qbinom(p,size,prob)</code> quantile function</strong> <br>
+- <em>input</em>: <code>p</code> is a probability, <code>size</code> is the number of trials <span class="math inline">\(n\)</span>, <code>prob</code> is the probability of success <span class="math inline">\(p\)</span><br>
+- <em>output</em>: a positive integer since <span class="math inline">\(X\in\{0,1,\dotsc,n\}\)</span> <br>
+- <em>example</em>: find <span class="math inline">\(q\)</span> s.t. <span class="math inline">\(P(X\leq q)=p\)</span><br>
+<br>
+<strong><code>rbinom(n,size,prob)</code> random number generator</strong> <br>
+- <em>input</em>: <code>n</code> is the number of observations you want to generate, <code>size</code> is the number of trials <span class="math inline">\(n\)</span>, <code>prob</code> is the probability of success <span class="math inline">\(p\)</span><br>
+- <em>output</em>: a vector of n positive integers <br>
+- <em>example</em>: generate <span class="math inline">\(n\)</span> independent Binomial<span class="math inline">\((n,p)\)</span> random variables</p>
+</blockquote>
+<p><strong>Note: These functions correspond to the Bernoulli distribution whenever <code>size=1</code>.</strong></p>
+<p>More information is also accessible in R if you type <code>?dbinom</code>, <code>?pbinom</code>, <code>?qbinom</code>, or <code>?rbinom</code>.</p>
+<div id="probability-mass-function-dbinom" class="section level3">
+<h3><span class="header-section-number">2.2.1</span> Probability Mass Function (<code>dbinom</code>)</h3>
+<p><strong>PROBLEM 13:</strong> If you flip a coin <span class="math inline">\(n=5\)</span> times and in each flip the probability of heads is <span class="math inline">\(p=0.5\)</span>, what is the chance that you get 2 successes?</p>
+<details>
+<p><summary>Solution:</summary></p>
+<p>Here, our random variable <span class="math inline">\(X\)</span> is the number of successes in <span class="math inline">\(n\)</span> independent trials, so <span class="math inline">\(X\sim\text{Binomial}(n,p)\)</span> with <span class="math inline">\(n=5\)</span> and <span class="math inline">\(p=0.5\)</span>.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw">dbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">prob=</span><span class="fl">0.5</span>)</a></code></pre></div>
+<pre><code>## [1] 0.3125</code></pre>
+<p>We can also check our answer using the Binomial probability mass function: <span class="math inline">\(P(X=x)={n\choose x}p^x(1-p)^{n-x}\)</span>.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" data-line-number="1"><span class="kw">choose</span>(<span class="dv">5</span>,<span class="dv">2</span>)<span class="op">*</span><span class="fl">0.5</span><span class="op">^</span><span class="dv">2</span><span class="op">*</span>(<span class="dv">1</span><span class="fl">-0.5</span>)<span class="op">^</span>(<span class="dv">5-2</span>)</a></code></pre></div>
+<pre><code>## [1] 0.3125</code></pre>
+</details>
+</div>
+<div id="cumulative-distribution-function-pbinom" class="section level3">
+<h3><span class="header-section-number">2.2.2</span> Cumulative Distribution Function (<code>pbinom</code>)</h3>
+<p><strong>PROBLEM 14:</strong> If you flip a coin <span class="math inline">\(n=5\)</span> times and in each flip the probability of heads is <span class="math inline">\(p=0.5\)</span>, what is the chance that you get <em>at most</em> 2 successes?</p>
+<details>
+<p><summary>Solution:</summary></p>
+<p>Now we want to find <span class="math inline">\(P(X\leq2)\)</span>. We know that <span class="math inline">\(P(X\leq2)=P(X=2)+P(X=1)+P(X=0)\)</span>, so we could again use the <code>dbinom( )</code> function.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" data-line-number="1"><span class="kw">dbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">prob=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">dbinom</span>(<span class="dv">1</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">prob=</span><span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span><span class="kw">dbinom</span>(<span class="dv">0</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">prob=</span><span class="fl">0.5</span>)</a></code></pre></div>
+<pre><code>## [1] 0.5</code></pre>
+<p>The problem is that this approach becomes cumbersome as the number of trials increases. A more efficient approach is to recognize that <span class="math inline">\(P(X\leq2)\)</span> takes the form of the CDF and use <code>pnorm( )</code>.</p>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" data-line-number="1"><span class="kw">pbinom</span>(<span class="dv">2</span>, <span class="dt">size=</span><span class="dv">5</span>, <span class="dt">prob=</span><span class="fl">0.5</span>)</a></code></pre></div>
+<pre><code>## [1] 0.5</code></pre>
+</details>
+<p><br></p>
+<p><strong>PROBLEM 15:</strong> If you flip a coin <span class="math inline">\(n=100\)</span> times and in each flip the probability of heads is <span class="math inline">\(p=0.25\)</span>, what is the chance that you get <em>at most</em> 20 successes?</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" data-line-number="1"><span class="kw">pbinom</span>(<span class="dv">20</span>, <span class="dt">size=</span><span class="dv">100</span>, <span class="dt">prob=</span><span class="fl">0.25</span>)</a></code></pre></div>
+<pre><code>## [1] 0.1488</code></pre>
+</details>
+<p><br></p>
+<p><strong>PROBLEM 16:</strong> If you flip a coin <span class="math inline">\(n=100\)</span> times and in each flip the probability of heads is <span class="math inline">\(p=0.25\)</span>, what is the chance that you get <em>at least</em> 20 successes?</p>
+<details>
+<p><summary>Solution:</summary></p>
+<p>We have two ways to solve this problem. First, we can write <span class="math inline">\(P(X\geq 20)=1-P(X&lt;20)=1-P(X\leq 19)\)</span> where <span class="math inline">\(P(X&lt;20)=P(X\leq 19)\)</span> since <span class="math inline">\(X\)</span> is discrete.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="dv">1</span><span class="op">-</span><span class="kw">pbinom</span>(<span class="dv">19</span>, <span class="dt">size=</span><span class="dv">100</span>, <span class="dt">prob=</span><span class="fl">0.25</span>)</a></code></pre></div>
+<pre><code>## [1] 0.9005</code></pre>
+<p>Alternatively, we can use the <code>lower.tail=FALSE</code> option to tell R we want the probability <em>greater than</em> x. However, note that this is <em>strictly greater than</em>, so we must again remember than <span class="math inline">\(P(X\geq 20)=P(X&gt;19)\)</span>.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" data-line-number="1"><span class="kw">pbinom</span>(<span class="dv">19</span>, <span class="dt">size=</span><span class="dv">100</span>, <span class="dt">prob=</span><span class="fl">0.25</span>, <span class="dt">lower.tail=</span><span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] 0.9005</code></pre>
+</details>
+</div>
+<div id="quantile-function-qbinom" class="section level3">
+<h3><span class="header-section-number">2.2.3</span> Quantile Function (<code>qbinom</code>)</h3>
+<p><strong>PROBLEM 17:</strong> Suppose you flip a coin <span class="math inline">\(n=20\)</span> times where each flip has a probability of heads equal to <span class="math inline">\(p=0.5\)</span>. Find the value <span class="math inline">\(q\)</span> such that the probability of getting at most <span class="math inline">\(q\)</span> successes is equal to 0.25.</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw">qbinom</span>(<span class="fl">0.25</span>, <span class="dt">size=</span><span class="dv">20</span>, <span class="dt">prob=</span><span class="fl">0.5</span>)</a></code></pre></div>
+<pre><code>## [1] 8</code></pre>
+</details>
+</div>
+<div id="random-number-generator-rbinom" class="section level3">
+<h3><span class="header-section-number">2.2.4</span> Random Number Generator (<code>rbinom</code>)</h3>
+<p><strong>PROBLEM 18:</strong> Generate <span class="math inline">\(n=50\)</span> Bernoulli<span class="math inline">\((p)\)</span> random variables with <span class="math inline">\(p=0.2\)</span>.</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">50</span>, <span class="dt">size=</span><span class="dv">1</span>, <span class="dt">prob=</span><span class="fl">0.2</span>)</a>
+<a class="sourceLine" id="cb69-2" data-line-number="2">x</a></code></pre></div>
+<pre><code>##  [1] 0 0 1 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+## [36] 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" data-line-number="1"><span class="kw">barplot</span>(<span class="kw">table</span>(x))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-44-1.png" width="672" /></p>
+</details>
+<p><br></p>
+<p><strong>PROBLEM 19:</strong> Generate <span class="math inline">\(n=100\)</span> Binomial<span class="math inline">\((n,p)\)</span> random variables with <span class="math inline">\(p=0.4\)</span>.</p>
+<details>
+<p><summary>Solution:</summary></p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rbinom</span>(<span class="dv">100</span>, <span class="dt">size=</span><span class="dv">100</span>, <span class="dt">prob=</span><span class="fl">0.2</span>)</a>
+<a class="sourceLine" id="cb72-2" data-line-number="2">x</a></code></pre></div>
+<pre><code>##   [1] 17 16 29 18 20 22 15 15 14 26 22 15 20 20 19 30 16 24 14 19 16 17 24
+##  [24] 22 17 20 15 18 28 21 22 18 19 31 24 27 24 23 17 23 29 18 19 24 14 19
+##  [47] 19 16 21 28 30 16 20 19 22 17 20 16 19 22 20 14 23 19 29 18 24 15 25
+##  [70] 20 15 18 24 18 21 24 14 22 22 20 19 21 26 17 17 19 18 24 16 20 19 21
+##  [93] 22 28 17 17 23 24 15 27</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" data-line-number="1"><span class="kw">barplot</span>(<span class="kw">table</span>(x))</a></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-45-1.png" width="672" /></p>
+</details>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="introduction-to-data-analytics.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="sampling-distributions-and-the-clt.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>
