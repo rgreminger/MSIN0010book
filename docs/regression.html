@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 6 Regression | Data Analytics with R</title>
   <meta name="description" content="Chapter 6 Regression | Data Analytics with R" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 6 Regression | Data Analytics with R" />
   <meta property="og:type" content="book" />
@@ -50,9 +50,6 @@
 
 
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
-<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
 
 <style type="text/css">
@@ -247,7 +244,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 0.892 on 97 degrees of freedom
-## Multiple R-squared:  0.601,	Adjusted R-squared:  0.593 
+## Multiple R-squared:  0.601,  Adjusted R-squared:  0.593 
 ## F-statistic:   73 on 2 and 97 DF,  p-value: &lt;2e-16</code></pre>
 <p><font size="4"><strong>Parameter Estimates</strong></font></p>
 <p>First, focus on the “Coefficients” section. Notice that in the first column R reports estimates of our model parameters: <span class="math inline">\(\hat{\beta}_0=-4.914\)</span>, <span class="math inline">\(\hat{\beta}_1=1.666\)</span>, and <span class="math inline">\(\hat{\beta}_2=-1.004\)</span>. Since we generated this data set, we know the “true” values are <span class="math inline">\(\beta_0=-5\)</span>, <span class="math inline">\(\beta_1=2\)</span>, and <span class="math inline">\(\beta_2=-1\)</span>. The estimates here are pretty close to the truth. (Remember: the estimates will not exactly equal the true values because we only have a random sample of <span class="math inline">\(n=100\)</span> observations!)</p>
@@ -306,7 +303,7 @@ where we use the “hat” notation to denote estimates or predicted values.</p>
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
 ## Residual standard error: 21.2 on 97 degrees of freedom
-## Multiple R-squared:  0.17,	Adjusted R-squared:  0.153 
+## Multiple R-squared:  0.17,   Adjusted R-squared:  0.153 
 ## F-statistic: 9.91 on 2 and 97 DF,  p-value: 0.000121</code></pre>
 <p>The answer is that we get incorrect estimates of model parameters! (Remember <span class="math inline">\(\beta=-5,\beta_1=2,\beta_2=-1\)</span>.)</p>
 <p>A more flexible approach to regression modeling is provided by <strong>regression trees</strong>. The idea is to split up the covariate space into homogeneous regions (with respect to the response <span class="math inline">\(Y\)</span>) and then fit simple linear models within each region.</p>
@@ -426,11 +423,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
+"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -442,10 +440,6 @@ gitbook.start({
 "text": null
 },
 "history": {
-"link": null,
-"text": null
-},
-"view": {
 "link": null,
 "text": null
 },
