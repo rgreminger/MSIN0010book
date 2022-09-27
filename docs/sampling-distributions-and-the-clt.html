@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html lang="" xml:lang="">
 <head>
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Sampling Distributions and the CLT | Data Analytics with R</title>
   <meta name="description" content="Chapter 3 Sampling Distributions and the CLT | Data Analytics with R" />
-  <meta name="generator" content="bookdown 0.14 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Sampling Distributions and the CLT | Data Analytics with R" />
   <meta property="og:type" content="book" />
-  
   
   
   
@@ -21,7 +20,8 @@
   
   
 
-<meta name="author" content="Adam Smith, UCL School of Management" />
+<meta name="author" content="Adam Smith (main text), UCL School of Management" />
+<meta name="author" content="Rafael Greminger (2022 updates), UCL School of Management" />
 
 
 
@@ -32,7 +32,8 @@
   
 <link rel="prev" href="computing-probabilities.html"/>
 <link rel="next" href="estimation.html"/>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -48,30 +49,37 @@
 
 
 
-
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
+<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
 
 <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -80,15 +88,15 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
 code span.at { color: #7d9029; } /* Attribute */
 code span.bn { color: #40a070; } /* BaseN */
-code span.bu { } /* BuiltIn */
+code span.bu { color: #008000; } /* BuiltIn */
 code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
 code span.ch { color: #4070a0; } /* Char */
 code span.cn { color: #880000; } /* Constant */
@@ -101,7 +109,7 @@ code span.er { color: #ff0000; font-weight: bold; } /* Error */
 code span.ex { } /* Extension */
 code span.fl { color: #40a070; } /* Float */
 code span.fu { color: #06287e; } /* Function */
-code span.im { } /* Import */
+code span.im { color: #008000; font-weight: bold; } /* Import */
 code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
 code span.kw { color: #007020; font-weight: bold; } /* Keyword */
 code span.op { color: #666666; } /* Operator */
@@ -114,6 +122,7 @@ code span.va { color: #19177c; } /* Variable */
 code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
+
 
 </head>
 
@@ -128,24 +137,30 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <ul class="summary">
 <li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
-<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i>Getting Started with R</a><ul>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html"><i class="fa fa-check"></i>Getting Started with R</a>
+<ul>
 <li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#why-use-r"><i class="fa fa-check"></i>Why use R?</a></li>
+<li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#what-does-r-do"><i class="fa fa-check"></i>What does R do?</a></li>
 <li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#downloading-r-and-rstudio"><i class="fa fa-check"></i>Downloading R and RStudio</a></li>
 <li class="chapter" data-level="" data-path="getting-started-with-r.html"><a href="getting-started-with-r.html#installing-and-loading-packages"><i class="fa fa-check"></i>Installing and Loading Packages</a></li>
 </ul></li>
-<li class="chapter" data-level="1" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html"><i class="fa fa-check"></i><b>1</b> Introduction to Data Analytics</a><ul>
+<li class="chapter" data-level="1" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html"><i class="fa fa-check"></i><b>1</b> Introduction to Data Analytics</a>
+<ul>
 <li class="chapter" data-level="1.1" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#loading-and-inspecting-data-sets"><i class="fa fa-check"></i><b>1.1</b> Loading and Inspecting Data Sets</a></li>
 <li class="chapter" data-level="1.2" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#statistical-summaries"><i class="fa fa-check"></i><b>1.2</b> Statistical Summaries</a></li>
 <li class="chapter" data-level="1.3" data-path="introduction-to-data-analytics.html"><a href="introduction-to-data-analytics.html#graphical-summaries"><i class="fa fa-check"></i><b>1.3</b> Graphical Summaries</a></li>
 </ul></li>
-<li class="chapter" data-level="2" data-path="computing-probabilities.html"><a href="computing-probabilities.html"><i class="fa fa-check"></i><b>2</b> Computing Probabilities</a><ul>
-<li class="chapter" data-level="2.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#normal-distribution"><i class="fa fa-check"></i><b>2.1</b> Normal Distribution</a><ul>
+<li class="chapter" data-level="2" data-path="computing-probabilities.html"><a href="computing-probabilities.html"><i class="fa fa-check"></i><b>2</b> Computing Probabilities</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#normal-distribution"><i class="fa fa-check"></i><b>2.1</b> Normal Distribution</a>
+<ul>
 <li class="chapter" data-level="2.1.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#probability-density-function-dnorm"><i class="fa fa-check"></i><b>2.1.1</b> Probability Density Function (<code>dnorm</code>)</a></li>
 <li class="chapter" data-level="2.1.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#cumulative-distribution-function-pnorm"><i class="fa fa-check"></i><b>2.1.2</b> Cumulative Distribution Function (<code>pnorm</code>)</a></li>
 <li class="chapter" data-level="2.1.3" data-path="computing-probabilities.html"><a href="computing-probabilities.html#quantile-function-qnorm"><i class="fa fa-check"></i><b>2.1.3</b> Quantile Function (<code>qnorm</code>)</a></li>
 <li class="chapter" data-level="2.1.4" data-path="computing-probabilities.html"><a href="computing-probabilities.html#random-number-generator-rnorm"><i class="fa fa-check"></i><b>2.1.4</b> Random Number Generator (<code>rnorm</code>)</a></li>
 </ul></li>
-<li class="chapter" data-level="2.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#bernoulli-and-binomial-distributions"><i class="fa fa-check"></i><b>2.2</b> Bernoulli and Binomial Distributions</a><ul>
+<li class="chapter" data-level="2.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#bernoulli-and-binomial-distributions"><i class="fa fa-check"></i><b>2.2</b> Bernoulli and Binomial Distributions</a>
+<ul>
 <li class="chapter" data-level="2.2.1" data-path="computing-probabilities.html"><a href="computing-probabilities.html#probability-mass-function-dbinom"><i class="fa fa-check"></i><b>2.2.1</b> Probability Mass Function (<code>dbinom</code>)</a></li>
 <li class="chapter" data-level="2.2.2" data-path="computing-probabilities.html"><a href="computing-probabilities.html#cumulative-distribution-function-pbinom"><i class="fa fa-check"></i><b>2.2.2</b> Cumulative Distribution Function (<code>pbinom</code>)</a></li>
 <li class="chapter" data-level="2.2.3" data-path="computing-probabilities.html"><a href="computing-probabilities.html#quantile-function-qbinom"><i class="fa fa-check"></i><b>2.2.3</b> Quantile Function (<code>qbinom</code>)</a></li>
@@ -153,29 +168,35 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="3" data-path="sampling-distributions-and-the-clt.html"><a href="sampling-distributions-and-the-clt.html"><i class="fa fa-check"></i><b>3</b> Sampling Distributions and the CLT</a></li>
-<li class="chapter" data-level="4" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>4</b> Estimation</a><ul>
+<li class="chapter" data-level="4" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>4</b> Estimation</a>
+<ul>
 <li class="chapter" data-level="4.1" data-path="estimation.html"><a href="estimation.html#point-estimation-and-the-mle"><i class="fa fa-check"></i><b>4.1</b> Point Estimation and the MLE</a></li>
-<li class="chapter" data-level="4.2" data-path="estimation.html"><a href="estimation.html#confidence-intervals"><i class="fa fa-check"></i><b>4.2</b> Confidence Intervals</a><ul>
+<li class="chapter" data-level="4.2" data-path="estimation.html"><a href="estimation.html#confidence-intervals"><i class="fa fa-check"></i><b>4.2</b> Confidence Intervals</a>
+<ul>
 <li class="chapter" data-level="4.2.1" data-path="estimation.html"><a href="estimation.html#types-of-confidence-intervals"><i class="fa fa-check"></i><b>4.2.1</b> Types of Confidence Intervals</a></li>
 <li class="chapter" data-level="4.2.2" data-path="estimation.html"><a href="estimation.html#examples"><i class="fa fa-check"></i><b>4.2.2</b> Examples</a></li>
 </ul></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i><b>5</b> Hypothesis Tests</a><ul>
+<li class="chapter" data-level="5" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i><b>5</b> Hypothesis Tests</a>
+<ul>
 <li class="chapter" data-level="5.1" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#steps-of-hypothesis-testing"><i class="fa fa-check"></i><b>5.1</b> Steps of Hypothesis Testing</a></li>
 <li class="chapter" data-level="5.2" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#connection-to-confidence-intervals"><i class="fa fa-check"></i><b>5.2</b> Connection to Confidence Intervals</a></li>
 <li class="chapter" data-level="5.3" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html#hypothesis-testing-in-r"><i class="fa fa-check"></i><b>5.3</b> Hypothesis Testing in R</a></li>
 </ul></li>
-<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a><ul>
+<li class="chapter" data-level="6" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>6</b> Regression</a>
+<ul>
 <li class="chapter" data-level="6.1" data-path="regression.html"><a href="regression.html#linear-regression"><i class="fa fa-check"></i><b>6.1</b> Linear Regression</a></li>
 <li class="chapter" data-level="6.2" data-path="regression.html"><a href="regression.html#regression-trees"><i class="fa fa-check"></i><b>6.2</b> Regression Trees</a></li>
 <li class="chapter" data-level="6.3" data-path="regression.html"><a href="regression.html#model-selection"><i class="fa fa-check"></i><b>6.3</b> Model Selection</a></li>
 </ul></li>
-<li class="chapter" data-level="7" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>7</b> Classification</a><ul>
+<li class="chapter" data-level="7" data-path="classification.html"><a href="classification.html"><i class="fa fa-check"></i><b>7</b> Classification</a>
+<ul>
 <li class="chapter" data-level="7.1" data-path="classification.html"><a href="classification.html#k-nearest-neighbors"><i class="fa fa-check"></i><b>7.1</b> <span class="math inline">\(k\)</span>-Nearest Neighbors</a></li>
 <li class="chapter" data-level="7.2" data-path="classification.html"><a href="classification.html#logistic-regression"><i class="fa fa-check"></i><b>7.2</b> Logistic Regression</a></li>
 <li class="chapter" data-level="7.3" data-path="classification.html"><a href="classification.html#classification-trees"><i class="fa fa-check"></i><b>7.3</b> Classification Trees</a></li>
 </ul></li>
-<li class="chapter" data-level="8" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>8</b> Clustering</a><ul>
+<li class="chapter" data-level="8" data-path="clustering.html"><a href="clustering.html"><i class="fa fa-check"></i><b>8</b> Clustering</a>
+<ul>
 <li class="chapter" data-level="8.1" data-path="clustering.html"><a href="clustering.html#k-means"><i class="fa fa-check"></i><b>8.1</b> <span class="math inline">\(k\)</span>-Means</a></li>
 <li class="chapter" data-level="8.2" data-path="clustering.html"><a href="clustering.html#hierarchical-clustering"><i class="fa fa-check"></i><b>8.2</b> Hierarchical Clustering</a></li>
 </ul></li>
@@ -196,58 +217,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="sampling-distributions-and-the-clt" class="section level1">
-<h1><span class="header-section-number">Chapter 3</span> Sampling Distributions and the CLT</h1>
+<div id="sampling-distributions-and-the-clt" class="section level1 hasAnchor" number="3">
+<h1><span class="header-section-number">Chapter 3</span> Sampling Distributions and the CLT<a href="sampling-distributions-and-the-clt.html#sampling-distributions-and-the-clt" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><strong>Sampling distributions</strong> are theoretical objects that represent the probability distribution of a statistic (usually the sample mean).</p>
 <p>The <strong>sampling distribution of the sample mean</strong> is the distribution of means that result from taking all possible samples of size <span class="math inline">\(n\)</span> from the population.</p>
 <p>We can build some intuition for what this means in R.</p>
 <p>Let’s start by letting the population distribution be normal with mean <span class="math inline">\(\mu=0\)</span> and variance <span class="math inline">\(\sigma^2=1\)</span>. We can take a sample of size <span class="math inline">\(n=100\)</span> from that population and plot the <strong>sample</strong> distribution.</p>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb75-2" data-line-number="2"><span class="kw">mean</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="sampling-distributions-and-the-clt.html#cb78-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb78-2"><a href="sampling-distributions-and-the-clt.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
 <pre><code>## [1] 0.008768</code></pre>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" data-line-number="1"><span class="kw">hist</span>(x, <span class="dt">main=</span><span class="st">&quot;Sample Distribution&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-46-1.png" width="672" /></p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="sampling-distributions-and-the-clt.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">main=</span><span class="st">&quot;Sample Distribution&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
 <p>While we cannot generate <em>all possible samples</em> of size <span class="math inline">\(n\)</span> from this normal distribution, we can take a large number.</p>
 <p>Let <span class="math inline">\(R=100,000\)</span> be the number of samples we want to generate. We will construct a for loop in R to do the following: (1) generate a random sample of size <span class="math inline">\(n\)</span> from the population; (2) compute the sample mean and store the result in a vector called <code>xbar</code>.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1">R =<span class="st"> </span><span class="dv">100000</span></a>
-<a class="sourceLine" id="cb78-2" data-line-number="2">xbar =<span class="st"> </span><span class="kw">double</span>(R)</a>
-<a class="sourceLine" id="cb78-3" data-line-number="3"><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>R){</a>
-<a class="sourceLine" id="cb78-4" data-line-number="4">    x =<span class="st"> </span><span class="kw">rnorm</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">mean=</span><span class="dv">0</span>, <span class="dt">sd=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb78-5" data-line-number="5">    xbar[r] =<span class="st"> </span><span class="kw">mean</span>(x)</a>
-<a class="sourceLine" id="cb78-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb78-7" data-line-number="7"><span class="kw">hist</span>(xbar, <span class="dt">main=</span><span class="st">&quot;Sampling Distribution of Xbar&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-47-1.png" width="672" /></p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="sampling-distributions-and-the-clt.html#cb81-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">=</span> <span class="dv">100000</span></span>
+<span id="cb81-2"><a href="sampling-distributions-and-the-clt.html#cb81-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fu">double</span>(R)</span>
+<span id="cb81-3"><a href="sampling-distributions-and-the-clt.html#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R){</span>
+<span id="cb81-4"><a href="sampling-distributions-and-the-clt.html#cb81-4" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb81-5"><a href="sampling-distributions-and-the-clt.html#cb81-5" aria-hidden="true" tabindex="-1"></a>    xbar[r] <span class="ot">=</span> <span class="fu">mean</span>(x)</span>
+<span id="cb81-6"><a href="sampling-distributions-and-the-clt.html#cb81-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb81-7"><a href="sampling-distributions-and-the-clt.html#cb81-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(xbar, <span class="at">main=</span><span class="st">&quot;Sampling Distribution of Xbar&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
 <p>This plot is the distribution of sample means after taking <span class="math inline">\(R=100,000\)</span> samples with size <span class="math inline">\(n=100\)</span> from the population.</p>
 <p>Notice that this again looks like a normal distribution. The mean looks the same as the distribution of <span class="math inline">\(X\)</span>, but the variance looks much smaller.</p>
 <p>In fact, when the population distribution is <span class="math inline">\(N(\mu,\sigma^2)\)</span>, then the distribution of <span class="math inline">\(\bar{X}\)</span> is <span class="math inline">\(N(\mu,\sigma^2/n)\)</span>. In this case, we know that <span class="math inline">\(E(\bar{X})=E(X)=\mu=0\)</span> and <span class="math inline">\(Var(\bar{X})=Var(X)/n=\sigma^2/n=1/100=0.01\)</span>.</p>
 <p>Let’s check to see what the mean and variance are in our approximation of the sampling distribution.</p>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw">mean</span>(xbar)</a></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="sampling-distributions-and-the-clt.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(xbar)</span></code></pre></div>
 <pre><code>## [1] 0.0004032</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1"><span class="kw">var</span>(xbar)</a></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="sampling-distributions-and-the-clt.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(xbar)</span></code></pre></div>
 <pre><code>## [1] 0.009978</code></pre>
 <p>Very close to the true values!</p>
 <p>The next question to consider is what if our population distribution was not normally distributed? What if it was skewed to the right or left?</p>
 <p>Let’s assume <span class="math inline">\(X\)</span> has a Exponential<span class="math inline">\((\beta)\)</span> distribution where <span class="math inline">\(\beta=1\)</span> is a rate parameter. We can again take one individual sample from this population distribution.</p>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" data-line-number="1">x =<span class="st"> </span><span class="kw">rexp</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">rate=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb83-2" data-line-number="2"><span class="kw">hist</span>(x, <span class="dt">main=</span><span class="st">&quot;Sample Distribution&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="sampling-distributions-and-the-clt.html#cb86-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rexp</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">rate=</span><span class="dv">1</span>)</span>
+<span id="cb86-2"><a href="sampling-distributions-and-the-clt.html#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">main=</span><span class="st">&quot;Sample Distribution&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
 <p>Based on this sample, it appears that the population distribution is highly asymmetric and skewed to the right.</p>
 <p>In this case, should we still expect the sampling distribution of the sample mean to be normal? Let’s go through the same exercise as before.</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" data-line-number="1">R =<span class="st"> </span><span class="dv">100000</span></a>
-<a class="sourceLine" id="cb84-2" data-line-number="2">xbar =<span class="st"> </span><span class="kw">double</span>(R)</a>
-<a class="sourceLine" id="cb84-3" data-line-number="3"><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>R){</a>
-<a class="sourceLine" id="cb84-4" data-line-number="4">  x =<span class="st"> </span><span class="kw">rexp</span>(<span class="dt">n=</span><span class="dv">100</span>, <span class="dt">rate=</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb84-5" data-line-number="5">  xbar[r] =<span class="st"> </span><span class="kw">mean</span>(x)</a>
-<a class="sourceLine" id="cb84-6" data-line-number="6">}</a>
-<a class="sourceLine" id="cb84-7" data-line-number="7"><span class="kw">hist</span>(xbar, <span class="dt">main=</span><span class="st">&quot;Sampling Distribution of Xbar&quot;</span>)</a></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="sampling-distributions-and-the-clt.html#cb87-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">=</span> <span class="dv">100000</span></span>
+<span id="cb87-2"><a href="sampling-distributions-and-the-clt.html#cb87-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fu">double</span>(R)</span>
+<span id="cb87-3"><a href="sampling-distributions-and-the-clt.html#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R){</span>
+<span id="cb87-4"><a href="sampling-distributions-and-the-clt.html#cb87-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="fu">rexp</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">rate=</span><span class="dv">1</span>)</span>
+<span id="cb87-5"><a href="sampling-distributions-and-the-clt.html#cb87-5" aria-hidden="true" tabindex="-1"></a>  xbar[r] <span class="ot">=</span> <span class="fu">mean</span>(x)</span>
+<span id="cb87-6"><a href="sampling-distributions-and-the-clt.html#cb87-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb87-7"><a href="sampling-distributions-and-the-clt.html#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(xbar, <span class="at">main=</span><span class="st">&quot;Sampling Distribution of Xbar&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
 <p>The distribution of sample means again looks normal!</p>
 <p>In fact, the <strong>Central Limit Theorem</strong> guarantees that this will be the case as the sample size <span class="math inline">\(n\)</span> gets large. Then for any population distribution, we know that the distribution of <span class="math inline">\(\bar{X}\)</span> will be <em>approximately</em> normal with mean <span class="math inline">\(E(\bar{X})=E(X)\)</span> and <span class="math inline">\(Var(\bar{X})=Var(X)/n\)</span>.</p>
 <p>Since <span class="math inline">\(X\sim\text{Exponential}(\beta)\)</span> with <span class="math inline">\(\beta=1\)</span>, it can be shown that <span class="math inline">\(E(X)=\beta=1\)</span> and <span class="math inline">\(Var(X)=\beta^2=1\)</span>. Therefore, <span class="math inline">\(\bar{X}\)</span> is approximately normal with mean <span class="math inline">\(E(\bar{X})=E(X)=1\)</span> and variance <span class="math inline">\(Var(\bar{X})=Var(X)/n=1/100=0.01\)</span>.</p>
 <p>We again check these results using our approximate sampling distribution and find consistent answers.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" data-line-number="1"><span class="kw">mean</span>(xbar)</a></code></pre></div>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="sampling-distributions-and-the-clt.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(xbar)</span></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" data-line-number="1"><span class="kw">var</span>(xbar)</a></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="sampling-distributions-and-the-clt.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(xbar)</span></code></pre></div>
 <pre><code>## [1] 0.01004</code></pre>
 
 </div>
@@ -261,7 +282,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -276,12 +296,12 @@ gitbook.start({
 "github": false,
 "facebook": true,
 "twitter": true,
-"google": false,
 "linkedin": false,
 "weibo": false,
 "instapaper": false,
 "vk": false,
-"all": ["facebook", "google", "twitter", "linkedin", "weibo", "instapaper"]
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
 "theme": "white",
@@ -296,7 +316,15 @@ gitbook.start({
 "link": null,
 "text": null
 },
+"view": {
+"link": null,
+"text": null
+},
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
@@ -310,7 +338,7 @@ gitbook.start({
     var script = document.createElement("script");
     script.type = "text/javascript";
     var src = "true";
-    if (src === "" || src === "true") src = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
     if (location.protocol !== "file:")
       if (/^https?:/.test(src))
         src = src.replace(/^https?:/, '');
