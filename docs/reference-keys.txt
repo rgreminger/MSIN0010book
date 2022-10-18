@@ -34,3 +34,5 @@ classification-trees
 clustering
 k-means
 hierarchical-clustering
+point-estimation
+interpreting-confidence-intervals

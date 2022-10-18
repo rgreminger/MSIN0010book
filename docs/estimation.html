@@ -170,11 +170,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3" data-path="sampling-distributions-and-the-clt.html"><a href="sampling-distributions-and-the-clt.html"><i class="fa fa-check"></i><b>3</b> Sampling Distributions and the CLT</a></li>
 <li class="chapter" data-level="4" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>4</b> Estimation</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="estimation.html"><a href="estimation.html#point-estimation-and-the-mle"><i class="fa fa-check"></i><b>4.1</b> Point Estimation and the MLE</a></li>
+<li class="chapter" data-level="4.1" data-path="estimation.html"><a href="estimation.html#point-estimation"><i class="fa fa-check"></i><b>4.1</b> Point Estimation</a></li>
 <li class="chapter" data-level="4.2" data-path="estimation.html"><a href="estimation.html#confidence-intervals"><i class="fa fa-check"></i><b>4.2</b> Confidence Intervals</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="estimation.html"><a href="estimation.html#types-of-confidence-intervals"><i class="fa fa-check"></i><b>4.2.1</b> Types of Confidence Intervals</a></li>
-<li class="chapter" data-level="4.2.2" data-path="estimation.html"><a href="estimation.html#examples"><i class="fa fa-check"></i><b>4.2.2</b> Examples</a></li>
+<li class="chapter" data-level="4.2.2" data-path="estimation.html"><a href="estimation.html#interpreting-confidence-intervals"><i class="fa fa-check"></i><b>4.2.2</b> Interpreting confidence intervals</a></li>
+<li class="chapter" data-level="4.2.3" data-path="estimation.html"><a href="estimation.html#examples"><i class="fa fa-check"></i><b>4.2.3</b> Examples</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i><b>5</b> Hypothesis Tests</a>
@@ -219,92 +220,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="estimation" class="section level1 hasAnchor" number="4">
 <h1><span class="header-section-number">Chapter 4</span> Estimation<a href="estimation.html#estimation" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<div id="point-estimation-and-the-mle" class="section level2 hasAnchor" number="4.1">
-<h2><span class="header-section-number">4.1</span> Point Estimation and the MLE<a href="estimation.html#point-estimation-and-the-mle" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="point-estimation" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Point Estimation<a href="estimation.html#point-estimation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <hr>
-<p>Point estimation is all about using one single number (statistic) to estimate a population parameter of interest. One question is how do we actually come up with those statistics?</p>
-<p>In this section, we will illustrate the concept of <strong>maximum likelihood estimation</strong>. The idea of maximum likelihood estimation is to first assume our data come from a known family of distributions (e.g., normal) that contain parameters (e.g., mean <span class="math inline">\(\mu\)</span>, variance <span class="math inline">\(\sigma^2\)</span>). Then the maximum likelihood estimates (MLEs) of the parameters will be the parameter values that are most likely to have generated our data, where “most likely” is measured by the likelihood function.</p>
-<p>To start, let’s create a simple data set. We will generate <span class="math inline">\(n=25\)</span> normal random variables with mean <span class="math inline">\(\mu=5\)</span> and variance <span class="math inline">\(\sigma^2=1\)</span>.</p>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="estimation.html#cb92-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">25</span>, <span class="at">mean=</span><span class="dv">5</span>, <span class="at">sd=</span><span class="dv">1</span>)</span></code></pre></div>
-<p>Now we will pretend as if we do not know the mean parameter of the population distribution <span class="math inline">\(\mu\)</span> and then use the method of maximum likelihood to estimate <span class="math inline">\(\mu\)</span>.</p>
-<p>Remember that the MLE of <span class="math inline">\(\mu\)</span> is defined as <span class="math inline">\(\hat{\mu}^{\text{MLE}}=\arg\max f(x_1,\dotsc,x_n|\mu,\sigma^2)\)</span>. That is, <span class="math inline">\(\hat{\mu}^{\text{MLE}}\)</span> is the value of <span class="math inline">\(\mu\)</span> that maximizes the likelihood function.</p>
-<p>Once we have made the assumption that are our data are normally distributed, the likelihood function takes the form <span class="math display">\[f(x_1,\dotsc,x_n|\mu,\sigma^2)=\prod_{i=1}^n f(x_i|\mu,\sigma^2)=\prod_{i=1}^n{1\over\sqrt{2\pi\sigma^2}}\exp\left(-{1\over2\sigma^2}(x_i-\mu)^2\right)\]</span>
-where the right-most term is the PDF of the normal distribution.</p>
-<p>If we use calculus to formally maximize the likelihood function, we will find that <span class="math inline">\(\hat{\mu}^{\text{MLE}}=\bar{X}\)</span>.</p>
-<p>Since the MLE of <span class="math inline">\(\mu\)</span> is the sample mean, computing the MLE in R becomes straightforward.</p>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="estimation.html#cb93-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
-<pre><code>## [1] 5.162</code></pre>
-<p>Therefore, the MLE of <span class="math inline">\(\mu\)</span> is about 5.16.</p>
-<p>To help provide some intuition for how the maximum likelihood method works, let’s work through an example. Rather than try to work through the calculus to show that <span class="math inline">\(\hat{\mu}^{\text{MLE}}=\bar{x}=5.16\)</span>, we can plot the likelihood function against many candidate values of <span class="math inline">\(\mu\)</span> and see where the curve is highest.</p>
-<p>Since the likelihood function is a product of positive numbers (many of which can be very small), it’s more convenient and numerically stable to work with the <em>log-likelihood function</em>.
-<span class="math display">\[\log f(x_1,\dotsc,x_n|\mu,\sigma^2)=\log\left(\prod_{i=1}^n f(x_i|\mu,\sigma^2)\right)=\sum_{i=1}^n \log f(x_i|\mu,\sigma^2)\]</span></p>
-<p>To compute the log-likelihood function for each <span class="math inline">\(x_i\)</span>, we can use the <code>dnorm( )</code> function.</p>
-<p>Let’s start by evaluating the log-likelihood for each observation. To do this we need to plug in a value for the mean (which we will fix to its true value <span class="math inline">\(\mu=5\)</span>).</p>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="estimation.html#cb95-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="dv">5</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">log=</span><span class="cn">TRUE</span>)</span></code></pre></div>
-<pre><code>##  [1] -1.2702 -1.0084 -0.9244 -1.4070 -2.8072 -0.9735 -2.2069 -1.6471 -1.3350 -0.9204
-## [11] -1.0977 -1.0532 -2.3580 -2.0379 -1.1200 -0.9289 -1.0902 -1.4054 -1.5403 -0.9302
-## [21] -2.1302 -1.5254 -1.9105 -2.3638 -1.7857</code></pre>
-<p>The entire log-likelihood function is the sum of the individual log-likelihood evaluations. Therefore, the log-likelihood for <span class="math inline">\(\mu=5\)</span> can be found as follows.</p>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb97-1"><a href="estimation.html#cb97-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="dv">5</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">log=</span><span class="cn">TRUE</span>))</span></code></pre></div>
-<pre><code>## [1] -37.78</code></pre>
-<p>This number now represents a measure of the relative likelihood that our data x were generated from a normal distribution with mean 5. We can the imagine using the likelihood function as a way of finding “good” estimates of <span class="math inline">\(\mu\)</span>. The “best” estimate of <span class="math inline">\(\mu\)</span> would correspond to the value that is <em>most</em> likely to have generated our data.</p>
-<p>As a simple example, we could say: is it more likely that our data come from a distribution with mean <span class="math inline">\(\mu=5\)</span> or <span class="math inline">\(\mu=6\)</span>?</p>
-<p>To test this, we could evaluate the log likelihood function for <span class="math inline">\(\mu=6\)</span> and compare.</p>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb99-1"><a href="estimation.html#cb99-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">dnorm</span>(x, <span class="at">mean=</span><span class="dv">6</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">log=</span><span class="cn">TRUE</span>))</span></code></pre></div>
-<pre><code>## [1] -46.22</code></pre>
-<p>Given that the likelihood function is higher (less negative) for <span class="math inline">\(\mu=5\)</span>, we say that <span class="math inline">\(\hat{\mu}=5\)</span> is our estimate of <span class="math inline">\(\mu\)</span>.</p>
-<p>Since <span class="math inline">\(\mu\)</span> can be any real number, there is no reason to restrict plausible values of <span class="math inline">\(\mu\)</span> to the set of integers. Instead, we can lay out a grid of candidate parameter values of any desired level of granularity.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb101-1"><a href="estimation.html#cb101-1" aria-hidden="true" tabindex="-1"></a>index <span class="ot">=</span> <span class="fu">seq</span>(<span class="dv">3</span>, <span class="dv">7</span>, <span class="at">by=</span>.<span class="dv">01</span>)</span>
-<span id="cb101-2"><a href="estimation.html#cb101-2" aria-hidden="true" tabindex="-1"></a>index</span></code></pre></div>
-<pre><code>##   [1] 3.00 3.01 3.02 3.03 3.04 3.05 3.06 3.07 3.08 3.09 3.10 3.11 3.12 3.13 3.14 3.15 3.16
-##  [18] 3.17 3.18 3.19 3.20 3.21 3.22 3.23 3.24 3.25 3.26 3.27 3.28 3.29 3.30 3.31 3.32 3.33
-##  [35] 3.34 3.35 3.36 3.37 3.38 3.39 3.40 3.41 3.42 3.43 3.44 3.45 3.46 3.47 3.48 3.49 3.50
-##  [52] 3.51 3.52 3.53 3.54 3.55 3.56 3.57 3.58 3.59 3.60 3.61 3.62 3.63 3.64 3.65 3.66 3.67
-##  [69] 3.68 3.69 3.70 3.71 3.72 3.73 3.74 3.75 3.76 3.77 3.78 3.79 3.80 3.81 3.82 3.83 3.84
-##  [86] 3.85 3.86 3.87 3.88 3.89 3.90 3.91 3.92 3.93 3.94 3.95 3.96 3.97 3.98 3.99 4.00 4.01
-## [103] 4.02 4.03 4.04 4.05 4.06 4.07 4.08 4.09 4.10 4.11 4.12 4.13 4.14 4.15 4.16 4.17 4.18
-## [120] 4.19 4.20 4.21 4.22 4.23 4.24 4.25 4.26 4.27 4.28 4.29 4.30 4.31 4.32 4.33 4.34 4.35
-## [137] 4.36 4.37 4.38 4.39 4.40 4.41 4.42 4.43 4.44 4.45 4.46 4.47 4.48 4.49 4.50 4.51 4.52
-## [154] 4.53 4.54 4.55 4.56 4.57 4.58 4.59 4.60 4.61 4.62 4.63 4.64 4.65 4.66 4.67 4.68 4.69
-## [171] 4.70 4.71 4.72 4.73 4.74 4.75 4.76 4.77 4.78 4.79 4.80 4.81 4.82 4.83 4.84 4.85 4.86
-## [188] 4.87 4.88 4.89 4.90 4.91 4.92 4.93 4.94 4.95 4.96 4.97 4.98 4.99 5.00 5.01 5.02 5.03
-## [205] 5.04 5.05 5.06 5.07 5.08 5.09 5.10 5.11 5.12 5.13 5.14 5.15 5.16 5.17 5.18 5.19 5.20
-## [222] 5.21 5.22 5.23 5.24 5.25 5.26 5.27 5.28 5.29 5.30 5.31 5.32 5.33 5.34 5.35 5.36 5.37
-## [239] 5.38 5.39 5.40 5.41 5.42 5.43 5.44 5.45 5.46 5.47 5.48 5.49 5.50 5.51 5.52 5.53 5.54
-## [256] 5.55 5.56 5.57 5.58 5.59 5.60 5.61 5.62 5.63 5.64 5.65 5.66 5.67 5.68 5.69 5.70 5.71
-## [273] 5.72 5.73 5.74 5.75 5.76 5.77 5.78 5.79 5.80 5.81 5.82 5.83 5.84 5.85 5.86 5.87 5.88
-## [290] 5.89 5.90 5.91 5.92 5.93 5.94 5.95 5.96 5.97 5.98 5.99 6.00 6.01 6.02 6.03 6.04 6.05
-## [307] 6.06 6.07 6.08 6.09 6.10 6.11 6.12 6.13 6.14 6.15 6.16 6.17 6.18 6.19 6.20 6.21 6.22
-## [324] 6.23 6.24 6.25 6.26 6.27 6.28 6.29 6.30 6.31 6.32 6.33 6.34 6.35 6.36 6.37 6.38 6.39
-## [341] 6.40 6.41 6.42 6.43 6.44 6.45 6.46 6.47 6.48 6.49 6.50 6.51 6.52 6.53 6.54 6.55 6.56
-## [358] 6.57 6.58 6.59 6.60 6.61 6.62 6.63 6.64 6.65 6.66 6.67 6.68 6.69 6.70 6.71 6.72 6.73
-## [375] 6.74 6.75 6.76 6.77 6.78 6.79 6.80 6.81 6.82 6.83 6.84 6.85 6.86 6.87 6.88 6.89 6.90
-## [392] 6.91 6.92 6.93 6.94 6.95 6.96 6.97 6.98 6.99 7.00</code></pre>
-<p>We now want to step through each value in the index and evaluate the log-likelihood function. The MLE will be the value in the index that yields the highest log-likelihood function.</p>
-<p>To do this, we will use a “for loop” in R.</p>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb103-1"><a href="estimation.html#cb103-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">=</span> <span class="fu">length</span>(index)</span>
-<span id="cb103-2"><a href="estimation.html#cb103-2" aria-hidden="true" tabindex="-1"></a>loglike <span class="ot">=</span> <span class="fu">double</span>(R)</span>
-<span id="cb103-3"><a href="estimation.html#cb103-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R){</span>
-<span id="cb103-4"><a href="estimation.html#cb103-4" aria-hidden="true" tabindex="-1"></a>  loglike[r] <span class="ot">=</span> <span class="fu">sum</span>(<span class="fu">dnorm</span>(x, <span class="at">mean=</span>index[r], <span class="at">sd=</span><span class="dv">1</span>, <span class="at">log=</span><span class="cn">TRUE</span>))</span>
-<span id="cb103-5"><a href="estimation.html#cb103-5" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
-<p>Here R counts the number of elements in the index variable and loglike is a vector of R elements that are initially set to be zero but are then filled in in each iteration of the for loop.</p>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb104-1"><a href="estimation.html#cb104-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(index, loglike, <span class="at">type=</span><span class="st">&quot;l&quot;</span>)</span>
-<span id="cb104-2"><a href="estimation.html#cb104-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span>index[<span class="fu">which.max</span>(loglike)], <span class="at">col=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="dv">2</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-62-1.png" width="672" /></p>
-<p>Once we have evaluated the log-likelihood function for each value in the index, we can plot the log-likelihood against the index.</p>
-<p>Based on this plot, it looks like the value that maximizes the log-likehood functin is a little bit greater than 5. We formally check this in R.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="estimation.html#cb105-1" aria-hidden="true" tabindex="-1"></a>index[<span class="fu">which.max</span>(loglike)]</span></code></pre></div>
-<pre><code>## [1] 5.16</code></pre>
-<p>This matches the MLE that we initially computed using the sample mean.</p>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="estimation.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
-<pre><code>## [1] 5.162</code></pre>
-<p>The only difference is the fact that our estimate using the plot is rounded to two decimal places because of the grid that we selected when creating the index variable.</p>
-<p><br></p>
+<p>Point estimation is all about using one single number (statistic) to estimate a population parameter of interest. Generally, we need to differentiate three different terms:</p>
+<ol style="list-style-type: decimal">
+<li><em>Parameter</em>: <span class="math inline">\(\theta\)</span></li>
+<li><em>Estimator</em>: <span class="math inline">\(\hat{\theta}(X) = g(X_1,\dots,X_n)\)</span></li>
+<li><em>Estimate</em>: <span class="math inline">\(\hat{\theta}(x) = g(x_1,\dots,x_n)\)</span></li>
+</ol>
+<p><span class="math inline">\(\theta\)</span> is the population parameter we want to know. <span class="math inline">\(\hat{\theta}(X)\)</span> is our estimator, which is a function of our random sample. It is itself a random variable because another random sample will lead to a different number. The estimate <span class="math inline">\(\hat{\theta}(x)\)</span> then is our statistic that we compute for given sample; given realizations <span class="math inline">\((x_1,\dots,x_n)\)</span>, this number is not random. Note that we apply the same function <span class="math inline">\(g()\)</span> in the estimator and estimate, but in the estimator the <span class="math inline">\(X_i\)</span> are random variables whereas in the estimate the <span class="math inline">\(x_i\)</span> are realizations.</p>
+<p>To highlight the difference between estimate and estimator consider the following example: the population is 1,000,000 consumers and we want to know how many of them purchased our product. Hence, the population parameter we want to know is <span class="math display">\[\theta = \frac{\text{no. purchases in population}}{1,000,000}\]</span></p>
+<p>In principle, we could just call all 1,000,000 consumers and ask, but that would cost way too much time (and time is money)! Instead, we are going to take a <em>random</em> sample with <span class="math inline">\(n\)</span> consumers from the population. In this case, our estimator for the mean is
+<span class="math display">\[\hat{\theta}(X) = g(X_1,\dots,X_n) = \frac{\text{no. purchases in sample}}{n} \]</span></p>
+<p>This is what we now do in R.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="estimation.html#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate population and calculate population parameter</span></span>
+<span id="cb1-2"><a href="estimation.html#cb1-2" aria-hidden="true" tabindex="-1"></a>pop <span class="ot">=</span> <span class="fu">rbinom</span>(<span class="dv">1000000</span>,<span class="dv">1</span>,<span class="fl">0.2</span>) <span class="co"># generates 1,000,000 consumers that bought (=1) or not(=0)</span></span>
+<span id="cb1-3"><a href="estimation.html#cb1-3" aria-hidden="true" tabindex="-1"></a>pop_par <span class="ot">=</span> <span class="fu">mean</span>(pop)  </span>
+<span id="cb1-4"><a href="estimation.html#cb1-4" aria-hidden="true" tabindex="-1"></a>pop_par </span></code></pre></div>
+<pre><code>## [1] 0.200342</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="estimation.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take random sample and calculate estimate on that sample</span></span>
+<span id="cb3-2"><a href="estimation.html#cb3-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">sample</span>(pop,<span class="dv">100</span>,<span class="at">replace=</span><span class="cn">TRUE</span>)    <span class="co"># randomly takes 100 consumers out of pop </span></span>
+<span id="cb3-3"><a href="estimation.html#cb3-3" aria-hidden="true" tabindex="-1"></a>estimate <span class="ot">=</span> <span class="fu">mean</span>(x)</span>
+<span id="cb3-4"><a href="estimation.html#cb3-4" aria-hidden="true" tabindex="-1"></a>estimate </span></code></pre></div>
+<pre><code>## [1] 0.17</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="estimation.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate sampling error </span></span>
+<span id="cb5-2"><a href="estimation.html#cb5-2" aria-hidden="true" tabindex="-1"></a>sampling_error <span class="ot">=</span> <span class="fu">abs</span>(estimate<span class="sc">-</span>pop_par) </span>
+<span id="cb5-3"><a href="estimation.html#cb5-3" aria-hidden="true" tabindex="-1"></a>sampling_error</span></code></pre></div>
+<pre><code>## [1] 0.030342</code></pre>
+<p>Both the estimate and sampling error will be different if we take another random sample.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="estimation.html#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">sample</span>(pop,<span class="dv">100</span>,<span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb7-2"><a href="estimation.html#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
+<pre><code>## [1] 0.28</code></pre>
 </div>
 <div id="confidence-intervals" class="section level2 hasAnchor" number="4.2">
 <h2><span class="header-section-number">4.2</span> Confidence Intervals<a href="estimation.html#confidence-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <hr>
-<p>Ultimately, point estimates are insufficient because the estimators themselves are random variables and subject to variation across different samples. Rather than provide a single point estimate, it will be better to provide a <em>range of plausible values</em> for the parameter of interest. This is the idea of <strong>confidence intervals</strong>.</p>
+<p>As we just saw, estimators themselves are random variables and subject to variation across different samples. Hence, point estimates are <em>not enough</em> to learn about the population parameter we are interested in. Rather than provide a single point estimate, it will be better to provide a <em>range of plausible values</em> for the parameter of interest. This is the idea of <strong>confidence intervals</strong>.</p>
 <p>A confidence interval for any parameter <span class="math inline">\(\theta\)</span> will always take the form:
 <span class="math display">\[\hat{\theta}\pm \text{(critical value)}\times \text{SD}(\hat{\theta})\]</span>
 where <span class="math inline">\(\hat{\theta}\)</span> is an estimator of <span class="math inline">\(\theta\)</span>, the critical value is a quantile of a normal or t distribution, and <span class="math inline">\(\text{SD}(\hat{\theta})\)</span> is the standard deviation of the estimator.</p>
@@ -323,8 +275,8 @@ where <span class="math inline">\(\hat{\theta}\)</span> is an estimator of <span
 </ol>
 <p>Notice that we can compute the critical values in R. If we need <span class="math inline">\(z_{\alpha/2}\)</span>, then we must find the value of a standard normal random variable such that <span class="math inline">\(\alpha/2\)</span> percent of the area is to its right. This is can be found using the normal quantile function <code>qnorm( )</code>!</p>
 <p>For example, if <span class="math inline">\(\alpha=0.05\)</span> let’s use <code>qnorm( )</code> to find <span class="math inline">\(z_{0.025}\)</span>.</p>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="estimation.html#cb109-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 1.96</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="estimation.html#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 1.959964</code></pre>
 <p>A summary of the most commonly used normal critical values are provided below.</p>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
@@ -365,21 +317,40 @@ Critical Value <span class="math inline">\(z_{\alpha/2}\)</span>
 </tbody>
 </table>
 <p>Similarly, if we need to compute <span class="math inline">\(t_{n-1,\alpha/2}\)</span> with <span class="math inline">\(\alpha=0.05\)</span> and our data have <span class="math inline">\(n=50\)</span> observations, we can use the <code>qt( )</code> function.</p>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb111-1"><a href="estimation.html#cb111-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">50-1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 2.01</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="estimation.html#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">50-1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 2.009575</code></pre>
 <p>Notice this critical value is larger than <span class="math inline">\(z_{0.025}\)</span> – this comes from the fact that the t-distribution has fatter tails than the normal distribution. But, it also turns out that a t distribution (which only has one parameter <span class="math inline">\(\nu\)</span> called the “degrees of freedom”) converges to a normal distribution as <span class="math inline">\(\nu\to\infty\)</span>. We can formally check this using <code>qt( )</code>.</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb113-1"><a href="estimation.html#cb113-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">50</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 2.009</code></pre>
-<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb115-1"><a href="estimation.html#cb115-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">100</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 1.984</code></pre>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb117-1"><a href="estimation.html#cb117-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">1000</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 1.962</code></pre>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb119-1"><a href="estimation.html#cb119-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">10000</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div>
-<pre><code>## [1] 1.96</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="estimation.html#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">50</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 2.008559</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="estimation.html#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">100</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 1.983972</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="estimation.html#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">1000</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 1.962339</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="estimation.html#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">10000</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code></pre></div>
+<pre><code>## [1] 1.960201</code></pre>
 <p>Notice how these values approach <span class="math inline">\(z_{0.025}\approx1.96\)</span> as the degrees of freedom parameter gets large.</p>
 </div>
-<div id="examples" class="section level3 hasAnchor" number="4.2.2">
-<h3><span class="header-section-number">4.2.2</span> Examples<a href="estimation.html#examples" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="interpreting-confidence-intervals" class="section level3 hasAnchor" number="4.2.2">
+<h3><span class="header-section-number">4.2.2</span> Interpreting confidence intervals<a href="estimation.html#interpreting-confidence-intervals" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Suppose an analyst tells you that the 95% confidence interval for the population parameter <span class="math inline">\(\theta\)</span> is <span class="math inline">\((0.5,1.5)\)</span>. What can you conclude from this, i.e., what does it mean that we are 95% confident that <span class="math inline">\(\theta\)</span> is in this interval?</p>
+<p>What the confidence interval tells us is that if we take many samples from the population and construct the confidence interval for each sample, then in approximately 95% of the samples the constructed confidence interval will include the true population parameter. Note that, same as the estimator, the confidence interval depends on the sample and hence is random.</p>
+<p>We can check in R whether this holds using the same population we generated earlier. For this, we are now going to construct a for loop that does the following: (1) take a random sample of size <span class="math inline">\(n=100\)</span> from the population, (2) compute the 95% confidence interval (type 4 above) for the sample, check whether the population parameter lies within the computed confidence interval and store the result in a vector called poppar_in_ci.</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="estimation.html#cb21-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">=</span> <span class="dv">1000</span>                                <span class="co"># how many samples to take </span></span>
+<span id="cb21-2"><a href="estimation.html#cb21-2" aria-hidden="true" tabindex="-1"></a>poppar_in_ci <span class="ot">=</span> <span class="fu">double</span>(R)</span>
+<span id="cb21-3"><a href="estimation.html#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R){</span>
+<span id="cb21-4"><a href="estimation.html#cb21-4" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">=</span> <span class="fu">sample</span>(pop,<span class="dv">100</span>,<span class="at">replace=</span><span class="cn">TRUE</span>)                   <span class="co"># generate new sample </span></span>
+<span id="cb21-5"><a href="estimation.html#cb21-5" aria-hidden="true" tabindex="-1"></a>    phat <span class="ot">=</span> <span class="fu">mean</span>(x)                        </span>
+<span id="cb21-6"><a href="estimation.html#cb21-6" aria-hidden="true" tabindex="-1"></a>    s <span class="ot">=</span> <span class="fu">sqrt</span>(phat<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>phat)<span class="sc">/</span><span class="dv">100</span>)           <span class="co"># see formula for CI of proportion above</span></span>
+<span id="cb21-7"><a href="estimation.html#cb21-7" aria-hidden="true" tabindex="-1"></a>    poppar_in_ci[r] <span class="ot">=</span> phat <span class="sc">-</span><span class="fl">1.96</span> <span class="sc">*</span> s <span class="sc">&lt;</span> pop_par <span class="sc">&amp;</span> </span>
+<span id="cb21-8"><a href="estimation.html#cb21-8" aria-hidden="true" tabindex="-1"></a>                        phat <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> s <span class="sc">&gt;</span> pop_par</span>
+<span id="cb21-9"><a href="estimation.html#cb21-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-10"><a href="estimation.html#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(poppar_in_ci)</span></code></pre></div>
+<pre><code>## [1] 0.933</code></pre>
+<p>The result of this simulation shows that for approximately 95% of our samples, the constructed confidence interval indeed contains the population parameter value.</p>
+<p>Note that in this case, we were sampling from a population we first generated. Often, we take samples just from a hypothetical population, where we assume that the samples are drawn from a distribution that captures the population. For example, in chapter 3 we directly made assumptions on the population distribution and sampled from the respective distributions.</p>
+</div>
+<div id="examples" class="section level3 hasAnchor" number="4.2.3">
+<h3><span class="header-section-number">4.2.3</span> Examples<a href="estimation.html#examples" class="anchor-section" aria-label="Anchor link to header"></a></h3>
 <p><strong>PROBLEM 1:</strong> A wine importer needs to report the average percentage of alcohol in bottles of French wine. From experience with previous kinds of wine, the importer believes that alcolhol percentages are normally distributed and the population standard deviation is 1.2%. The importer randomly samples 60 bottles of the new wine and obtains a sample mean <span class="math inline">\(\bar{x}=9.3\%\)</span>. Give a 90% confidence interval for the average percentage of alcohol in all bottles of the new wine.</p>
 <details>
 <summary>
@@ -395,14 +366,14 @@ n = 60\\
 We must first figure out which type of confidence interval to use. Notice that we are trying to estimate the <em>average</em> percentage of alcohol, so our parameter is a mean <span class="math inline">\(\mu\)</span>. Moreover, we are told to assume that the data are normally distributed and the population standard deviation <span class="math inline">\(\sigma\)</span> is known. Thefore, our confidence interval will be of the form:
 <span class="math display">\[\bar{x}\pm z_{\alpha/2}{\sigma\over\sqrt{n}}.\]</span>
 We can now define each object in R and construct the confidence interval.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb121-1"><a href="estimation.html#cb121-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">60</span></span>
-<span id="cb121-2"><a href="estimation.html#cb121-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">=</span> <span class="fl">1.2</span></span>
-<span id="cb121-3"><a href="estimation.html#cb121-3" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fl">9.3</span></span>
-<span id="cb121-4"><a href="estimation.html#cb121-4" aria-hidden="true" tabindex="-1"></a>zalpha <span class="ot">=</span> <span class="fu">qnorm</span>(<span class="fl">0.05</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
-<span id="cb121-5"><a href="estimation.html#cb121-5" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">-</span> zalpha<span class="sc">*</span>sigma<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code></pre></div>
-<pre><code>## [1] 9.045</code></pre>
-<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb123-1"><a href="estimation.html#cb123-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">+</span> zalpha<span class="sc">*</span>sigma<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code></pre></div>
-<pre><code>## [1] 9.555</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="estimation.html#cb23-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">60</span></span>
+<span id="cb23-2"><a href="estimation.html#cb23-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">=</span> <span class="fl">1.2</span></span>
+<span id="cb23-3"><a href="estimation.html#cb23-3" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fl">9.3</span></span>
+<span id="cb23-4"><a href="estimation.html#cb23-4" aria-hidden="true" tabindex="-1"></a>zalpha <span class="ot">=</span> <span class="fu">qnorm</span>(<span class="fl">0.05</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb23-5"><a href="estimation.html#cb23-5" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">-</span> zalpha<span class="sc">*</span>sigma<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code></pre></div>
+<pre><code>## [1] 9.04518</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="estimation.html#cb25-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">+</span> zalpha<span class="sc">*</span>sigma<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code></pre></div>
+<pre><code>## [1] 9.55482</code></pre>
 <p>Therefore, we are 90% confident that the true average alcohol content in all new bottles of wine is between 9.05% and 9.55%.</p>
 </details>
 <p><br></p>
@@ -421,14 +392,14 @@ s &amp;= 140\\
 Here we are not told whether the data are normally distributed. However, it won’t matter because we only have an estimate of <span class="math inline">\(\sigma\)</span> (remember that among the four types of confidence intervals we considered earlier, there are no differences between case II and III). Therefore, our confidence interval will be of the form:
 <span class="math display">\[\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}.\]</span>
 We can again define each object in R and construct the confidence interval.</p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb125-1"><a href="estimation.html#cb125-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
-<span id="cb125-2"><a href="estimation.html#cb125-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fl">357.60</span></span>
-<span id="cb125-3"><a href="estimation.html#cb125-3" aria-hidden="true" tabindex="-1"></a>s <span class="ot">=</span> <span class="dv">140</span></span>
-<span id="cb125-4"><a href="estimation.html#cb125-4" aria-hidden="true" tabindex="-1"></a>talpha <span class="ot">=</span> <span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span>n<span class="dv">-1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
-<span id="cb125-5"><a href="estimation.html#cb125-5" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">-</span> talpha<span class="sc">*</span>s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code></pre></div>
-<pre><code>## [1] 329.8</code></pre>
-<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb127-1"><a href="estimation.html#cb127-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">+</span> talpha<span class="sc">*</span>s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code></pre></div>
-<pre><code>## [1] 385.4</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="estimation.html#cb27-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb27-2"><a href="estimation.html#cb27-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fl">357.60</span></span>
+<span id="cb27-3"><a href="estimation.html#cb27-3" aria-hidden="true" tabindex="-1"></a>s <span class="ot">=</span> <span class="dv">140</span></span>
+<span id="cb27-4"><a href="estimation.html#cb27-4" aria-hidden="true" tabindex="-1"></a>talpha <span class="ot">=</span> <span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span>n<span class="dv">-1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb27-5"><a href="estimation.html#cb27-5" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">-</span> talpha<span class="sc">*</span>s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code></pre></div>
+<pre><code>## [1] 329.821</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="estimation.html#cb29-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">+</span> talpha<span class="sc">*</span>s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code></pre></div>
+<pre><code>## [1] 385.379</code></pre>
 <p>Therefore, we are 95% confident that the true average account checking account value in the given region is between £329.82 and £385.38.</p>
 </details>
 <p><br></p>
@@ -438,8 +409,8 @@ We can again define each object in R and construct the confidence interval.</p>
 Solution:
 </summary>
 <p>First, let’s load in the data from R.</p>
-<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb129-1"><a href="estimation.html#cb129-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(EuStockMarkets)</span>
-<span id="cb129-2"><a href="estimation.html#cb129-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(EuStockMarkets)</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="estimation.html#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(EuStockMarkets)</span>
+<span id="cb31-2"><a href="estimation.html#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(EuStockMarkets)</span></code></pre></div>
 <table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -460,118 +431,105 @@ FTSE
 <tbody>
 <tr>
 <td style="text-align:right;">
-1629
+1628.75
 </td>
 <td style="text-align:right;">
-1678
+1678.1
 </td>
 <td style="text-align:right;">
-1773
+1772.8
 </td>
 <td style="text-align:right;">
-2444
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1614
-</td>
-<td style="text-align:right;">
-1688
-</td>
-<td style="text-align:right;">
-1750
-</td>
-<td style="text-align:right;">
-2460
+2443.6
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
-1607
+1613.63
 </td>
 <td style="text-align:right;">
-1679
+1688.5
 </td>
 <td style="text-align:right;">
-1718
+1750.5
 </td>
 <td style="text-align:right;">
-2448
-</td>
-</tr>
-<tr>
-<td style="text-align:right;">
-1621
-</td>
-<td style="text-align:right;">
-1684
-</td>
-<td style="text-align:right;">
-1708
-</td>
-<td style="text-align:right;">
-2470
+2460.2
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
-1618
+1606.51
 </td>
 <td style="text-align:right;">
-1687
+1678.6
 </td>
 <td style="text-align:right;">
-1723
+1718.0
 </td>
 <td style="text-align:right;">
-2485
+2448.2
 </td>
 </tr>
 <tr>
 <td style="text-align:right;">
-1611
+1621.04
 </td>
 <td style="text-align:right;">
-1672
+1684.1
 </td>
 <td style="text-align:right;">
-1714
+1708.1
 </td>
 <td style="text-align:right;">
-2467
+2470.4
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1618.16
+</td>
+<td style="text-align:right;">
+1686.6
+</td>
+<td style="text-align:right;">
+1723.1
+</td>
+<td style="text-align:right;">
+2484.7
+</td>
+</tr>
+<tr>
+<td style="text-align:right;">
+1610.61
+</td>
+<td style="text-align:right;">
+1671.6
+</td>
+<td style="text-align:right;">
+1714.3
+</td>
+<td style="text-align:right;">
+2466.8
 </td>
 </tr>
 </tbody>
 </table>
 <p>Now let’s pull the subset of data we care about (i.e., the UK FTSE column).</p>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb130-1"><a href="estimation.html#cb130-1" aria-hidden="true" tabindex="-1"></a>uk <span class="ot">=</span> EuStockMarkets[,<span class="dv">4</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="estimation.html#cb32-1" aria-hidden="true" tabindex="-1"></a>uk <span class="ot">=</span> EuStockMarkets[,<span class="dv">4</span>]</span></code></pre></div>
 <p>Notice that we are not told anything about the true distribution of the data. Therefore, our confidence interval will be of the form:
 <span class="math display">\[\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}.\]</span>
 Next, let’s compute each component necessary to construct the 99% confidence interval.</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb131-1"><a href="estimation.html#cb131-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">length</span>(uk)</span>
-<span id="cb131-2"><a href="estimation.html#cb131-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fu">mean</span>(uk)</span>
-<span id="cb131-3"><a href="estimation.html#cb131-3" aria-hidden="true" tabindex="-1"></a>s <span class="ot">=</span> <span class="fu">sd</span>(uk)</span>
-<span id="cb131-4"><a href="estimation.html#cb131-4" aria-hidden="true" tabindex="-1"></a>talpha <span class="ot">=</span> <span class="fu">qt</span>(<span class="fl">0.005</span>, <span class="at">df=</span>n<span class="dv">-1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
-<span id="cb131-5"><a href="estimation.html#cb131-5" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">-</span> talpha<span class="sc">*</span>s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code></pre></div>
-<pre><code>## [1] 3507</code></pre>
-<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb133-1"><a href="estimation.html#cb133-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">+</span> talpha<span class="sc">*</span>s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code></pre></div>
-<pre><code>## [1] 3624</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="estimation.html#cb33-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">length</span>(uk)</span>
+<span id="cb33-2"><a href="estimation.html#cb33-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fu">mean</span>(uk)</span>
+<span id="cb33-3"><a href="estimation.html#cb33-3" aria-hidden="true" tabindex="-1"></a>s <span class="ot">=</span> <span class="fu">sd</span>(uk)</span>
+<span id="cb33-4"><a href="estimation.html#cb33-4" aria-hidden="true" tabindex="-1"></a>talpha <span class="ot">=</span> <span class="fu">qt</span>(<span class="fl">0.005</span>, <span class="at">df=</span>n<span class="dv">-1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb33-5"><a href="estimation.html#cb33-5" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">-</span> talpha<span class="sc">*</span>s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code></pre></div>
+<pre><code>## [1] 3507.248</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="estimation.html#cb35-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">+</span> talpha<span class="sc">*</span>s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code></pre></div>
+<pre><code>## [1] 3624.038</code></pre>
 <p>Therefore, we are 99% confident that the true closing price for the UK FTSE index is between £3,507.25 and £3,624.04.</p>
-<p>Finally, notice that we can use the <code>t.test( )</code> function to perform the same analysis but with fewer steps.</p>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb135-1"><a href="estimation.html#cb135-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(uk, <span class="at">conf.level=</span><span class="fl">0.99</span>)</span></code></pre></div>
-<pre><code>## 
-##  One Sample t-test
-## 
-## data:  uk
-## t = 157, df = 1859, p-value &lt;2e-16
-## alternative hypothesis: true mean is not equal to 0
-## 99 percent confidence interval:
-##  3507 3624
-## sample estimates:
-## mean of x 
-##      3566</code></pre>
-</details>
+<p>Finally, notice that we can use the <code>t.test( )</code> function to perform the same analysis but with fewer ste</p>
 
 </div>
 </div>

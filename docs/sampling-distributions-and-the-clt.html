@@ -52,10 +52,6 @@
 <link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
 <link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
 <script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<script src="libs/kePrint-0.0.1/kePrint.js"></script>
-<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
-<link href="libs/bsTable-3.3.7/bootstrapTable.min.css" rel="stylesheet" />
-<script src="libs/bsTable-3.3.7/bootstrapTable.js"></script>
 
 
 <style type="text/css">
@@ -170,11 +166,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li class="chapter" data-level="3" data-path="sampling-distributions-and-the-clt.html"><a href="sampling-distributions-and-the-clt.html"><i class="fa fa-check"></i><b>3</b> Sampling Distributions and the CLT</a></li>
 <li class="chapter" data-level="4" data-path="estimation.html"><a href="estimation.html"><i class="fa fa-check"></i><b>4</b> Estimation</a>
 <ul>
-<li class="chapter" data-level="4.1" data-path="estimation.html"><a href="estimation.html#point-estimation-and-the-mle"><i class="fa fa-check"></i><b>4.1</b> Point Estimation and the MLE</a></li>
+<li class="chapter" data-level="4.1" data-path="estimation.html"><a href="estimation.html#point-estimation"><i class="fa fa-check"></i><b>4.1</b> Point Estimation</a></li>
 <li class="chapter" data-level="4.2" data-path="estimation.html"><a href="estimation.html#confidence-intervals"><i class="fa fa-check"></i><b>4.2</b> Confidence Intervals</a>
 <ul>
 <li class="chapter" data-level="4.2.1" data-path="estimation.html"><a href="estimation.html#types-of-confidence-intervals"><i class="fa fa-check"></i><b>4.2.1</b> Types of Confidence Intervals</a></li>
-<li class="chapter" data-level="4.2.2" data-path="estimation.html"><a href="estimation.html#examples"><i class="fa fa-check"></i><b>4.2.2</b> Examples</a></li>
+<li class="chapter" data-level="4.2.2" data-path="estimation.html"><a href="estimation.html#interpreting-confidence-intervals"><i class="fa fa-check"></i><b>4.2.2</b> Interpreting confidence intervals</a></li>
+<li class="chapter" data-level="4.2.3" data-path="estimation.html"><a href="estimation.html#examples"><i class="fa fa-check"></i><b>4.2.3</b> Examples</a></li>
 </ul></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="hypothesis-tests.html"><a href="hypothesis-tests.html"><i class="fa fa-check"></i><b>5</b> Hypothesis Tests</a>
@@ -220,56 +217,64 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="sampling-distributions-and-the-clt" class="section level1 hasAnchor" number="3">
 <h1><span class="header-section-number">Chapter 3</span> Sampling Distributions and the CLT<a href="sampling-distributions-and-the-clt.html#sampling-distributions-and-the-clt" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <p><strong>Sampling distributions</strong> are theoretical objects that represent the probability distribution of a statistic (usually the sample mean).</p>
-<p>The <strong>sampling distribution of the sample mean</strong> is the distribution of means that result from taking all possible samples of size <span class="math inline">\(n\)</span> from the population.</p>
-<p>We can build some intuition for what this means in R.</p>
-<p>Let’s start by letting the population distribution be normal with mean <span class="math inline">\(\mu=0\)</span> and variance <span class="math inline">\(\sigma^2=1\)</span>. We can take a sample of size <span class="math inline">\(n=100\)</span> from that population and plot the <strong>sample</strong> distribution.</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb78-1"><a href="sampling-distributions-and-the-clt.html#cb78-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
-<span id="cb78-2"><a href="sampling-distributions-and-the-clt.html#cb78-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
-<pre><code>## [1] 0.008768</code></pre>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="sampling-distributions-and-the-clt.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">main=</span><span class="st">&quot;Sample Distribution&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-49-1.png" width="672" /></p>
-<p>While we cannot generate <em>all possible samples</em> of size <span class="math inline">\(n\)</span> from this normal distribution, we can take a large number.</p>
-<p>Let <span class="math inline">\(R=100,000\)</span> be the number of samples we want to generate. We will construct a for loop in R to do the following: (1) generate a random sample of size <span class="math inline">\(n\)</span> from the population; (2) compute the sample mean and store the result in a vector called <code>xbar</code>.</p>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="sampling-distributions-and-the-clt.html#cb81-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">=</span> <span class="dv">100000</span></span>
-<span id="cb81-2"><a href="sampling-distributions-and-the-clt.html#cb81-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fu">double</span>(R)</span>
-<span id="cb81-3"><a href="sampling-distributions-and-the-clt.html#cb81-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R){</span>
-<span id="cb81-4"><a href="sampling-distributions-and-the-clt.html#cb81-4" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
-<span id="cb81-5"><a href="sampling-distributions-and-the-clt.html#cb81-5" aria-hidden="true" tabindex="-1"></a>    xbar[r] <span class="ot">=</span> <span class="fu">mean</span>(x)</span>
-<span id="cb81-6"><a href="sampling-distributions-and-the-clt.html#cb81-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb81-7"><a href="sampling-distributions-and-the-clt.html#cb81-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(xbar, <span class="at">main=</span><span class="st">&quot;Sampling Distribution of Xbar&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-50-1.png" width="672" /></p>
+<p>The <strong>sampling distribution of the sample mean</strong> is the theoretical distribution of means that would result from taking all possible samples of size <span class="math inline">\(n\)</span> from the population.</p>
+<p>We can build some intuition for what this means in R by simulating this sampling distribution.</p>
+<p>Let’s start by assuming that we are sampling from the normal distribution with mean <span class="math inline">\(\mu=0\)</span> and variance <span class="math inline">\(\sigma^2=1\)</span> such that observations in our sample are IID. A specific sample of size <span class="math inline">\(n\)</span> then is going to consist of realizations <span class="math inline">\(\{x_1,\dots,x_n\}\)</span>, where each <span class="math inline">\(x_i\)</span> is a realization of the random variable <span class="math inline">\(X_i \sim N(0,1)\)</span>.</p>
+<p>In R, we now can take a sample of size <span class="math inline">\(n=100\)</span> by simulating draws from the normal distribution. For this sample, we then also compute the mean defined by <span class="math inline">\(\frac{1}{n}\sum_{i=1}^n x_i\)</span> and plot the distribution of the realizations <span class="math inline">\(\{x_1,\dots,x_n\}\)</span> in a histogram.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="sampling-distributions-and-the-clt.html#cb1-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
+<span id="cb1-2"><a href="sampling-distributions-and-the-clt.html#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code></pre></div>
+<pre><code>## [1] -0.08761556</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="sampling-distributions-and-the-clt.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(x),<span class="fu">aes</span>(x)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="sampling-distributions-and-the-clt.html#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># note: to plot the vector with ggplot, we convert x to a data.frame first</span></span></code></pre></div>
+<p>While we cannot generate all possible samples of size <span class="math inline">\(n\)</span> from this normal distribution to get the sampling distribution, we can many sample and get close to it.</p>
+<p>Let <span class="math inline">\(R=100,000\)</span> be the number of samples we want to generate. The code below now constructs a for loop in R to do the following: (1) generate a random sample of size <span class="math inline">\(n\)</span> from the population; (2) compute the sample mean and store the computed mean in a vector called <code>xbar</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="sampling-distributions-and-the-clt.html#cb5-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">=</span> <span class="dv">100000</span></span>
+<span id="cb5-2"><a href="sampling-distributions-and-the-clt.html#cb5-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fu">double</span>(R)</span>
+<span id="cb5-3"><a href="sampling-distributions-and-the-clt.html#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R){</span>
+<span id="cb5-4"><a href="sampling-distributions-and-the-clt.html#cb5-4" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>) <span class="co"># generate new sample </span></span>
+<span id="cb5-5"><a href="sampling-distributions-and-the-clt.html#cb5-5" aria-hidden="true" tabindex="-1"></a>    xbar[r] <span class="ot">=</span> <span class="fu">mean</span>(x)              <span class="co"># calculate mean and ad it in vector xbar  </span></span>
+<span id="cb5-6"><a href="sampling-distributions-and-the-clt.html#cb5-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-7"><a href="sampling-distributions-and-the-clt.html#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(xbar),<span class="fu">aes</span>(xbar),<span class="at">xtitle=</span><span class="st">&quot;mean in sample&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb5-8"><a href="sampling-distributions-and-the-clt.html#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">title=</span><span class="st">&quot;Sampling distribution&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-9"><a href="sampling-distributions-and-the-clt.html#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Sampling distribution&quot;</span>) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="sampling-distributions-and-the-clt.html#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Sample means&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>This plot is the distribution of sample means after taking <span class="math inline">\(R=100,000\)</span> samples with size <span class="math inline">\(n=100\)</span> from the population.</p>
-<p>Notice that this again looks like a normal distribution. The mean looks the same as the distribution of <span class="math inline">\(X\)</span>, but the variance looks much smaller.</p>
-<p>In fact, when the population distribution is <span class="math inline">\(N(\mu,\sigma^2)\)</span>, then the distribution of <span class="math inline">\(\bar{X}\)</span> is <span class="math inline">\(N(\mu,\sigma^2/n)\)</span>. In this case, we know that <span class="math inline">\(E(\bar{X})=E(X)=\mu=0\)</span> and <span class="math inline">\(Var(\bar{X})=Var(X)/n=\sigma^2/n=1/100=0.01\)</span>.</p>
+<p>Notice that this again looks like a normal distribution. The mean looks the same as in the first histogram within a single sample, but the variance looks much smaller.</p>
+<p>In fact, when the population distribution is <span class="math inline">\(N(\mu,\sigma^2)\)</span>, then the distribution of <span class="math inline">\(\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i\)</span> is <span class="math inline">\(N(\mu,\sigma^2/n)\)</span>. In this case, we know that <span class="math inline">\(E(\bar{X})=E(X)=\mu=0\)</span> and <span class="math inline">\(Var(\bar{X})=Var(X)/n=\sigma^2/n=1/100=0.01\)</span>.</p>
 <p>Let’s check to see what the mean and variance are in our approximation of the sampling distribution.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="sampling-distributions-and-the-clt.html#cb82-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(xbar)</span></code></pre></div>
-<pre><code>## [1] 0.0004032</code></pre>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb84-1"><a href="sampling-distributions-and-the-clt.html#cb84-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(xbar)</span></code></pre></div>
-<pre><code>## [1] 0.009978</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="sampling-distributions-and-the-clt.html#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(xbar)</span></code></pre></div>
+<pre><code>## [1] 4.686235e-05</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="sampling-distributions-and-the-clt.html#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(xbar)</span></code></pre></div>
+<pre><code>## [1] 0.01002268</code></pre>
 <p>Very close to the true values!</p>
 <p>The next question to consider is what if our population distribution was not normally distributed? What if it was skewed to the right or left?</p>
-<p>Let’s assume <span class="math inline">\(X\)</span> has a Exponential<span class="math inline">\((\beta)\)</span> distribution where <span class="math inline">\(\beta=1\)</span> is a rate parameter. We can again take one individual sample from this population distribution.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb86-1"><a href="sampling-distributions-and-the-clt.html#cb86-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rexp</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">rate=</span><span class="dv">1</span>)</span>
-<span id="cb86-2"><a href="sampling-distributions-and-the-clt.html#cb86-2" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x, <span class="at">main=</span><span class="st">&quot;Sample Distribution&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-52-1.png" width="672" /></p>
-<p>Based on this sample, it appears that the population distribution is highly asymmetric and skewed to the right.</p>
-<p>In this case, should we still expect the sampling distribution of the sample mean to be normal? Let’s go through the same exercise as before.</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="sampling-distributions-and-the-clt.html#cb87-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">=</span> <span class="dv">100000</span></span>
-<span id="cb87-2"><a href="sampling-distributions-and-the-clt.html#cb87-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fu">double</span>(R)</span>
-<span id="cb87-3"><a href="sampling-distributions-and-the-clt.html#cb87-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R){</span>
-<span id="cb87-4"><a href="sampling-distributions-and-the-clt.html#cb87-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="fu">rexp</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">rate=</span><span class="dv">1</span>)</span>
-<span id="cb87-5"><a href="sampling-distributions-and-the-clt.html#cb87-5" aria-hidden="true" tabindex="-1"></a>  xbar[r] <span class="ot">=</span> <span class="fu">mean</span>(x)</span>
-<span id="cb87-6"><a href="sampling-distributions-and-the-clt.html#cb87-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb87-7"><a href="sampling-distributions-and-the-clt.html#cb87-7" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(xbar, <span class="at">main=</span><span class="st">&quot;Sampling Distribution of Xbar&quot;</span>)</span></code></pre></div>
-<p><img src="_main_files/figure-html/unnamed-chunk-53-1.png" width="672" /></p>
+<p>Let’s assume <span class="math inline">\(X_i\)</span> has a Exponential<span class="math inline">\((\beta)\)</span> distribution where <span class="math inline">\(\beta=1\)</span> is a rate parameter. We can again take one individual sample <span class="math inline">\({x_1,\dots,x_n}\)</span>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="sampling-distributions-and-the-clt.html#cb10-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rexp</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">rate=</span><span class="dv">1</span>) <span class="co"># take draws</span></span>
+<span id="cb10-2"><a href="sampling-distributions-and-the-clt.html#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(x),<span class="fu">aes</span>(x)) <span class="sc">+</span> <span class="fu">geom_histogram</span>() </span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Based on this sample, it appears that distribution is highly asymmetric and skewed to the right.</p>
+<p>In this case, should we still expect the sampling distribution of the sample mean to be normal? Let’s go through the same exercise as before, i.e. take many samples of size <span class="math inline">\(n=100\)</span>, compute the sample mean for each of the samples, and then plot the histogram of the sample means.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="sampling-distributions-and-the-clt.html#cb11-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">=</span> <span class="dv">100000</span></span>
+<span id="cb11-2"><a href="sampling-distributions-and-the-clt.html#cb11-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fu">double</span>(R)</span>
+<span id="cb11-3"><a href="sampling-distributions-and-the-clt.html#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R){</span>
+<span id="cb11-4"><a href="sampling-distributions-and-the-clt.html#cb11-4" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">=</span> <span class="fu">rexp</span>(<span class="at">n=</span><span class="dv">100</span>, <span class="at">rate=</span><span class="dv">1</span>)</span>
+<span id="cb11-5"><a href="sampling-distributions-and-the-clt.html#cb11-5" aria-hidden="true" tabindex="-1"></a>  xbar[r] <span class="ot">=</span> <span class="fu">mean</span>(x)</span>
+<span id="cb11-6"><a href="sampling-distributions-and-the-clt.html#cb11-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb11-7"><a href="sampling-distributions-and-the-clt.html#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">data.frame</span>(xbar),<span class="fu">aes</span>(xbar),<span class="at">xtitle=</span><span class="st">&quot;mean in sample&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb11-8"><a href="sampling-distributions-and-the-clt.html#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">title=</span><span class="st">&quot;Sampling distribution&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-9"><a href="sampling-distributions-and-the-clt.html#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">&quot;Sampling distribution&quot;</span>) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="sampling-distributions-and-the-clt.html#cb11-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Sample means&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>The distribution of sample means again looks normal!</p>
-<p>In fact, the <strong>Central Limit Theorem</strong> guarantees that this will be the case as the sample size <span class="math inline">\(n\)</span> gets large. Then for any population distribution, we know that the distribution of <span class="math inline">\(\bar{X}\)</span> will be <em>approximately</em> normal with mean <span class="math inline">\(E(\bar{X})=E(X)\)</span> and <span class="math inline">\(Var(\bar{X})=Var(X)/n\)</span>.</p>
+<p>The <strong>Central Limit Theorem</strong> guarantees that this will be the case as the sample size <span class="math inline">\(n\)</span> gets large. Then for any population distribution, we know that the distribution of <span class="math inline">\(\bar{X}\)</span> will be <em>approximately</em> normal with mean <span class="math inline">\(E(\bar{X})=E(X)\)</span> and <span class="math inline">\(Var(\bar{X})=Var(X)/n\)</span>.</p>
 <p>Since <span class="math inline">\(X\sim\text{Exponential}(\beta)\)</span> with <span class="math inline">\(\beta=1\)</span>, it can be shown that <span class="math inline">\(E(X)=\beta=1\)</span> and <span class="math inline">\(Var(X)=\beta^2=1\)</span>. Therefore, <span class="math inline">\(\bar{X}\)</span> is approximately normal with mean <span class="math inline">\(E(\bar{X})=E(X)=1\)</span> and variance <span class="math inline">\(Var(\bar{X})=Var(X)/n=1/100=0.01\)</span>.</p>
 <p>We again check these results using our approximate sampling distribution and find consistent answers.</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="sampling-distributions-and-the-clt.html#cb88-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(xbar)</span></code></pre></div>
-<pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="sampling-distributions-and-the-clt.html#cb90-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(xbar)</span></code></pre></div>
-<pre><code>## [1] 0.01004</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="sampling-distributions-and-the-clt.html#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(xbar)</span></code></pre></div>
+<pre><code>## [1] 1.000008</code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="sampling-distributions-and-the-clt.html#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">var</span>(xbar)</span></code></pre></div>
+<pre><code>## [1] 0.009936316</code></pre>
 
 </div>
             </section>
