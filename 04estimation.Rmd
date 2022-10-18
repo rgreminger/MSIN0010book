@@ -1,114 +1,55 @@
 # Estimation
 
-## Point Estimation and the MLE
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+set.seed(1209837)
+```
+
+
+## Point Estimation 
 <hr>
 
-Point estimation is all about using one single number (statistic) to estimate a population parameter of interest. One question is how do we actually come up with those statistics?
+Point estimation is all about using one single number (statistic) to estimate a population parameter of interest. Generally, we need to differentiate three different terms: 
 
-In this section, we will illustrate the concept of **maximum likelihood estimation**. The idea of maximum likelihood estimation is to first assume our data come from a known family of distributions (e.g., normal) that contain parameters (e.g., mean $\mu$, variance $\sigma^2$). Then the maximum likelihood estimates (MLEs) of the parameters will be the parameter values that are most likely to have generated our data, where "most likely" is measured by the likelihood function.
+1. *Parameter*: $\theta$
+2. *Estimator*: $\hat{\theta}(X) = g(X_1,\dots,X_n)$
+3. *Estimate*: $\hat{\theta}(x) = g(x_1,\dots,x_n)$
 
-To start, let's create a simple data set. We will generate $n=25$ normal random variables with mean $\mu=5$ and variance $\sigma^2=1$. 
+$\theta$ is the population parameter we want to know. $\hat{\theta}(X)$ is our estimator, which is a function of our random sample. It is itself a random variable because another random sample will lead to a different number. The estimate $\hat{\theta}(x)$ then is our statistic that we compute for given sample; given realizations $(x_1,\dots,x_n)$, this number is not random. Note that we apply the same function $g()$ in the estimator and estimate, but in the estimator the $X_i$ are random variables whereas in the estimate the $x_i$ are realizations. 
+
+To highlight the difference between estimate and estimator consider the following example: the population is 1,000,000 consumers and we want to know how many of them purchased our product. Hence, the population parameter we want to know is $$\theta = \frac{\text{no. purchases in population}}{1,000,000}$$ 
+
+In principle, we could just call all 1,000,000 consumers and ask, but that would cost way too much time (and time is money)! Instead, we are going to take a *random* sample with $n$ consumers from the population. In this case, our estimator for the mean is 
+$$\hat{\theta}(X) = g(X_1,\dots,X_n) = \frac{\text{no. purchases in sample}}{n} $$
+
+This is what we now do in R. 
 
 ```{r}
-x = rnorm(25, mean=5, sd=1)
+# Generate population and calculate population parameter
+pop = rbinom(1000000,1,0.2) # generates 1,000,000 consumers that bought (=1) or not(=0)
+pop_par = mean(pop)  
+pop_par 
+# Take random sample and calculate estimate on that sample
+x = sample(pop,100,replace=TRUE)    # randomly takes 100 consumers out of pop 
+estimate = mean(x)
+estimate 
+# Calculate sampling error 
+sampling_error = abs(estimate-pop_par) 
+sampling_error
 ```
 
-Now we will pretend as if we do not know the mean parameter of the population distribution $\mu$ and then use the method of maximum likelihood to estimate $\mu$. 
-
-Remember that the MLE of $\mu$ is defined as $\hat{\mu}^{\text{MLE}}=\arg\max f(x_1,\dotsc,x_n|\mu,\sigma^2)$. That is, $\hat{\mu}^{\text{MLE}}$ is the value of $\mu$ that maximizes the likelihood function.
-
-Once we have made the assumption that are our data are normally distributed, the likelihood function takes the form  $$f(x_1,\dotsc,x_n|\mu,\sigma^2)=\prod_{i=1}^n f(x_i|\mu,\sigma^2)=\prod_{i=1}^n{1\over\sqrt{2\pi\sigma^2}}\exp\left(-{1\over2\sigma^2}(x_i-\mu)^2\right)$$
-where the right-most term is the PDF of the normal distribution.
-
-If we use calculus to formally maximize the likelihood function, we will find that $\hat{\mu}^{\text{MLE}}=\bar{X}$.
-
-Since the MLE of $\mu$ is the sample mean, computing the MLE in R becomes straightforward.
-
+Both the estimate and sampling error will be different if we take another random sample. 
 ```{r}
+x = sample(pop,100,replace=TRUE)
 mean(x)
 ```
-
-Therefore, the MLE of $\mu$ is about 5.16. 
-
-To help provide some intuition for how the maximum likelihood method works, let's work through an example. Rather than try to work through the calculus to show that $\hat{\mu}^{\text{MLE}}=\bar{x}=5.16$, we can plot the likelihood function against many candidate values of $\mu$ and see where the curve is highest.
-
-Since the likelihood function is a product of positive numbers (many of which can be very small), it's more convenient and numerically stable to work with the *log-likelihood function*.
-$$\log f(x_1,\dotsc,x_n|\mu,\sigma^2)=\log\left(\prod_{i=1}^n f(x_i|\mu,\sigma^2)\right)=\sum_{i=1}^n \log f(x_i|\mu,\sigma^2)$$
-
-To compute the log-likelihood function for each $x_i$, we can use the `dnorm( )` function. 
-
-Let's start by evaluating the log-likelihood for each observation. To do this we need to plug in a value for the mean (which we will fix to its true value $\mu=5$).
-
-```{r}
-dnorm(x, mean=5, sd=1, log=TRUE)
-```
-
-The entire log-likelihood function is the sum of the individual log-likelihood evaluations. Therefore, the log-likelihood for $\mu=5$ can be found as follows.
-
-```{r}
-sum(dnorm(x, mean=5, sd=1, log=TRUE))
-```
-
-This number now represents a measure of the relative likelihood that our data x were generated from a normal distribution with mean 5. We can the imagine using the likelihood function as a way of finding "good" estimates of $\mu$. The "best" estimate of $\mu$ would correspond to the value that is *most* likely to have generated our data.
-
-As a simple example, we could say: is it more likely that our data come from a distribution with mean $\mu=5$ or $\mu=6$?
-
-To test this, we could evaluate the log likelihood function for $\mu=6$ and compare.
-
-```{r}
-sum(dnorm(x, mean=6, sd=1, log=TRUE))
-```
-
-Given that the likelihood function is higher (less negative) for $\mu=5$, we say that $\hat{\mu}=5$ is our estimate of $\mu$. 
-
-Since $\mu$ can be any real number, there is no reason to restrict plausible values of $\mu$ to the set of integers. Instead, we can lay out a grid of candidate parameter values of any desired level of granularity.
-
-```{r}
-index = seq(3, 7, by=.01)
-index
-```
-
-We now want to step through each value in the index and evaluate the log-likelihood function. The MLE will be the value in the index that yields the highest log-likelihood function.
-
-To do this, we will use a "for loop" in R.
-
-```{r}
-R = length(index)
-loglike = double(R)
-for(r in 1:R){
-  loglike[r] = sum(dnorm(x, mean=index[r], sd=1, log=TRUE))
-}
-```
-
-Here R counts the number of elements in the index variable and loglike is a vector of R elements that are initially set to be zero but are then filled in in each iteration of the for loop.
-
-```{r}
-plot(index, loglike, type="l")
-abline(v=index[which.max(loglike)], col=2, lty=2)
-```
-
-Once we have evaluated the log-likelihood function for each value in the index, we can plot the log-likelihood against the index.
-
-Based on this plot, it looks like the value that maximizes the log-likehood functin is a little bit greater than 5. We formally check this in R.
-
-```{r}
-index[which.max(loglike)]
-```
-
-This matches the MLE that we initially computed using the sample mean. 
-
-```{r}
-mean(x)
-```
-
-The only difference is the fact that our estimate using the plot is rounded to two decimal places because of the grid that we selected when creating the index variable.
-
-<br>
 
 ## Confidence Intervals
 <hr>
 
-Ultimately, point estimates are insufficient because the estimators themselves are random variables and subject to variation across different samples. Rather than provide a single point estimate, it will be better to provide a *range of plausible values* for the parameter of interest. This is the idea of **confidence intervals**.
+As we just saw, estimators themselves are random variables and subject to variation across different samples. Hence, point estimates are *not enough* to learn about the population parameter we are interested in. Rather than provide a single point estimate, it will be better to provide a *range of plausible values* for the parameter of interest. This is the idea of **confidence intervals**.
 
 A confidence interval for any parameter $\theta$ will always take the form:
 $$\hat{\theta}\pm \text{(critical value)}\times \text{SD}(\hat{\theta})$$
@@ -161,6 +102,32 @@ qt(0.025, df=10000, lower.tail=FALSE)
 ```
 
 Notice how these values approach $z_{0.025}\approx1.96$ as the degrees of freedom parameter gets large.
+
+### Interpreting confidence intervals 
+Suppose an analyst tells you that the 95% confidence interval for the population parameter $\theta$ is $(0.5,1.5)$. What can you conclude from this, i.e., what does it mean that we are 95% confident that $\theta$ is in this interval? 
+
+What the confidence interval tells us is that if we take many samples from the population and construct the confidence interval for each sample, then in approximately 95% of the samples the constructed confidence interval will include the true population parameter. Note that, same as the estimator, the confidence interval depends on the sample and hence is random. 
+
+We can check in R whether this holds using the same population we generated earlier. For this, we are now going to construct a for loop that does the following: (1) take a random sample of size $n=100$ from the population, (2) compute the 95% confidence interval (type 4 above) for the sample, check whether the population parameter lies within the computed confidence interval and store the result in a vector called poppar_in_ci. 
+```{r}
+R = 1000                                # how many samples to take 
+poppar_in_ci = double(R)
+for(r in 1:R){
+    x = sample(pop,100,replace=TRUE)                   # generate new sample 
+    phat = mean(x)                        
+    s = sqrt(phat*(1-phat)/100)           # see formula for CI of proportion above
+    poppar_in_ci[r] = phat -1.96 * s < pop_par & 
+                        phat + 1.96 * s > pop_par
+}
+mean(poppar_in_ci)
+
+```
+The result of this simulation shows that for approximately 95% of our samples, the constructed confidence interval indeed contains the population parameter value. 
+
+Note that in this case, we were sampling from a population we first generated. Often, we take samples just from a hypothetical population, where we assume that the samples are drawn from a distribution that captures the population. For example, in chapter 3 we directly made assumptions on the population distribution and sampled from the respective distributions. 
+
+
+
 
 ### Examples
 
@@ -265,10 +232,4 @@ xbar + talpha*s/sqrt(n)
 
 Therefore, we are 99% confident that the true closing price for the UK FTSE index is between £3,507.25 and £3,624.04.
 
-Finally, notice that we can use the `t.test( )` function to perform the same analysis but with fewer steps.
-
-```{r}
-t.test(uk, conf.level=0.99)
-```
-
-</details>
+Finally, notice that we can use the `t.test( )` function to perform the same analysis but with fewer ste
