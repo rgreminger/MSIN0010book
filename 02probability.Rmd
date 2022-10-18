@@ -1,5 +1,11 @@
 # Computing Probabilities
 
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+```
+
 There are many common families of probability distributions and we have discussed six so far. The discrete distributions include the discrete Uniform, Bernoulli, and Binomial. The continuous distributions include the continuous Uniform, Normal, and t.
 
 This chapter provides a set of examples to show you how to compute probabilities from a few of these distributions in R.

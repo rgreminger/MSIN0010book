@@ -1,5 +1,12 @@
 # Introduction to Data Analytics
 
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+```
+
+
 In this chapter, we will get acclimated to working with data using a suite of packages in R called the `tidyverse`.^[https://www.tidyverse.org/] If you are interested in a complete introduction to the tidyverse syntax, see [R for Data Science](https://r4ds.had.co.nz). Specifically, for details on data visualization see [Chapter 3 - Data Visualization](https://r4ds.had.co.nz/data-visualisation.html) and [Chapter 7 - Exploratory Data Analysis](https://r4ds.had.co.nz/exploratory-data-analysis.html).
 
 To use the `tidyverse` packages, we first need to load them in R. Without running this command first, any of the functions used below that are part of `tidyverse` will produce an error. 

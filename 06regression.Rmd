@@ -1,5 +1,9 @@
-```{r echo=FALSE}
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
 set.seed(1000)
+```
 ```
 
 # Regression

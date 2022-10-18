@@ -1,3 +1,10 @@
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+set.seed(1209837)
+```
+
 # Classification
 
 Classification shares many similarities with regression: We have a response variable $Y$ and a set of one or more predictors $X_1,\dotsc,X_p$. The difference is that for classification problems, the response $Y$ is **discrete**, meaning $Y\in\{1,2,\dotsc,C\}$ where $C$ is the number of classes that $Y$ can take on.

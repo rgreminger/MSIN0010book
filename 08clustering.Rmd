@@ -1,3 +1,10 @@
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+set.seed(1209837)
+```
+
 # Clustering
 
 The goal of clustering is to discover groups of similar observations among a set of variables $X_1,\dotsc,X_p$. Clustering is an example of an **unsupervised learning** method, as we only consider the features $X_1,\dotsc,X_p$ *without* an associated response $Y$.

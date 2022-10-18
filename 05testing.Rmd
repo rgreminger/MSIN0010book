@@ -1,4 +1,9 @@
 # Hypothesis Tests
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+```
 
 ## Steps of Hypothesis Testing
 <hr>
