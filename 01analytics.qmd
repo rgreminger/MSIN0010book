@@ -1,0 +1,233 @@
+# Introduction to Data Analytics
+
+```{r include=FALSE}
+library(tidyverse)
+library(knitr)
+library(kableExtra)
+```
+
+
+In this chapter, we will get acclimated to working with data using a suite of packages in R called the `tidyverse`.^[[https://www.tidyverse.org/](https://www.tidyverse.org/)] If you are interested in a complete introduction to the tidyverse syntax, see [R for Data Science](https://r4ds.had.co.nz). Specifically, for details on data visualization see [Chapter 3 - Data Visualization](https://r4ds.had.co.nz/data-visualisation.html) and [Chapter 7 - Exploratory Data Analysis](https://r4ds.had.co.nz/exploratory-data-analysis.html).
+
+To use the `tidyverse` packages, we first need to load them in R. Without running this command first, any of the functions used below that are part of `tidyverse` will produce an error. 
+```{r message = FALSE}
+library(tidyverse)
+```
+
+
+## Loading and Inspecting Data Sets
+
+The following line of code reads in a data set that contains weekly prices, promotional activity, and sales for 20 different brands of beer. The data set comes from many stores within one Chicago grocery retail chain -- Dominick's Finer Foods --  and spans more than five years of transactions. The complete raw data are publically available from the Kilts Center for Marketing at the University of Chicago.^[[https://www.chicagobooth.edu/research/kilts/datasets/dominicks](https://www.chicagobooth.edu/research/kilts/datasets/dominicks)]
+
+```{r message = FALSE}
+beer = read_csv("beer.csv")
+```
+
+Note, for this code to work, the data file `beer.csv` needs to be located in the current working directory of R. Some datasets that we will use are already built into R. Those can be directly loaded by running `data(XX)` where `XX` is the name of the dataset you want to load (e.g. `mtcars`).
+
+
+We always want to view the data after importing to make sure all the values were read-in correctly. To inspect the first few lines of a data set, use the `head( )` command.
+
+```{r results="hide"}
+head(beer)
+```
+
+```{r echo=FALSE}
+head(beer) %>% 
+  kable() %>%
+  kable_styling(font_size=10) %>%
+  scroll_box(width = "100%")
+```
+
+We can see that our data set contains 11 different variables (i.e., columns). A brief summary of each variable is provided below. 
+
+- `store`: unique store ID number 
+- `upc`: Universal Product Code
+- `week`: week ID number
+- `move`: number of units sold
+- `price`: retail price in US dollars
+- `sale`: indicator of promotional activity
+- `profit`: gross profit margin
+- `brand`: brand name
+- `packsize`: number of items in one package
+- `itemsize`: size of items in one package
+- `units`: units of items
+
+## Statistical Summaries 
+
+
+We can compute summary statistics in the tidyverse by combining the `summarise` operator with any one (or many!) of R's built-in statistics functions. A few of the most common are listed below.
+
+```{r echo=FALSE}
+names = c("mean","median","variance","standard deviation","correlation")
+functions = c("`mean( )`","`median( )`","`var( )`","`sd( )`","`cor( )`")
+dt = data.frame(names,functions)
+names(dt) = c("Statistic","R Function")
+dt %>%
+  kable() %>%
+  kable_styling(full_width = FALSE)
+```
+
+For example, let's compute the average price across all products and weeks. For this, we're going to use the pipe operator `%>%`, which works by putting together a function from the left to right. Below, the dataset `beer` is put as an argument into the `summarise()` function. An alternative way of writing the same function would be `summarise(beer,mean(price))`.
+
+```{r}
+beer %>% 
+  summarise(mean(price))
+```
+
+Now suppose we wanted to find the average price for only one brand of beer, say Budweiser. To do this, we can use the `filter( )` operator to select rows in the data that satisfy certain conditions. Here we want Budweiser beers so the condition is that `brand` is equal to `BUDWEISER BEER`, or `brand=="BUDWEISER BEER"`. Note that a double equals sign `==` is always used when writing logical statements to check equality. As above, we again use `%>%` to put the different commands together. 
+
+```{r}
+beer %>% 
+  filter(brand=="BUDWEISER BEER") %>%
+  summarise(mean(price))
+```
+
+To compute summary statistics for multiple brands, we can use the `group_by( )` operator. As the name suggests, this operator tells R to first group by a certain categorical variable, and to compute a summary for each level that the given variable takes on.
+
+```{r message = FALSE}
+beer %>% 
+  group_by(brand) %>%
+  summarise(mean(price))
+```
+
+We can also easily extend the code above to compute multiple summary statistics across groups.
+
+```{r message = FALSE}
+beer %>% 
+  group_by(brand) %>%
+  summarise(mean(price), mean(move))
+```
+
+
+
+## Graphical Summaries 
+
+
+Data visualization is one of the strengths of the `tidyverse`. A fairly exhaustive list of graph types can be found at https://www.r-graph-gallery.com. For our purposes, we will start with a few of the most commonly used graphs.
+
+```{r echo=FALSE}
+names = c("histogram","box plot","bar plot","line plot","scatter plot")
+functions = c("`geom_histogram( )`","`geom_boxplot( )`","`geom_bar( )`","`geom_line( )`","`geom_point( )`")
+dt = data.frame(names,functions)
+names(dt) = c("Graph","Operator")
+dt %>%
+  kable() %>%
+  kable_styling(full_width = FALSE)
+```
+
+Let's start be looking at the distribution of weekly prices across all products. 
+
+```{r message = FALSE}
+beer %>%
+  ggplot(aes(x=price)) +
+  geom_histogram() + 
+  labs(title="Distribution of Weekly Prices")
+```
+
+This is an example of a **histogram**. The variable on the x-axis (price) is split into different bins, and the y-axis counts the number of observations that fall withiin each bin.
+
+We can also inspect the distribution of a variable like prices using a **boxplot**.
+
+```{r}
+beer %>%
+  ggplot(aes(y=price)) +
+  geom_boxplot() + 
+  labs(title="Distribution of Weekly Prices")
+```
+
+Notice that the focal variable of interest is now on the y-axis. The rectangular box shown in the middle of the plot indicates three key summary statistics: the bottom line is the 25th percentile, the middle line is the 50th percentile (or median), and the top line is the 75th percentile. The vertical line starting around 2.5 and ending around 7 indicates the full range of prices in the data. 
+
+The figure above shows the distribution of prices across all prodcuts. However, we may want to explore whether the distribution of prices is *different across products*. This can be done by defining `x=brand` within the `ggplot( )` function.
+
+```{r}
+beer %>%
+  ggplot(aes(x=brand, y=price)) +
+  geom_boxplot() + 
+  labs(title="Distribution of Weekly Prices")
+```
+
+We have succeeded in creating a box plot for each brand, but the brand labels are impossible to read! As easy fix is to rotate the x-axis labels, which can be controlled using the `theme()` operator. The `theme()` operator is generally what we use to change plot formatting, such as the size of the axis labels or the position of the title. 
+
+```{r}
+beer %>%
+  ggplot(aes(x=brand, y=price)) +
+  geom_boxplot() + 
+  labs(title="Distribution of Weekly Prices") + 
+  theme(axis.text.x = element_text(angle=90, hjust=1),
+        plot.title = element_text(hjust=0.5))
+```
+
+Much better! 
+
+Next, let's explore the variation of prices over time. We can make a time series plot (or line plot) to do this, where we specify `group=brand` so that R makes a separate line for each brand.
+
+```{r}
+beer %>%
+  ggplot(aes(x=week, y=price, group=brand)) +
+  geom_line() + 
+  labs(title="Beer Prices over Time") +
+  theme(plot.title = element_text(hjust=0.5))
+```
+
+This was a good attempt, but the plot is not especially useful! While we do notice that the prices are changing over time, we can't identify the products themselves so we don't know which products are changing more or less than others. 
+
+We can fix this in a couple ways. The first thing we will try is to simply add color to the plot above, so that we can identify a product by the color of its line.
+
+```{r}
+beer %>%
+  ggplot(aes(x=week, y=price, group=brand, color=brand)) +
+  geom_line() + 
+  labs(title="Beer Prices over Time") +
+  theme(plot.title = element_text(hjust=0.5))
+```
+
+This is better, but it is still hard to identify products because of how much overlap there is in prices. So maybe the best thing to do is create a separate plot for each brand. This can be easily accomplished using `facet_wrap( )`. 
+
+```{r}
+beer %>%
+  ggplot(aes(x=week,y=price,group=brand,color=brand)) +
+  geom_line(show.legend=FALSE) + 
+  labs(title="Beer Prices over Time") + 
+  facet_wrap(brand ~ .) +
+  theme(plot.title = element_text(hjust=0.5),
+        strip.text.x = element_text(size=6))
+```
+
+Note that we added `show.legend=FALSE` to `geom_line( )` since we no longer need the color to identify products. We also added an option to `theme( )` to control the size of the text to ensure that the labels are all legible.
+
+Finally, let's explore the relationship between *two variables* like price and demand.
+
+
+```{r}
+beer %>%
+  ggplot(aes(x=price, y=move)) +
+  geom_point() + 
+  labs(title="Price vs. Demand") + 
+  theme(plot.title = element_text(hjust=0.5))
+```
+
+This figure matches our intuition from economics, which is that as price increases, demand seems to fall. We can even imagine a line going through these points -- this line would be a demand curve!
+
+As before, it would be interesting to know how the relationship between price and demand changes across products. Let's apply the same techniques above -- adding color and using separate plots -- to investigate.
+
+```{r}
+beer %>%
+  ggplot(aes(x=price, y=move, color=brand)) +
+  geom_point() + 
+  labs(title="Price vs. Demand") + 
+  theme(plot.title = element_text(hjust=0.5))
+```
+
+```{r}
+beer %>%
+  ggplot(aes(x=price, y=move, color=brand)) +
+  geom_point(show.legend=FALSE) + 
+  labs(title="Price vs. Demand") +
+  facet_wrap(brand~.,scales="free") + 
+  theme(plot.title = element_text(hjust=0.5),
+        strip.text.x = element_text(size=6))
+
+```
+
+These last two plots indeed show that demand is negatively related to price (as price increases, demand falls) and that the magnitude of this relationship may change across products. 
