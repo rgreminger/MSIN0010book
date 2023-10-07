@@ -15,21 +15,107 @@ library(tidyverse)
 ```
 
 
-## Loading and Inspecting Data Sets
+## Loading Data Sets
+
+### Data formats 
+
+Data sets come in different storage formats: 
+
+  - .csv: Commas separate the values in each row.
+  - .xls: Excel spreadsheet.
+  - .txt: Text files 
+  - As part of R package. 
+
+R can read in data from most (if not all) of these formats. In our examples, we will use data set from R packages and .csv files.
+
+### Reading in Data from R packages 
+
+To read in data from an R package, we use the `data()` function. For example, the `ISLR` provides several data sets. To read in the `OJ` data, we simply run `data(OJ)`. As the data is part of a package, don't forget to first load the package. 
+
+```{r}
+library(ISLR)
+data(OJ)
+head(OJ,2) # this displays the first two rows of the data set. 
+```
+
+
+### Reading in Data from .csv files
+
+To read in data from .csv files, we will use the `read_csv()` function, which is provided by one of the packages in `tidyverse`.
 
 The following line of code reads in a data set that contains weekly prices, promotional activity, and sales for 20 different brands of beer. The data set comes from many stores within one Chicago grocery retail chain -- Dominick's Finer Foods --  and spans more than five years of transactions. The complete raw data are publically available from the Kilts Center for Marketing at the University of Chicago.^[[https://www.chicagobooth.edu/research/kilts/datasets/dominicks](https://www.chicagobooth.edu/research/kilts/datasets/dominicks)]
 
 ```{r message = FALSE}
-beer = read_csv("beer.csv")
+beer <- read_csv("beer.csv")
 ```
 
-Note, for this code to work, the data file `beer.csv` needs to be located in the current working directory of R. Some datasets that we will use are already built into R. Those can be directly loaded by running `data(XX)` where `XX` is the name of the dataset you want to load (e.g. `mtcars`).
+
+## The Working Directory 
+
+For above code to work, the data file `beer.csv` needs to be located in the current **working directory** of R. This is the directory that R uses as a default to look for files. To see what your current working directory is, we can use the `getwd()` function, which is short for "get working directory". The output is the path to the folder that R is currently looking in for files.
+
+```{r}
+#| echo: [2]
+setwd("C:/Users/Rafael/Documents")
+getwd()
+```
+
+### Using `setwd()` to change the working directory
+We can change the working directory with `setwd("PATH_TO_NEW_WORKING_DIRECTORY")`, where `NEWPATH` is the path to the new working directory. Note that we must use `/` instead of `\` in the path name, otherwise R will not be able to find the folder and give an error. 
+
+```{r}
+#| error: true 
+setwd("C:\Users\Rafael\Documents")
+```
+
+
+**Exercise 1:** Change the working directory to your downloads folder, and use the `getwd()` function to confirm that the working directory has changed.
+
+<details>
+  <summary>Solution:</summary>
+```{r}
+setwd("C:/Users/Rafael/Downloads")
+getwd()
+```
+</details>
+
+
+### Using the "Files" tab to change the working directory
+Another way to change the working directory is to use the "Files" tab in the bottom right panel of RStudio. Navigate to the folder you want to use as your working directory, and click "More" and then "Set As Working Directory".
+
+
+![ ](set_working_directory.png){width=60%}
+
+### Open a script to automatically set the working directory
+Another way to set the working directory is to open a .R file with RStudio. RStudio will automatically set the working directory to the folder where the .R file is located. This makes it very convenient to keep all of your code and data files in the same folder.
+
+To make use of this, you should create a new folder for every project (or assignment). You can do this directly in RStudio by going to the "File" tab, navigating to whereever you want the new folder to be, and then clicking "Create a new folder". This will open a window that allows you to create a new folder and name it. 
+
+![ ](create_new_directory.png){width=60%}
+
+Then, you can create a new .R file by going to the "File" tab, clicking "New File", and then "R Script". This will allow you to name and save a new script in the folder. Then, whenever you open this script with a new RStudio session, RStudio will automatically set the working directory to the folder where the script is located.
+
+**IMPORTANT**: This only works if all instances of RStudio have been closed! If you have another RStudio session open, it will not automatically set the working directory.
+
+
+
+![ ](create_empty_script.png){width=60%}
+
+
+### Providing full file paths to read in data
+Instead of changing the working directory, we can also specify the full file path to the `beer.csv` data we want to load. We can do this by running `read_csv("PATH/beer.csv")`, where we replace `PATH` with the path to the `beer.csv` file. Note again that we need to use `/` and not `\` in the file path. 
+
+```{.r} 
+beer <- read_csv("C:/Users/Rafael/Documents/beer.csv")
+```
+
+## Inspecting Data 
 
 
 We always want to view the data after importing to make sure all the values were read-in correctly. To inspect the first few lines of a data set, use the `head( )` command.
 
 ```{r results="hide"}
-head(beer)
+head(beer,3)
 ```
 
 ```{r echo=FALSE}
@@ -53,7 +139,7 @@ We can see that our data set contains 11 different variables (i.e., columns). A 
 - `itemsize`: size of items in one package
 - `units`: units of items
 
-## Statistical Summaries 
+## Summary Statistics
 
 
 We can compute summary statistics in the tidyverse by combining the `summarise` operator with any one (or many!) of R's built-in statistics functions. A few of the most common are listed below.

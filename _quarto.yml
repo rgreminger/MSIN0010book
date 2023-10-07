@@ -6,7 +6,6 @@ book:
   author: 
     - "Adam Smith, UCL SoM"
     - "Rafael P. Greminger, UCL SoM"
-  date: "10/7/2023"
   chapters:
     - index.qmd
     - 00R.qmd
