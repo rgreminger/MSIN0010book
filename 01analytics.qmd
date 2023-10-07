@@ -108,6 +108,13 @@ Instead of changing the working directory, we can also specify the full file pat
 beer <- read_csv("C:/Users/Rafael/Documents/beer.csv")
 ```
 
+### Uploading data in RStudio/Posit cloud 
+
+If you are using RStudio in the cloud, you need to upload the .csv data file to the cloud before you can read it in. To do this, click on the "Upload" button in the "Files" tab, and then select the file you want to upload using the file browser.
+
+![ ](upload_file_cloud.png){width=60%}
+
+
 ## Inspecting Data 
 
 
