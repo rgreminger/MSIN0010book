@@ -35,7 +35,6 @@ To read in data from an R package, we use the `data()` function. For example, th
 ```{r}
 library(ISLR)
 data(OJ)
-head(OJ,2) # this displays the first two rows of the data set. 
 ```
 
 
