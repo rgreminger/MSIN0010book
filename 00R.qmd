@@ -1,0 +1,68 @@
+
+# Getting Started with R  {.unnumbered}
+
+## Why use R? 
+
+R is a statistical software environment that is widely used by statisticians, social scientists, and data analysts. R is different from "point-and-click" software packages like Microsoft Excel, SPSS, or Tableau in that it requires the user to write code via a command line interface. For this reason, R is also often referred to as a programming language. However, the R environment is much more interactive than other programming languages like C or Java which makes it easier to learn and use.
+
+Here are a few key advantages of R.
+
+- R is **free** and **open source**^[[https://opensource.org](https://opensource.org)]. 
+- R is available on Windows, Mac OS, and UNIX/Linux. 
+- R is **flexible**: you can write, modify, save, and share your own code.
+- R is **powerful**: you can do everything from making [high-quality graphics](https://www.r-graph-gallery.com) to running [sophisticated statistical machine learning models](https://www.r-bloggers.com/101-machine-learning-algorithms-for-data-science-with-cheat-sheets/).
+- R is **popular**: there is a large and growing online community of users making it easy to find answers to any problem you run into.
+
+Lastly, learning R is a tangible and highly-valued skill you can put on your CV! 
+
+## What does R do? 
+At its core, R (and any other programming language) just translates human-written code into instructions that the computer understands, and then has the computer execute it for us. For example, to assign the number 2 to the variable `a` we just type 
+```{r eval = FALSE}
+a <- 2
+```
+
+R then translates this instruction into code that looks something like this (which is Assembly code): 
+```{r eval = FALSE}
+   pushq   %rbp
+   movq    %rsp, %rbp
+   movl    $1, %eax
+   popq    %rbp
+   retq
+   nopl    (%rax,%rax)
+```
+
+Clearly, it is much more convenient to write in R code than in these complicated instructions! Besides, the above will be even further translated into zeros and ones, which would be impossible for us to write instructions in.
+
+
+
+## Downloading R and RStudio 
+
+To download R, go to http://cran.r-project.org/mirrors.html and choose the CRAN mirror closest to your physical location. Then select "Download R for..." and choose your operating system. For other questions, see the [R FAQ](https://cran.r-project.org/doc/FAQ/R-FAQ.html).
+
+After downloading R, you should also download [RStudio](https://rstudio.com), which is an integrated development enviroment (IDE) for R. Whereas we could use any basic text editor to write code for R, and IDE like Rstudio provides a much more interactive and user-friendly interface for using R. To download it, go [here](https://www.rstudio.com/products/rstudio/download/#download) and select the installer corresponding to your operating system.
+
+An alternative to run R locally on your computer is to run it in the cloud. By registering on [Posit cloud](https://posit.cloud/), you can get the Rstudio experience directly in your browser, without the need to install anything on your computer. However, this can only be used while connected to the internet, and the free account has resource limitations (e.g. RAM).
+
+## Installing and Loading Packages 
+
+As you will see, one of the most attractive features of R is its library of over 10,000 packages. R packages -- which are collections of R functions, code, and data sets -- allow us to use code written by others in order to use certain data sets, make certain graphs, or run certain models. 
+
+For example, in this course we will discuss a variety of regression models including linear regression models and regression trees. While the R function to estimate a linear regression model (called  `lm`) is included in "base" R, the function to estimate a regression tree is not. Rather than writing the code ourselves, we can download an R package! 
+
+One package that provides code for estimating regression trees is called `rpart`. To use functions within the `rpart` package, we must first install it.
+
+```{r eval = FALSE}
+install.packages("rpart")
+```
+
+Alternatively, you can navigate to the "Packages" tab in RStudio (likely in the lower right panel), click "Install", and search for **rpart**.
+
+**Note: You only need to install a package once!** After a package is installed, it will remain installed until you upgrade your version of R/RStudio.
+
+However, in each R session (i.e., each time you open RStudio), you will need to *load the package*.
+
+```{r eval = FALSE}
+library("rpart")
+```
+
+Again, an alternative is to navigate to the "Packages" tab in RStudio, find the package name, and click on the box to the left of the name.

@@ -1,0 +1,35 @@
+project:
+  type: book
+
+book:
+  title: "Data Analytics with R"
+  author: 
+    - "Adam Smith, UCL SoM"
+    - "Rafael P. Greminger, UCL SoM"
+  chapters:
+    - index.qmd
+    - 00R.qmd
+    - 01analytics.qmd
+    - 02probability.qmd
+    - 03probability.qmd
+    - 04estimation.qmd
+    - 05testing.qmd
+    - 06regression.qmd 
+    - 07classification.qmd
+    - 08clustering.qmd
+  downloads: [pdf]
+  search: true
+  reader-mode: true
+  sidebar: 
+    style: docked
+    background: light
+
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+
+
