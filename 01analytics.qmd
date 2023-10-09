@@ -102,8 +102,6 @@ Then, you can create a new .R file by going to the "File" tab, clicking "New Fil
 
 **IMPORTANT**: This only works if all instances of RStudio have been closed! If you have another RStudio session open, it will not automatically set the working directory.
 
-
-
 ![ ](create_empty_script.png){width=60%}
 
 
