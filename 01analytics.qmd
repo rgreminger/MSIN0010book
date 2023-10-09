@@ -49,21 +49,24 @@ beer <- read_csv("beer.csv")
 ```
 
 
-## The Working Directory 
+## The Working Directory
 
 For above code to work, the data file `beer.csv` needs to be located in the current **working directory** of R. This is the directory that R uses as a default to look for files. To see what your current working directory is, we can use the `getwd()` function, which is short for "get working directory". The output is the path to the folder that R is currently looking in for files.
 
-```{r}
-#| echo: [2]
-setwd("C:/Users/Rafael/Documents")
+```{r, include=TRUE, results='hide'}
+#| echo: true
 getwd()
+```
+```{r}
+#| echo: false
+print("C:/Users/Rafael/Documents")
 ```
 
 ### Using `setwd()` to change the working directory
-We can change the working directory with `setwd("PATH_TO_NEW_WORKING_DIRECTORY")`, where `NEWPATH` is the path to the new working directory. Note that we must use `/` instead of `\` in the path name, otherwise R will not be able to find the folder and give an error. 
+We can change the working directory with `setwd("PATH_TO_NEW_WORKING_DIRECTORY")`, where `NEWPATH` is the path to the new working directory. Note that we must use `/` instead of `\` in the path name, otherwise R will not be able to find the folder and give an error.
 
 ```{r}
-#| error: true 
+#| error: true
 setwd("C:\Users\Rafael\Documents")
 ```
 
@@ -72,9 +75,12 @@ setwd("C:\Users\Rafael\Documents")
 
 <details>
   <summary>Solution:</summary>
-```{r}
+```{r, eval=FALSE}
 setwd("C:/Users/Rafael/Downloads")
 getwd()
+```
+```{r, echo=FALSE}
+print("C:/Users/Rafael/Downloads")
 ```
 </details>
 
@@ -88,7 +94,7 @@ Another way to change the working directory is to use the "Files" tab in the bot
 ### Open a script to automatically set the working directory
 Another way to set the working directory is to open a .R file with RStudio. RStudio will automatically set the working directory to the folder where the .R file is located. This makes it very convenient to keep all of your code and data files in the same folder.
 
-To make use of this, you should create a new folder for every project (or assignment). You can do this directly in RStudio by going to the "File" tab, navigating to whereever you want the new folder to be, and then clicking "Create a new folder". This will open a window that allows you to create a new folder and name it. 
+To make use of this, you should create a new folder for every project (or assignment). You can do this directly in RStudio by going to the "File" tab, navigating to whereever you want the new folder to be, and then clicking "Create a new folder". This will open a window that allows you to create a new folder and name it.
 
 ![ ](create_new_directory.png){width=60%}
 
@@ -102,20 +108,20 @@ Then, you can create a new .R file by going to the "File" tab, clicking "New Fil
 
 
 ### Providing full file paths to read in data
-Instead of changing the working directory, we can also specify the full file path to the `beer.csv` data we want to load. We can do this by running `read_csv("PATH/beer.csv")`, where we replace `PATH` with the path to the `beer.csv` file. Note again that we need to use `/` and not `\` in the file path. 
+Instead of changing the working directory, we can also specify the full file path to the `beer.csv` data we want to load. We can do this by running `read_csv("PATH/beer.csv")`, where we replace `PATH` with the path to the `beer.csv` file. Note again that we need to use `/` and not `\` in the file path.
 
-```{.r} 
+```{.r}
 beer <- read_csv("C:/Users/Rafael/Documents/beer.csv")
 ```
 
-### Uploading data in RStudio/Posit cloud 
+### Uploading data in RStudio/Posit cloud
 
 If you are using RStudio in the cloud, you need to upload the .csv data file to the cloud before you can read it in. To do this, click on the "Upload" button in the "Files" tab, and then select the file you want to upload using the file browser.
 
 ![ ](upload_file_cloud.png){width=60%}
 
 
-## Inspecting Data 
+## Inspecting Data
 
 
 We always want to view the data after importing to make sure all the values were read-in correctly. To inspect the first few lines of a data set, use the `head( )` command.
@@ -125,15 +131,15 @@ head(beer,3)
 ```
 
 ```{r echo=FALSE}
-head(beer) %>% 
+head(beer) %>%
   kable() %>%
   kable_styling(font_size=10) %>%
   scroll_box(width = "100%")
 ```
 
-We can see that our data set contains 11 different variables (i.e., columns). A brief summary of each variable is provided below. 
+We can see that our data set contains 11 different variables (i.e., columns). A brief summary of each variable is provided below.
 
-- `store`: unique store ID number 
+- `store`: unique store ID number
 - `upc`: Universal Product Code
 - `week`: week ID number
 - `move`: number of units sold
@@ -163,14 +169,14 @@ dt %>%
 For example, let's compute the average price across all products and weeks. For this, we're going to use the pipe operator `%>%`, which works by putting together a function from the left to right. Below, the dataset `beer` is put as an argument into the `summarise()` function. An alternative way of writing the same function would be `summarise(beer,mean(price))`.
 
 ```{r}
-beer %>% 
+beer %>%
   summarise(mean(price))
 ```
 
-Now suppose we wanted to find the average price for only one brand of beer, say Budweiser. To do this, we can use the `filter( )` operator to select rows in the data that satisfy certain conditions. Here we want Budweiser beers so the condition is that `brand` is equal to `BUDWEISER BEER`, or `brand=="BUDWEISER BEER"`. Note that a double equals sign `==` is always used when writing logical statements to check equality. As above, we again use `%>%` to put the different commands together. 
+Now suppose we wanted to find the average price for only one brand of beer, say Budweiser. To do this, we can use the `filter( )` operator to select rows in the data that satisfy certain conditions. Here we want Budweiser beers so the condition is that `brand` is equal to `BUDWEISER BEER`, or `brand=="BUDWEISER BEER"`. Note that a double equals sign `==` is always used when writing logical statements to check equality. As above, we again use `%>%` to put the different commands together.
 
 ```{r}
-beer %>% 
+beer %>%
   filter(brand=="BUDWEISER BEER") %>%
   summarise(mean(price))
 ```
@@ -178,7 +184,7 @@ beer %>%
 To compute summary statistics for multiple brands, we can use the `group_by( )` operator. As the name suggests, this operator tells R to first group by a certain categorical variable, and to compute a summary for each level that the given variable takes on.
 
 ```{r message = FALSE}
-beer %>% 
+beer %>%
   group_by(brand) %>%
   summarise(mean(price))
 ```
@@ -186,14 +192,14 @@ beer %>%
 We can also easily extend the code above to compute multiple summary statistics across groups.
 
 ```{r message = FALSE}
-beer %>% 
+beer %>%
   group_by(brand) %>%
   summarise(mean(price), mean(move))
 ```
 
 
 
-## Graphical Summaries 
+## Graphical Summaries
 
 
 Data visualization is one of the strengths of the `tidyverse`. A fairly exhaustive list of graph types can be found at https://www.r-graph-gallery.com. For our purposes, we will start with a few of the most commonly used graphs.
@@ -208,12 +214,12 @@ dt %>%
   kable_styling(full_width = FALSE)
 ```
 
-Let's start be looking at the distribution of weekly prices across all products. 
+Let's start be looking at the distribution of weekly prices across all products.
 
 ```{r message = FALSE}
 beer %>%
   ggplot(aes(x=price)) +
-  geom_histogram() + 
+  geom_histogram() +
   labs(title="Distribution of Weekly Prices")
 ```
 
@@ -224,63 +230,63 @@ We can also inspect the distribution of a variable like prices using a **boxplot
 ```{r}
 beer %>%
   ggplot(aes(y=price)) +
-  geom_boxplot() + 
+  geom_boxplot() +
   labs(title="Distribution of Weekly Prices")
 ```
 
-Notice that the focal variable of interest is now on the y-axis. The rectangular box shown in the middle of the plot indicates three key summary statistics: the bottom line is the 25th percentile, the middle line is the 50th percentile (or median), and the top line is the 75th percentile. The vertical line starting around 2.5 and ending around 7 indicates the full range of prices in the data. 
+Notice that the focal variable of interest is now on the y-axis. The rectangular box shown in the middle of the plot indicates three key summary statistics: the bottom line is the 25th percentile, the middle line is the 50th percentile (or median), and the top line is the 75th percentile. The vertical line starting around 2.5 and ending around 7 indicates the full range of prices in the data.
 
 The figure above shows the distribution of prices across all prodcuts. However, we may want to explore whether the distribution of prices is *different across products*. This can be done by defining `x=brand` within the `ggplot( )` function.
 
 ```{r}
 beer %>%
   ggplot(aes(x=brand, y=price)) +
-  geom_boxplot() + 
+  geom_boxplot() +
   labs(title="Distribution of Weekly Prices")
 ```
 
-We have succeeded in creating a box plot for each brand, but the brand labels are impossible to read! As easy fix is to rotate the x-axis labels, which can be controlled using the `theme()` operator. The `theme()` operator is generally what we use to change plot formatting, such as the size of the axis labels or the position of the title. 
+We have succeeded in creating a box plot for each brand, but the brand labels are impossible to read! As easy fix is to rotate the x-axis labels, which can be controlled using the `theme()` operator. The `theme()` operator is generally what we use to change plot formatting, such as the size of the axis labels or the position of the title.
 
 ```{r}
 beer %>%
   ggplot(aes(x=brand, y=price)) +
-  geom_boxplot() + 
-  labs(title="Distribution of Weekly Prices") + 
+  geom_boxplot() +
+  labs(title="Distribution of Weekly Prices") +
   theme(axis.text.x = element_text(angle=90, hjust=1),
         plot.title = element_text(hjust=0.5))
 ```
 
-Much better! 
+Much better!
 
 Next, let's explore the variation of prices over time. We can make a time series plot (or line plot) to do this, where we specify `group=brand` so that R makes a separate line for each brand.
 
 ```{r}
 beer %>%
   ggplot(aes(x=week, y=price, group=brand)) +
-  geom_line() + 
+  geom_line() +
   labs(title="Beer Prices over Time") +
   theme(plot.title = element_text(hjust=0.5))
 ```
 
-This was a good attempt, but the plot is not especially useful! While we do notice that the prices are changing over time, we can't identify the products themselves so we don't know which products are changing more or less than others. 
+This was a good attempt, but the plot is not especially useful! While we do notice that the prices are changing over time, we can't identify the products themselves so we don't know which products are changing more or less than others.
 
 We can fix this in a couple ways. The first thing we will try is to simply add color to the plot above, so that we can identify a product by the color of its line.
 
 ```{r}
 beer %>%
   ggplot(aes(x=week, y=price, group=brand, color=brand)) +
-  geom_line() + 
+  geom_line() +
   labs(title="Beer Prices over Time") +
   theme(plot.title = element_text(hjust=0.5))
 ```
 
-This is better, but it is still hard to identify products because of how much overlap there is in prices. So maybe the best thing to do is create a separate plot for each brand. This can be easily accomplished using `facet_wrap( )`. 
+This is better, but it is still hard to identify products because of how much overlap there is in prices. So maybe the best thing to do is create a separate plot for each brand. This can be easily accomplished using `facet_wrap( )`.
 
 ```{r}
 beer %>%
   ggplot(aes(x=week,y=price,group=brand,color=brand)) +
-  geom_line(show.legend=FALSE) + 
-  labs(title="Beer Prices over Time") + 
+  geom_line(show.legend=FALSE) +
+  labs(title="Beer Prices over Time") +
   facet_wrap(brand ~ .) +
   theme(plot.title = element_text(hjust=0.5),
         strip.text.x = element_text(size=6))
@@ -294,8 +300,8 @@ Finally, let's explore the relationship between *two variables* like price and d
 ```{r}
 beer %>%
   ggplot(aes(x=price, y=move)) +
-  geom_point() + 
-  labs(title="Price vs. Demand") + 
+  geom_point() +
+  labs(title="Price vs. Demand") +
   theme(plot.title = element_text(hjust=0.5))
 ```
 
@@ -306,20 +312,20 @@ As before, it would be interesting to know how the relationship between price an
 ```{r}
 beer %>%
   ggplot(aes(x=price, y=move, color=brand)) +
-  geom_point() + 
-  labs(title="Price vs. Demand") + 
+  geom_point() +
+  labs(title="Price vs. Demand") +
   theme(plot.title = element_text(hjust=0.5))
 ```
 
 ```{r}
 beer %>%
   ggplot(aes(x=price, y=move, color=brand)) +
-  geom_point(show.legend=FALSE) + 
+  geom_point(show.legend=FALSE) +
   labs(title="Price vs. Demand") +
-  facet_wrap(brand~.,scales="free") + 
+  facet_wrap(brand~.,scales="free") +
   theme(plot.title = element_text(hjust=0.5),
         strip.text.x = element_text(size=6))
 
 ```
 
-These last two plots indeed show that demand is negatively related to price (as price increases, demand falls) and that the magnitude of this relationship may change across products. 
+These last two plots indeed show that demand is negatively related to price (as price increases, demand falls) and that the magnitude of this relationship may change across products.
