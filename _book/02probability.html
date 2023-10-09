@@ -424,10 +424,10 @@ Solution:
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] -0.4890442  0.3684766  0.6110784 -0.1277799  0.6044881  0.4438441
- [7] -1.1125351 -0.8252875 -0.4825811 -0.3451179  0.3467802 -0.6517851
-[13]  0.2932852 -0.9715142  1.7460202 -1.2774487 -1.6346988  0.5851149
-[19] -0.1499278 -1.3309082</code></pre>
+<pre><code> [1] -0.17882636 -0.21234177  1.09764335 -0.42517219  1.01550734  0.12260481
+ [7]  1.20205266  0.66776600 -1.11206127 -0.55684100  0.99605139  0.98493152
+[13] -0.45078057  0.35509410  0.41166034  1.67006312 -0.02447204 -0.72985944
+[19]  0.78301477 -0.57362651</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -444,21 +444,21 @@ Solution:
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean=</span><span class="dv">10</span>, <span class="at">sd=</span><span class="fu">sqrt</span>(<span class="dv">2</span>))</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1]  9.288186  7.903649  8.031604 10.060340  8.514295 11.143216  9.613060
-  [8]  7.798130  8.383735  9.175316  9.088977  7.765616  6.912230 10.738728
- [15] 12.196786  9.693552  7.741319 10.575687  9.706780  7.227365  7.831889
- [22] 10.576042 10.523325 10.779367 10.714656 10.366162  8.638491  8.134459
- [29] 11.522615 13.318690  8.674225  8.708375 10.071240 12.274929  9.668931
- [36]  9.168004  9.279618  8.735206 13.763540 10.825529  8.798534  7.071621
- [43] 10.647722  9.277539 11.792830 12.155732  9.327898 10.207978  9.920129
- [50]  8.095450  9.893914  6.802359  6.255512 10.322029 11.008744  9.918954
- [57]  8.027270  8.839319 12.141986 12.735981  8.969496 10.293405  9.952675
- [64] 11.255065 10.493657 11.921351 12.262292  8.941685 11.002026 10.184806
- [71] 10.943149 12.168104  9.786305 11.749403 11.040836 11.936732 11.744527
- [78] 10.497540 10.785602 11.332760 11.834471  7.775679 11.468809  9.422132
- [85] 12.914973  7.384747  9.333460 12.940236  9.442982  9.020957 11.704357
- [92]  9.035134 10.587663 10.012187  9.371008 11.674738  9.439248 11.182122
- [99] 10.584477  9.334580</code></pre>
+<pre><code>  [1]  9.530466  9.461966  8.289018  8.417350 10.601092 10.972744  8.087894
+  [8] 11.702790  8.527014 10.124590 10.284879 10.277736 10.742656  8.628170
+ [15]  9.705217  8.762290  9.325104 11.867894  9.932240 12.123598  9.985921
+ [22]  9.656180 12.145511  8.161745 11.457997 12.756521 11.355888  7.749314
+ [29] 12.872908  9.325454 10.861664 12.651028  9.165607  9.345917 10.336923
+ [36]  9.421400  7.823177  8.456949 10.175334  6.690245  9.914288 10.346064
+ [43]  9.342681 10.843215 10.475955 10.119351  8.786046  8.979702 10.721955
+ [50]  7.903304 11.265149 11.174894  8.589559 11.197003  9.303806  9.922516
+ [57]  9.367913 10.621103 11.123649  9.387326  8.778837 10.241196  8.809934
+ [64] 10.893722 14.425507 10.335092  8.760096 11.590557  8.138228 10.470332
+ [71]  7.182559 10.259874 10.477328  9.064639  8.603915 11.001388  7.867722
+ [78]  8.544123  8.143327  8.521617  7.986008 10.242558  9.212193  9.960270
+ [85] 10.703541  9.747171 10.177556 11.161309  8.423662  7.860855  9.405881
+ [92]  9.651924  7.981215  8.274767 12.529289  9.734988 10.238429 10.269849
+ [99] 10.408191  7.469703</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -586,8 +586,8 @@ Solution:
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rbinom</span>(<span class="dv">50</span>, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.2</span>)</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0 0 0 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 1 0 1 0 0 1 0 0 0 0 0 0 0 1
-[39] 1 0 0 1 0 0 0 0 0 0 1 0</code></pre>
+<pre><code> [1] 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 1 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 1 0 0
+[39] 0 0 0 0 1 1 0 0 0 1 0 0</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -604,10 +604,10 @@ Solution:
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rbinom</span>(<span class="dv">100</span>, <span class="at">size=</span><span class="dv">100</span>, <span class="at">prob=</span><span class="fl">0.2</span>)</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1] 21 18 16 23 35 11 17 24 25 24 19 26 14 17 18 23 24 19 23 26 23 17 27 20 18
- [26] 14 24 20 18 20 26 16 18 23 22 22 19 17 18 16 18 22 26 20 17 19 25 21 24 20
- [51] 17 23 18 16 29 19 26 17 28 14 20 24 16 23 18 21 17 24 26 14 22 23 22 19 19
- [76] 20 13 23 19 19 20 18 21 15 19 20 23 20 20 25 23 19 21 21 17 18 23 14 21 20</code></pre>
+<pre><code>  [1] 19 11 20 18 21 15 22 25 17 18 18 17 18 21 15 18 18 17 20 16 17 16 20 31 24
+ [26] 20 20 16 13 14 22 21 19 17 23 26 19 17 15 24 13 15 22 17 17 22 14 20 20 26
+ [51] 19 22 18 18 20 15 17 16 18 19 25 22 21 19 19 25 18 13 20 14 20 21 20 23 19
+ [76] 21 19 18 32 27 16 26 15 23 12 19 20 22 19 20 25 15 26 24 26 24 23 23 18 19</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
