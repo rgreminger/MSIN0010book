@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Data Analytics with R - 4&nbsp; Estimation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./05testing.html" rel="next">
+<link href="./03probability.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./04estimation.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estimation</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Analytics with R</a> 
+        <div class="sidebar-tools-main">
+    <a href="./Data-Analytics-with-R.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+  <div class="quarto-reader-toggle-btn">
+  <i class="bi"></i>
+  </div>
+</a>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./00R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Getting Started with R</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01analytics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Data Analytics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Computing Probabilities</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sampling Distributions and the CLT</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04estimation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estimation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clustering</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#point-estimation" id="toc-point-estimation" class="nav-link active" data-scroll-target="#point-estimation"><span class="header-section-number">4.1</span> Point Estimation</a></li>
+  <li><a href="#confidence-intervals" id="toc-confidence-intervals" class="nav-link" data-scroll-target="#confidence-intervals"><span class="header-section-number">4.2</span> Confidence Intervals</a>
+  <ul class="collapse">
+  <li><a href="#types-of-confidence-intervals" id="toc-types-of-confidence-intervals" class="nav-link" data-scroll-target="#types-of-confidence-intervals"><span class="header-section-number">4.2.1</span> Types of Confidence Intervals</a></li>
+  <li><a href="#interpreting-confidence-intervals" id="toc-interpreting-confidence-intervals" class="nav-link" data-scroll-target="#interpreting-confidence-intervals"><span class="header-section-number">4.2.2</span> Interpreting confidence intervals</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="header-section-number">4.2.3</span> Examples</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estimation</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="point-estimation" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="point-estimation"><span class="header-section-number">4.1</span> Point Estimation</h2>
+<p>Point estimation is all about using one single number (statistic) to estimate a population parameter of interest. Generally, we need to differentiate three different terms:</p>
+<ol type="1">
+<li><em>Parameter</em>: <span class="math inline">\(\theta\)</span></li>
+<li><em>Estimator</em>: <span class="math inline">\(\hat{\theta}(X) = g(X_1,\dots,X_n)\)</span></li>
+<li><em>Estimate</em>: <span class="math inline">\(\hat{\theta}(x) = g(x_1,\dots,x_n)\)</span></li>
+</ol>
+<p><span class="math inline">\(\theta\)</span> is the population parameter we want to know. <span class="math inline">\(\hat{\theta}(X)\)</span> is our estimator, which is a function of our random sample. It is itself a random variable because another random sample will lead to a different number. The estimate <span class="math inline">\(\hat{\theta}(x)\)</span> then is our statistic that we compute for given sample; given realizations <span class="math inline">\((x_1,\dots,x_n)\)</span>, this number is not random. Note that we apply the same function <span class="math inline">\(g()\)</span> in the estimator and estimate, but in the estimator the <span class="math inline">\(X_i\)</span> are random variables whereas in the estimate the <span class="math inline">\(x_i\)</span> are realizations.</p>
+<p>To highlight the difference between estimate and estimator consider the following example: the population is 1,000,000 consumers and we want to know how many of them purchased our product. Hence, the population parameter we want to know is <span class="math display">\[\theta = \frac{\text{no. purchases in population}}{1,000,000}\]</span></p>
+<p>In principle, we could just call all 1,000,000 consumers and ask, but that would cost way too much time (and time is money)! Instead, we are going to take a <em>random</em> sample with <span class="math inline">\(n\)</span> consumers from the population. In this case, our estimator for the mean is <span class="math display">\[\hat{\theta}(X) = g(X_1,\dots,X_n) = \frac{\text{no. purchases in sample}}{n} \]</span></p>
+<p>This is what we now do in R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate population and calculate population parameter</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>pop <span class="ot">=</span> <span class="fu">rbinom</span>(<span class="dv">1000000</span>,<span class="dv">1</span>,<span class="fl">0.2</span>) <span class="co"># generates 1,000,000 consumers that bought (=1) or not(=0)</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>pop_par <span class="ot">=</span> <span class="fu">mean</span>(pop)  </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>pop_par </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.200342</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Take random sample and calculate estimate on that sample</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">sample</span>(pop,<span class="dv">100</span>,<span class="at">replace=</span><span class="cn">TRUE</span>)    <span class="co"># randomly takes 100 consumers out of pop </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>estimate <span class="ot">=</span> <span class="fu">mean</span>(x)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>estimate </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.17</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate sampling error </span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sampling_error <span class="ot">=</span> <span class="fu">abs</span>(estimate<span class="sc">-</span>pop_par) </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>sampling_error</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.030342</code></pre>
+</div>
+</div>
+<p>Both the estimate and sampling error will be different if we take another random sample.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">sample</span>(pop,<span class="dv">100</span>,<span class="at">replace=</span><span class="cn">TRUE</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.28</code></pre>
+</div>
+</div>
+</section>
+<section id="confidence-intervals" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="confidence-intervals"><span class="header-section-number">4.2</span> Confidence Intervals</h2>
+<p>As we just saw, estimators themselves are random variables and subject to variation across different samples. Hence, point estimates are <em>not enough</em> to learn about the population parameter we are interested in. Rather than provide a single point estimate, it will be better to provide a <em>range of plausible values</em> for the parameter of interest. This is the idea of <strong>confidence intervals</strong>.</p>
+<p>A confidence interval for any parameter <span class="math inline">\(\theta\)</span> will always take the form: <span class="math display">\[\hat{\theta}\pm \text{(critical value)}\times \text{SD}(\hat{\theta})\]</span> where <span class="math inline">\(\hat{\theta}\)</span> is an estimator of <span class="math inline">\(\theta\)</span>, the critical value is a quantile of a normal or t distribution, and <span class="math inline">\(\text{SD}(\hat{\theta})\)</span> is the standard deviation of the estimator.</p>
+<section id="types-of-confidence-intervals" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="types-of-confidence-intervals"><span class="header-section-number">4.2.1</span> Types of Confidence Intervals</h3>
+<p>We will consider four types of <span class="math inline">\((1-\alpha)100\%\)</span> confidence intervals.</p>
+<ol type="1">
+<li><p>Confidence interval for mean <span class="math inline">\(\mu\)</span>, data are normally distributed, variance <span class="math inline">\(\sigma^2\)</span> is known <span class="math display">\[\bar{x}\pm z_{\alpha/2}{\sigma\over\sqrt{n}}\]</span></p></li>
+<li><p>Confidence interval for mean <span class="math inline">\(\mu\)</span>, data are normally distributed, variance <span class="math inline">\(\sigma^2\)</span> is unknown <span class="math display">\[\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}\]</span></p></li>
+<li><p>Confidence interval for mean <span class="math inline">\(\mu\)</span>, data are not normally distributed <span class="math display">\[\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}\]</span></p></li>
+<li><p>Confidence interval for proportion <span class="math inline">\(p\)</span>, data are binary (0s and 1s) <span class="math display">\[\hat{p}\pm z_{\alpha/2}\sqrt{\hat{p}(1-\hat{p})\over n}\]</span></p></li>
+</ol>
+<p>Notice that we can compute the critical values in R. If we need <span class="math inline">\(z_{\alpha/2}\)</span>, then we must find the value of a standard normal random variable such that <span class="math inline">\(\alpha/2\)</span> percent of the area is to its right. This is can be found using the normal quantile function <code>qnorm( )</code>!</p>
+<p>For example, if <span class="math inline">\(\alpha=0.05\)</span> let’s use <code>qnorm( )</code> to find <span class="math inline">\(z_{0.025}\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="fl">0.025</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.959964</code></pre>
+</div>
+</div>
+<p>A summary of the most commonly used normal critical values are provided below.</p>
+<div class="cell-output-display">
+<table class="table" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: center;" data-quarto-table-cell-role="th">Confidence Level $(1-\alpha)$</th>
+<th style="text-align: center;" data-quarto-table-cell-role="th">Critical Value $z_{\alpha/2}$</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">99%</td>
+<td style="text-align: center;">2.576</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">95%</td>
+<td style="text-align: center;">1.96</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">90%</td>
+<td style="text-align: center;">1.645</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+<p>Similarly, if we need to compute <span class="math inline">\(t_{n-1,\alpha/2}\)</span> with <span class="math inline">\(\alpha=0.05\)</span> and our data have <span class="math inline">\(n=50\)</span> observations, we can use the <code>qt( )</code> function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">50-1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.009575</code></pre>
+</div>
+</div>
+<p>Notice this critical value is larger than <span class="math inline">\(z_{0.025}\)</span> – this comes from the fact that the t-distribution has fatter tails than the normal distribution. But, it also turns out that a t distribution (which only has one parameter <span class="math inline">\(\nu\)</span> called the “degrees of freedom”) converges to a normal distribution as <span class="math inline">\(\nu\to\infty\)</span>. We can formally check this using <code>qt( )</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">50</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.008559</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">100</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.983972</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">1000</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.962339</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span><span class="dv">10000</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1.960201</code></pre>
+</div>
+</div>
+<p>Notice how these values approach <span class="math inline">\(z_{0.025}\approx1.96\)</span> as the degrees of freedom parameter gets large.</p>
+</section>
+<section id="interpreting-confidence-intervals" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="interpreting-confidence-intervals"><span class="header-section-number">4.2.2</span> Interpreting confidence intervals</h3>
+<p>Suppose an analyst tells you that the 95% confidence interval for the population parameter <span class="math inline">\(\theta\)</span> is <span class="math inline">\((0.5,1.5)\)</span>. What can you conclude from this, i.e., what does it mean that we are 95% confident that <span class="math inline">\(\theta\)</span> is in this interval?</p>
+<p>What the confidence interval tells us is that if we take many samples from the population and construct the confidence interval for each sample, then in approximately 95% of the samples the constructed confidence interval will include the true population parameter. Note that, same as the estimator, the confidence interval depends on the sample and hence is random.</p>
+<p>We can check in R whether this holds using the same population we generated earlier. For this, we are now going to construct a for loop that does the following: (1) take a random sample of size <span class="math inline">\(n=100\)</span> from the population, (2) compute the 95% confidence interval (type 4 above) for the sample, check whether the population parameter lies within the computed confidence interval and store the result in a vector called poppar_in_ci.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>R <span class="ot">=</span> <span class="dv">1000</span>                                <span class="co"># how many samples to take </span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>poppar_in_ci <span class="ot">=</span> <span class="fu">double</span>(R)</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(r <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>R){</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">=</span> <span class="fu">sample</span>(pop,<span class="dv">100</span>,<span class="at">replace=</span><span class="cn">TRUE</span>)                   <span class="co"># generate new sample </span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>    phat <span class="ot">=</span> <span class="fu">mean</span>(x)                        </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>    s <span class="ot">=</span> <span class="fu">sqrt</span>(phat<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>phat)<span class="sc">/</span><span class="dv">100</span>)           <span class="co"># see formula for CI of proportion above</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>    poppar_in_ci[r] <span class="ot">=</span> phat <span class="sc">-</span><span class="fl">1.96</span> <span class="sc">*</span> s <span class="sc">&lt;</span> pop_par <span class="sc">&amp;</span> </span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a>                        phat <span class="sc">+</span> <span class="fl">1.96</span> <span class="sc">*</span> s <span class="sc">&gt;</span> pop_par</span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(poppar_in_ci)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.933</code></pre>
+</div>
+</div>
+<p>The result of this simulation shows that for approximately 95% of our samples, the constructed confidence interval indeed contains the population parameter value.</p>
+<p>Note that in this case, we were sampling from a population we first generated. Often, we take samples just from a hypothetical population, where we assume that the samples are drawn from a distribution that captures the population. For example, in chapter 3 we directly made assumptions on the population distribution and sampled from the respective distributions.</p>
+</section>
+<section id="examples" class="level3" data-number="4.2.3">
+<h3 data-number="4.2.3" class="anchored" data-anchor-id="examples"><span class="header-section-number">4.2.3</span> Examples</h3>
+<p><strong>PROBLEM 1:</strong> A wine importer needs to report the average percentage of alcohol in bottles of French wine. From experience with previous kinds of wine, the importer believes that alcolhol percentages are normally distributed and the population standard deviation is 1.2%. The importer randomly samples 60 bottles of the new wine and obtains a sample mean <span class="math inline">\(\bar{x}=9.3\%\)</span>. Give a 90% confidence interval for the average percentage of alcohol in all bottles of the new wine.</p>
+<details>
+<summary>
+Solution:
+</summary>
+<p>From the problem, we know the following. <span class="math display">\[\begin{align*}
+n = 60\\
+\sigma=1.2\\
+\bar{x} =9.3\\
+\alpha=0.10
+\end{align*}\]</span> We must first figure out which type of confidence interval to use. Notice that we are trying to estimate the <em>average</em> percentage of alcohol, so our parameter is a mean <span class="math inline">\(\mu\)</span>. Moreover, we are told to assume that the data are normally distributed and the population standard deviation <span class="math inline">\(\sigma\)</span> is known. Thefore, our confidence interval will be of the form: <span class="math display">\[\bar{x}\pm z_{\alpha/2}{\sigma\over\sqrt{n}}.\]</span> We can now define each object in R and construct the confidence interval.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">60</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sigma <span class="ot">=</span> <span class="fl">1.2</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fl">9.3</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>zalpha <span class="ot">=</span> <span class="fu">qnorm</span>(<span class="fl">0.05</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">-</span> zalpha<span class="sc">*</span>sigma<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.04518</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">+</span> zalpha<span class="sc">*</span>sigma<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 9.55482</code></pre>
+</div>
+</div>
+<p>Therefore, we are 90% confident that the true average alcohol content in all new bottles of wine is between 9.05% and 9.55%.</p>
+</details>
+<p><strong>PROBLEM 2:</strong> An economist wants to estimate the average amount in checking accounts at banks in a given region. A random sample of 100 accounts gives <span class="math inline">\(\bar{x}=£357.60\)</span> and <span class="math inline">\(s=£140.00\)</span>. Give a 95% confidence interval for <span class="math inline">\(\mu\)</span>, the average amount in any checking account at a bank in the given region.</p>
+<details>
+<summary>
+Solution:
+</summary>
+<p>From the problem, we know the following. <span class="math display">\[\begin{align*}
+n &amp;= 100\\
+\bar{x} &amp;=357.60\\
+s &amp;= 140\\
+\alpha&amp;=0.5
+\end{align*}\]</span> Here we are not told whether the data are normally distributed. However, it won’t matter because we only have an estimate of <span class="math inline">\(\sigma\)</span> (remember that among the four types of confidence intervals we considered earlier, there are no differences between case II and III). Therefore, our confidence interval will be of the form: <span class="math display">\[\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}.\]</span> We can again define each object in R and construct the confidence interval.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="dv">100</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fl">357.60</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>s <span class="ot">=</span> <span class="dv">140</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>talpha <span class="ot">=</span> <span class="fu">qt</span>(<span class="fl">0.025</span>, <span class="at">df=</span>n<span class="dv">-1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">-</span> talpha<span class="sc">*</span>s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 329.821</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">+</span> talpha<span class="sc">*</span>s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 385.379</code></pre>
+</div>
+</div>
+<p>Therefore, we are 95% confident that the true average account checking account value in the given region is between £329.82 and £385.38.</p>
+</details>
+<p><strong>PROBLEM 3:</strong> The EuStockMarkets data set in R provides daily closing prices of four major European stock indices: Germany DAX (Ibis), Switzerland SMI, France CAC, and UK FTSE. Using this data set, produce a 99% confidence interval for the average closing price of the UK FTSE.</p>
+<details>
+<summary>
+Solution:
+</summary>
+<p>First, let’s load in the data from R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(EuStockMarkets)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(EuStockMarkets)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">DAX</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">SMI</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">CAC</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">FTSE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1628.75</td>
+<td style="text-align: right;">1678.1</td>
+<td style="text-align: right;">1772.8</td>
+<td style="text-align: right;">2443.6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1613.63</td>
+<td style="text-align: right;">1688.5</td>
+<td style="text-align: right;">1750.5</td>
+<td style="text-align: right;">2460.2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1606.51</td>
+<td style="text-align: right;">1678.6</td>
+<td style="text-align: right;">1718.0</td>
+<td style="text-align: right;">2448.2</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1621.04</td>
+<td style="text-align: right;">1684.1</td>
+<td style="text-align: right;">1708.1</td>
+<td style="text-align: right;">2470.4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">1618.16</td>
+<td style="text-align: right;">1686.6</td>
+<td style="text-align: right;">1723.1</td>
+<td style="text-align: right;">2484.7</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">1610.61</td>
+<td style="text-align: right;">1671.6</td>
+<td style="text-align: right;">1714.3</td>
+<td style="text-align: right;">2466.8</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+<p>Now let’s pull the subset of data we care about (i.e., the UK FTSE column).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>uk <span class="ot">=</span> EuStockMarkets[,<span class="dv">4</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Notice that we are not told anything about the true distribution of the data. Therefore, our confidence interval will be of the form: <span class="math display">\[\bar{x}\pm t_{n-1,\alpha/2}{s\over\sqrt{n}}.\]</span> Next, let’s compute each component necessary to construct the 99% confidence interval.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">=</span> <span class="fu">length</span>(uk)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>xbar <span class="ot">=</span> <span class="fu">mean</span>(uk)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>s <span class="ot">=</span> <span class="fu">sd</span>(uk)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>talpha <span class="ot">=</span> <span class="fu">qt</span>(<span class="fl">0.005</span>, <span class="at">df=</span>n<span class="dv">-1</span>, <span class="at">lower.tail=</span><span class="cn">FALSE</span>)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">-</span> talpha<span class="sc">*</span>s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3507.248</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>xbar <span class="sc">+</span> talpha<span class="sc">*</span>s<span class="sc">/</span><span class="fu">sqrt</span>(n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 3624.038</code></pre>
+</div>
+</div>
+<p>Therefore, we are 99% confident that the true closing price for the UK FTSE index is between £3,507.25 and £3,624.04.</p>
+<p>Finally, notice that we can use the <code>t.test( )</code> function to perform the same analysis but with fewer ste</p>
+
+
+</details></section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03probability.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sampling Distributions and the CLT</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./05testing.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
