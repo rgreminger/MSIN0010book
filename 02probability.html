@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.2.280">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,10 +17,9 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
 pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -47,13 +46,43 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
+    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -91,12 +120,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
@@ -105,16 +132,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02probability.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Computing Probabilities</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Computing Probabilities</span></h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
       </button>
     </div>
   </nav>
@@ -122,13 +144,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Analytics with R</a> 
         <div class="sidebar-tools-main">
-    <a href="./Data-Analytics-with-R.pdf" rel="" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
-  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+    <a href="./Data-Analytics-with-R.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
@@ -136,96 +158,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
     </div>
       </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
+      <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-        </div>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Preface</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00R.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Getting Started with R</span></a>
+  <a href="./00R.html" class="sidebar-item-text sidebar-link">Getting Started with R</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01analytics.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Data Analytics</span></span></a>
+  <a href="./01analytics.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Data Analytics</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02probability.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Computing Probabilities</span></span></a>
+  <a href="./02probability.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Computing Probabilities</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03probability.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sampling Distributions and the CLT</span></span></a>
+  <a href="./03probability.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sampling Distributions and the CLT</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04estimation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estimation</span></span></a>
+  <a href="./04estimation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estimation</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05testing.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></span></a>
+  <a href="./05testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06regression.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Regression</span></span></a>
+  <a href="./06regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Regression</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07classification.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+  <a href="./07classification.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classification</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08clustering.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clustering</span></span></a>
+  <a href="./08clustering.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clustering</span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#normal-distribution" id="toc-normal-distribution" class="nav-link active" data-scroll-target="#normal-distribution"><span class="header-section-number">2.1</span> Normal Distribution</a>
+  <li><a href="#normal-distribution" id="toc-normal-distribution" class="nav-link active" data-scroll-target="#normal-distribution"><span class="toc-section-number">2.1</span>  Normal Distribution</a>
   <ul class="collapse">
-  <li><a href="#probability-density-function-dnorm" id="toc-probability-density-function-dnorm" class="nav-link" data-scroll-target="#probability-density-function-dnorm"><span class="header-section-number">2.1.1</span> Probability Density Function (<code>dnorm</code>)</a></li>
-  <li><a href="#cumulative-distribution-function-pnorm" id="toc-cumulative-distribution-function-pnorm" class="nav-link" data-scroll-target="#cumulative-distribution-function-pnorm"><span class="header-section-number">2.1.2</span> Cumulative Distribution Function (<code>pnorm</code>)</a></li>
-  <li><a href="#quantile-function-qnorm" id="toc-quantile-function-qnorm" class="nav-link" data-scroll-target="#quantile-function-qnorm"><span class="header-section-number">2.1.3</span> Quantile Function (<code>qnorm</code>)</a></li>
-  <li><a href="#random-number-generator-rnorm" id="toc-random-number-generator-rnorm" class="nav-link" data-scroll-target="#random-number-generator-rnorm"><span class="header-section-number">2.1.4</span> Random Number Generator (<code>rnorm</code>)</a></li>
+  <li><a href="#probability-density-function-dnorm" id="toc-probability-density-function-dnorm" class="nav-link" data-scroll-target="#probability-density-function-dnorm"><span class="toc-section-number">2.1.1</span>  Probability Density Function (<code>dnorm</code>)</a></li>
+  <li><a href="#cumulative-distribution-function-pnorm" id="toc-cumulative-distribution-function-pnorm" class="nav-link" data-scroll-target="#cumulative-distribution-function-pnorm"><span class="toc-section-number">2.1.2</span>  Cumulative Distribution Function (<code>pnorm</code>)</a></li>
+  <li><a href="#quantile-function-qnorm" id="toc-quantile-function-qnorm" class="nav-link" data-scroll-target="#quantile-function-qnorm"><span class="toc-section-number">2.1.3</span>  Quantile Function (<code>qnorm</code>)</a></li>
+  <li><a href="#random-number-generator-rnorm" id="toc-random-number-generator-rnorm" class="nav-link" data-scroll-target="#random-number-generator-rnorm"><span class="toc-section-number">2.1.4</span>  Random Number Generator (<code>rnorm</code>)</a></li>
   </ul></li>
-  <li><a href="#bernoulli-and-binomial-distributions" id="toc-bernoulli-and-binomial-distributions" class="nav-link" data-scroll-target="#bernoulli-and-binomial-distributions"><span class="header-section-number">2.2</span> Bernoulli and Binomial Distributions</a>
+  <li><a href="#bernoulli-and-binomial-distributions" id="toc-bernoulli-and-binomial-distributions" class="nav-link" data-scroll-target="#bernoulli-and-binomial-distributions"><span class="toc-section-number">2.2</span>  Bernoulli and Binomial Distributions</a>
   <ul class="collapse">
-  <li><a href="#probability-mass-function-dbinom" id="toc-probability-mass-function-dbinom" class="nav-link" data-scroll-target="#probability-mass-function-dbinom"><span class="header-section-number">2.2.1</span> Probability Mass Function (<code>dbinom</code>)</a></li>
-  <li><a href="#cumulative-distribution-function-pbinom" id="toc-cumulative-distribution-function-pbinom" class="nav-link" data-scroll-target="#cumulative-distribution-function-pbinom"><span class="header-section-number">2.2.2</span> Cumulative Distribution Function (<code>pbinom</code>)</a></li>
-  <li><a href="#quantile-function-qbinom" id="toc-quantile-function-qbinom" class="nav-link" data-scroll-target="#quantile-function-qbinom"><span class="header-section-number">2.2.3</span> Quantile Function (<code>qbinom</code>)</a></li>
-  <li><a href="#random-number-generator-rbinom" id="toc-random-number-generator-rbinom" class="nav-link" data-scroll-target="#random-number-generator-rbinom"><span class="header-section-number">2.2.4</span> Random Number Generator (<code>rbinom</code>)</a></li>
+  <li><a href="#probability-mass-function-dbinom" id="toc-probability-mass-function-dbinom" class="nav-link" data-scroll-target="#probability-mass-function-dbinom"><span class="toc-section-number">2.2.1</span>  Probability Mass Function (<code>dbinom</code>)</a></li>
+  <li><a href="#cumulative-distribution-function-pbinom" id="toc-cumulative-distribution-function-pbinom" class="nav-link" data-scroll-target="#cumulative-distribution-function-pbinom"><span class="toc-section-number">2.2.2</span>  Cumulative Distribution Function (<code>pbinom</code>)</a></li>
+  <li><a href="#quantile-function-qbinom" id="toc-quantile-function-qbinom" class="nav-link" data-scroll-target="#quantile-function-qbinom"><span class="toc-section-number">2.2.3</span>  Quantile Function (<code>qbinom</code>)</a></li>
+  <li><a href="#random-number-generator-rbinom" id="toc-random-number-generator-rbinom" class="nav-link" data-scroll-target="#random-number-generator-rbinom"><span class="toc-section-number">2.2.4</span>  Random Number Generator (<code>rbinom</code>)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -235,7 +246,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Computing Probabilities</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Computing Probabilities</span></h1>
 </div>
 
 
@@ -424,10 +435,10 @@ Solution:
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">20</span>, <span class="at">mean=</span><span class="dv">0</span>, <span class="at">sd=</span><span class="dv">1</span>)</span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1]  0.91425791 -1.04958627 -0.93465403  0.19325380 -0.01823713 -0.86645369
- [7]  0.63871980 -0.36962999 -0.43475418 -0.32424412  1.60020368  0.49327786
-[13]  1.43441584 -0.78876451  0.30173806  0.08214899 -0.19969547 -1.04771367
-[19] -0.18370675 -0.47987416</code></pre>
+<pre><code> [1] -0.18822004  0.54324622  1.66450575 -0.47585051  0.73607657  0.03454268
+ [7] -0.82940421 -1.41500203  0.28635927  1.04024037  0.29147171  0.85782342
+[13]  0.07888812  0.95258935  1.40228712 -1.21475369 -0.49949247 -0.96029766
+[19] -1.19658471  0.99744795</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -444,21 +455,21 @@ Solution:
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean=</span><span class="dv">10</span>, <span class="at">sd=</span><span class="fu">sqrt</span>(<span class="dv">2</span>))</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1] 11.164460  7.929328 11.179405  8.442789 12.373270 13.401926  9.741446
-  [8]  8.115701 11.078015 10.069417  8.586165  9.757694 11.546480 10.702859
- [15]  7.528640  8.491067  8.210394 10.115810 10.515493 10.387686 13.640579
- [22]  8.160983  9.899891 10.368929 10.642952  6.823459  9.350985  8.447182
- [29] 11.916924 10.787050 11.092626 11.272405  9.522846 10.015570 10.033683
- [36]  9.189953  8.099563  7.760358 13.557964  9.905399  9.111984  8.341003
- [43] 11.712643  7.689756  9.020224 12.640759  6.951699  9.412638  7.086170
- [50]  8.268485  9.851610 11.758662 11.201609 13.633821 10.141695  9.738907
- [57]  9.979552 11.420146  8.059217 11.456927 10.829690  9.594522  7.986263
- [64] 10.746696 11.312949  9.622886 11.537176  7.548495  9.997797  9.787481
- [71] 11.763016 10.036189 11.010225  7.933874  7.947485 10.684199 10.359082
- [78] 12.162780  9.225362  8.881178 10.102968  6.136698  8.701801  9.142200
- [85]  9.648291 11.063129 10.536869 10.850814  8.831312 10.358653  9.197854
- [92]  9.373556  9.579944 12.025227 10.474767  9.070353 10.561072 11.444697
- [99]  8.680786 10.359923</code></pre>
+<pre><code>  [1] 10.089609 10.209659  9.693603  6.174415  9.917588 10.001480  9.909487
+  [8]  7.913678  9.989737 10.342441  8.885231  8.844183  8.622867  9.483766
+ [15]  7.917181  9.871560  7.339111  9.781307 11.603662 12.955061 10.047593
+ [22]  8.368955  8.167270  9.414610 11.809325  9.634971 11.493834 11.795649
+ [29]  9.192264  9.578254 10.332168 10.558574  9.951853 11.462898  9.840130
+ [36]  9.044684 11.480554  9.910585 11.327372 10.126033  7.772000 10.610841
+ [43] 10.586889  8.701369  9.968937  9.262215  8.919766  9.963047  8.982746
+ [50]  8.150293  8.814638  7.303306  9.781510 11.812395  9.322538 12.819629
+ [57]  8.888110 10.113260  9.611721 10.034017 10.037362  9.629698 10.296395
+ [64] 11.077338 10.175761  8.186245 10.610424  8.502268  9.244535 10.035226
+ [71]  8.967530  9.579874 10.287714 10.753097 10.922544  9.293066 12.142980
+ [78]  9.430714  9.053338 13.505554 10.749959 10.278956 12.097551  9.206692
+ [85]  9.261695  8.579727  8.547453 10.826871 10.559960 10.451541  9.552305
+ [92]  8.767024  8.446091  9.572116  7.756628 11.726188  6.969027 12.044585
+ [99] 12.273083 11.732644</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -586,8 +597,8 @@ Solution:
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rbinom</span>(<span class="dv">50</span>, <span class="at">size=</span><span class="dv">1</span>, <span class="at">prob=</span><span class="fl">0.2</span>)</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0 0 0 0 0 0 0 0 0 1 0 1 1 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0
-[39] 0 0 0 0 1 1 0 0 1 0 0 0</code></pre>
+<pre><code> [1] 1 0 1 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 1 0 0 0 0
+[39] 0 1 0 0 0 0 0 1 0 0 0 1</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -604,10 +615,10 @@ Solution:
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">rbinom</span>(<span class="dv">100</span>, <span class="at">size=</span><span class="dv">100</span>, <span class="at">prob=</span><span class="fl">0.2</span>)</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  [1] 23 25 12 27 29 26 13 22 16 25 18 18 23 16 20 14 19 21 19 19 25 26 29 16 22
- [26] 19 22 17 19 27 20 24 18 22 18 23 18 16 21 20 24 20 17 17 18 17 20 21 21 14
- [51] 23 20 19 20 19 20 23 23 25 23 23 17 18 21 20 13 23 19 15 20 22 20 17 24 19
- [76] 17 18 21 24 20 19 24 29 21 17 13 14 20 27 18 23 20 25 16 24 22 29 24 21 15</code></pre>
+<pre><code>  [1] 14 19 21 19 15 18 22 18 24 25 18 26 20 23 20 12 15 18 19 22 14 18 14 24 13
+ [26] 20 18 22 19 17 25 23 18 21 22 15 17 15 21 20 13 25 23 18 22 22 14 16 20 18
+ [51] 21 19 26 26 24 23  7 25 16 17 19 22 16 17 15 24 19 12 12 16 23 17 18 18 17
+ [76] 19 19 14 26 21 17 17 23 13 25 20 20 25 21 21 20 17 22 21 20 13 22 24 15 23</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -648,23 +659,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -729,92 +726,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
