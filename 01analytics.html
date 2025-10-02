@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.6.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Analytics with R - 1&nbsp; Introduction to Data Analytics</title>
+<title>1&nbsp; Introduction to Data Analytics – Data Analytics with R</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,11 +17,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -32,7 +33,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -46,43 +47,13 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
@@ -100,17 +71,23 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-07ba0ad10f5680c660e360ac31d2f3b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-252bd9d528994f4bca9f634f98017b2f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -119,11 +96,12 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
-
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
 
@@ -134,11 +112,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Data Analytics</span></h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01analytics.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Data Analytics</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -146,13 +129,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Analytics with R</a> 
         <div class="sidebar-tools-main">
-    <a href="./Data-Analytics-with-R.pdf" title="Download PDF" class="sidebar-tool px-1"><i class="bi bi-file-pdf"></i></a>
-  <a href="" class="quarto-reader-toggle sidebar-tool" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
+    <a href="./Data-Analytics-with-R.pdf" title="Download PDF" class="quarto-navigation-tool px-1" aria-label="Download PDF"><i class="bi bi-file-pdf"></i></a>
+  <a href="" class="quarto-reader-toggle quarto-navigation-tool px-1" onclick="window.quartoToggleReader(); return false;" title="Toggle reader mode">
   <div class="quarto-reader-toggle-btn">
   <i class="bi"></i>
   </div>
@@ -160,89 +143,100 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">Preface</a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./00R.html" class="sidebar-item-text sidebar-link">Getting Started with R</a>
+  <a href="./00R.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Getting Started with R</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01analytics.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Data Analytics</span></a>
+  <a href="./01analytics.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Data Analytics</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02probability.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Computing Probabilities</span></a>
+  <a href="./02probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Computing Probabilities</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03probability.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sampling Distributions and the CLT</span></a>
+  <a href="./03probability.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Sampling Distributions and the CLT</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04estimation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estimation</span></a>
+  <a href="./04estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Estimation</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05testing.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></a>
+  <a href="./05testing.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Hypothesis Tests</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06regression.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Regression</span></a>
+  <a href="./06regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Regression</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07classification.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classification</span></a>
+  <a href="./07classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./08clustering.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clustering</span></a>
+  <a href="./08clustering.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Clustering</span></span></a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#loading-data-sets" id="toc-loading-data-sets" class="nav-link active" data-scroll-target="#loading-data-sets"><span class="toc-section-number">1.1</span>  Loading Data Sets</a>
+  <li><a href="#loading-data-sets" id="toc-loading-data-sets" class="nav-link active" data-scroll-target="#loading-data-sets"><span class="header-section-number">1.1</span> Loading Data Sets</a>
   <ul class="collapse">
-  <li><a href="#data-formats" id="toc-data-formats" class="nav-link" data-scroll-target="#data-formats"><span class="toc-section-number">1.1.1</span>  Data formats</a></li>
-  <li><a href="#reading-in-data-from-r-packages" id="toc-reading-in-data-from-r-packages" class="nav-link" data-scroll-target="#reading-in-data-from-r-packages"><span class="toc-section-number">1.1.2</span>  Reading in Data from R packages</a></li>
-  <li><a href="#reading-in-data-from-.csv-files" id="toc-reading-in-data-from-.csv-files" class="nav-link" data-scroll-target="#reading-in-data-from-.csv-files"><span class="toc-section-number">1.1.3</span>  Reading in Data from .csv files</a></li>
+  <li><a href="#data-formats" id="toc-data-formats" class="nav-link" data-scroll-target="#data-formats"><span class="header-section-number">1.1.1</span> Data formats</a></li>
+  <li><a href="#reading-in-data-from-r-packages" id="toc-reading-in-data-from-r-packages" class="nav-link" data-scroll-target="#reading-in-data-from-r-packages"><span class="header-section-number">1.1.2</span> Reading in Data from R packages</a></li>
+  <li><a href="#reading-in-data-from-.csv-files" id="toc-reading-in-data-from-.csv-files" class="nav-link" data-scroll-target="#reading-in-data-from-.csv-files"><span class="header-section-number">1.1.3</span> Reading in Data from .csv files</a></li>
   </ul></li>
-  <li><a href="#the-working-directory" id="toc-the-working-directory" class="nav-link" data-scroll-target="#the-working-directory"><span class="toc-section-number">1.2</span>  The Working Directory</a>
+  <li><a href="#the-working-directory" id="toc-the-working-directory" class="nav-link" data-scroll-target="#the-working-directory"><span class="header-section-number">1.2</span> The Working Directory</a>
   <ul class="collapse">
-  <li><a href="#using-setwd-to-change-the-working-directory" id="toc-using-setwd-to-change-the-working-directory" class="nav-link" data-scroll-target="#using-setwd-to-change-the-working-directory"><span class="toc-section-number">1.2.1</span>  Using <code>setwd()</code> to change the working directory</a></li>
-  <li><a href="#using-the-files-tab-to-change-the-working-directory" id="toc-using-the-files-tab-to-change-the-working-directory" class="nav-link" data-scroll-target="#using-the-files-tab-to-change-the-working-directory"><span class="toc-section-number">1.2.2</span>  Using the “Files” tab to change the working directory</a></li>
-  <li><a href="#open-a-script-to-automatically-set-the-working-directory" id="toc-open-a-script-to-automatically-set-the-working-directory" class="nav-link" data-scroll-target="#open-a-script-to-automatically-set-the-working-directory"><span class="toc-section-number">1.2.3</span>  Open a script to automatically set the working directory</a></li>
-  <li><a href="#providing-full-file-paths-to-read-in-data" id="toc-providing-full-file-paths-to-read-in-data" class="nav-link" data-scroll-target="#providing-full-file-paths-to-read-in-data"><span class="toc-section-number">1.2.4</span>  Providing full file paths to read in data</a></li>
-  <li><a href="#uploading-data-in-rstudioposit-cloud" id="toc-uploading-data-in-rstudioposit-cloud" class="nav-link" data-scroll-target="#uploading-data-in-rstudioposit-cloud"><span class="toc-section-number">1.2.5</span>  Uploading data in RStudio/Posit cloud</a></li>
+  <li><a href="#using-setwd-to-change-the-working-directory" id="toc-using-setwd-to-change-the-working-directory" class="nav-link" data-scroll-target="#using-setwd-to-change-the-working-directory"><span class="header-section-number">1.2.1</span> Using <code>setwd()</code> to change the working directory</a></li>
+  <li><a href="#using-the-files-tab-to-change-the-working-directory" id="toc-using-the-files-tab-to-change-the-working-directory" class="nav-link" data-scroll-target="#using-the-files-tab-to-change-the-working-directory"><span class="header-section-number">1.2.2</span> Using the “Files” tab to change the working directory</a></li>
+  <li><a href="#open-a-script-to-automatically-set-the-working-directory" id="toc-open-a-script-to-automatically-set-the-working-directory" class="nav-link" data-scroll-target="#open-a-script-to-automatically-set-the-working-directory"><span class="header-section-number">1.2.3</span> Open a script to automatically set the working directory</a></li>
+  <li><a href="#providing-full-file-paths-to-read-in-data" id="toc-providing-full-file-paths-to-read-in-data" class="nav-link" data-scroll-target="#providing-full-file-paths-to-read-in-data"><span class="header-section-number">1.2.4</span> Providing full file paths to read in data</a></li>
+  <li><a href="#uploading-data-in-rstudioposit-cloud" id="toc-uploading-data-in-rstudioposit-cloud" class="nav-link" data-scroll-target="#uploading-data-in-rstudioposit-cloud"><span class="header-section-number">1.2.5</span> Uploading data in RStudio/Posit cloud</a></li>
   </ul></li>
-  <li><a href="#inspecting-data" id="toc-inspecting-data" class="nav-link" data-scroll-target="#inspecting-data"><span class="toc-section-number">1.3</span>  Inspecting Data</a></li>
-  <li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics"><span class="toc-section-number">1.4</span>  Summary Statistics</a></li>
-  <li><a href="#graphical-summaries" id="toc-graphical-summaries" class="nav-link" data-scroll-target="#graphical-summaries"><span class="toc-section-number">1.5</span>  Graphical Summaries</a></li>
+  <li><a href="#inspecting-data" id="toc-inspecting-data" class="nav-link" data-scroll-target="#inspecting-data"><span class="header-section-number">1.3</span> Inspecting Data</a></li>
+  <li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics"><span class="header-section-number">1.4</span> Summary Statistics</a></li>
+  <li><a href="#graphical-summaries" id="toc-graphical-summaries" class="nav-link" data-scroll-target="#graphical-summaries"><span class="header-section-number">1.5</span> Graphical Summaries</a></li>
   </ul>
 </nav>
     </div>
@@ -251,7 +245,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Data Analytics</span></h1>
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to Data Analytics</span></h1>
 </div>
 
 
@@ -264,7 +258,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </div>
   
 
+
 </header>
+
 
 <p>In this chapter, we will get acclimated to working with data using a suite of packages in R called the <code>tidyverse</code>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> If you are interested in a complete introduction to the tidyverse syntax, see <a href="https://r4ds.had.co.nz">R for Data Science</a>. Specifically, for details on data visualization see <a href="https://r4ds.had.co.nz/data-visualisation.html">Chapter 3 - Data Visualization</a> and <a href="https://r4ds.had.co.nz/exploratory-data-analysis.html">Chapter 7 - Exploratory Data Analysis</a>.</p>
 <p>To use the <code>tidyverse</code> packages, we first need to load them in R. Without running this command first, any of the functions used below that are part of <code>tidyverse</code> will produce an error.</p>
@@ -318,7 +314,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">"C:\Users\Rafael\Documents"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
-<pre><code>Error: '\U' used without hex digits in character string (&lt;text&gt;:1:11)</code></pre>
+<pre><code>Error: '\U' used without hex digits in character string (&lt;input&gt;:1:11)</code></pre>
 </div>
 </div>
 <p><strong>Exercise 1:</strong> Change the working directory to your downloads folder, and use the <code>getwd()</code> function to confirm that the working directory has changed.</p>
@@ -370,104 +366,105 @@ Solution:
 </div>
 <div class="cell">
 <div class="cell-output-display">
-
-<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; "><table class="table" style="font-size: 10px; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:right;"> store </th>
-   <th style="text-align:right;"> upc </th>
-   <th style="text-align:right;"> week </th>
-   <th style="text-align:right;"> move </th>
-   <th style="text-align:right;"> price </th>
-   <th style="text-align:left;"> sale </th>
-   <th style="text-align:right;"> profit </th>
-   <th style="text-align:left;"> brand </th>
-   <th style="text-align:right;"> packsize </th>
-   <th style="text-align:right;"> itemsize </th>
-   <th style="text-align:left;"> units </th>
-  </tr>
- </thead>
+<div style="border: 1px solid #ddd; padding: 5px; overflow-x: scroll; width:100%; ">
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: right;" data-quarto-table-cell-role="th">store</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">upc</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">week</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">move</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">price</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">sale</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">profit</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">brand</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">packsize</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">itemsize</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">units</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:right;"> 86 </td>
-   <td style="text-align:right;"> 1820000016 </td>
-   <td style="text-align:right;"> 91 </td>
-   <td style="text-align:right;"> 23 </td>
-   <td style="text-align:right;"> 3.49 </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:right;"> 19.05 </td>
-   <td style="text-align:left;"> BUDWEISER BEER </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:left;"> oz </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 86 </td>
-   <td style="text-align:right;"> 1820000784 </td>
-   <td style="text-align:right;"> 91 </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 3.79 </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:right;"> 28.23 </td>
-   <td style="text-align:left;"> O'DOUL'S N/A LONGNEC </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:left;"> oz </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 86 </td>
-   <td style="text-align:right;"> 1820000834 </td>
-   <td style="text-align:right;"> 91 </td>
-   <td style="text-align:right;"> 9 </td>
-   <td style="text-align:right;"> 3.69 </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:right;"> 22.03 </td>
-   <td style="text-align:left;"> BUDWEISER BEER LONG </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:left;"> oz </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 86 </td>
-   <td style="text-align:right;"> 1820000987 </td>
-   <td style="text-align:right;"> 91 </td>
-   <td style="text-align:right;"> 78 </td>
-   <td style="text-align:right;"> 3.29 </td>
-   <td style="text-align:left;"> B </td>
-   <td style="text-align:right;"> 5.78 </td>
-   <td style="text-align:left;"> MICHELOB REGULAR BEE </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:left;"> oz </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 86 </td>
-   <td style="text-align:right;"> 3410000354 </td>
-   <td style="text-align:right;"> 91 </td>
-   <td style="text-align:right;"> 35 </td>
-   <td style="text-align:right;"> 3.69 </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:right;"> 22.98 </td>
-   <td style="text-align:left;"> MILLER LITE BEER </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:left;"> oz </td>
-  </tr>
-  <tr>
-   <td style="text-align:right;"> 86 </td>
-   <td style="text-align:right;"> 3410000554 </td>
-   <td style="text-align:right;"> 91 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:right;"> 3.69 </td>
-   <td style="text-align:left;"> NA </td>
-   <td style="text-align:right;"> 22.98 </td>
-   <td style="text-align:left;"> MILLER GENUINE DRAFT </td>
-   <td style="text-align:right;"> 6 </td>
-   <td style="text-align:right;"> 12 </td>
-   <td style="text-align:left;"> oz </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">1820000016</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">3.49</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">19.05</td>
+<td style="text-align: left;">BUDWEISER BEER</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">oz</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">1820000784</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3.79</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">28.23</td>
+<td style="text-align: left;">O'DOUL'S N/A LONGNEC</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">oz</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">1820000834</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3.69</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">22.03</td>
+<td style="text-align: left;">BUDWEISER BEER LONG</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">oz</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">1820000987</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">3.29</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">5.78</td>
+<td style="text-align: left;">MICHELOB REGULAR BEE</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">oz</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">3410000354</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">3.69</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">22.98</td>
+<td style="text-align: left;">MILLER LITE BEER</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">oz</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">3410000554</td>
+<td style="text-align: right;">91</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">3.69</td>
+<td style="text-align: left;">NA</td>
+<td style="text-align: right;">22.98</td>
+<td style="text-align: left;">MILLER GENUINE DRAFT</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: left;">oz</td>
+</tr>
 </tbody>
-</table></div>
+</table>
+</div>
 
 </div>
 </div>
@@ -491,37 +488,37 @@ Solution:
 <p>We can compute summary statistics in the tidyverse by combining the <code>summarise</code> operator with any one (or many!) of R’s built-in statistics functions. A few of the most common are listed below.</p>
 <div class="cell">
 <div class="cell-output-display">
-
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Statistic </th>
-   <th style="text-align:left;"> R Function </th>
-  </tr>
- </thead>
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Statistic</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">R Function</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> mean </td>
-   <td style="text-align:left;"> `mean( )` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> median </td>
-   <td style="text-align:left;"> `median( )` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> variance </td>
-   <td style="text-align:left;"> `var( )` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> standard deviation </td>
-   <td style="text-align:left;"> `sd( )` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> correlation </td>
-   <td style="text-align:left;"> `cor( )` </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">mean</td>
+<td style="text-align: left;">`mean( )`</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">median</td>
+<td style="text-align: left;">`median( )`</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">variance</td>
+<td style="text-align: left;">`var( )`</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">standard deviation</td>
+<td style="text-align: left;">`sd( )`</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">correlation</td>
+<td style="text-align: left;">`cor( )`</td>
+</tr>
 </tbody>
 </table>
+
 
 </div>
 </div>
@@ -614,37 +611,37 @@ Solution:
 <p>Data visualization is one of the strengths of the <code>tidyverse</code>. A fairly exhaustive list of graph types can be found at https://www.r-graph-gallery.com. For our purposes, we will start with a few of the most commonly used graphs.</p>
 <div class="cell">
 <div class="cell-output-display">
-
-<table class="table" style="width: auto !important; margin-left: auto; margin-right: auto;">
- <thead>
-  <tr>
-   <th style="text-align:left;"> Graph </th>
-   <th style="text-align:left;"> Operator </th>
-  </tr>
- </thead>
+<table class="table caption-top table-sm table-striped small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">Graph</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Operator</th>
+</tr>
+</thead>
 <tbody>
-  <tr>
-   <td style="text-align:left;"> histogram </td>
-   <td style="text-align:left;"> `geom_histogram( )` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> box plot </td>
-   <td style="text-align:left;"> `geom_boxplot( )` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> bar plot </td>
-   <td style="text-align:left;"> `geom_bar( )` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> line plot </td>
-   <td style="text-align:left;"> `geom_line( )` </td>
-  </tr>
-  <tr>
-   <td style="text-align:left;"> scatter plot </td>
-   <td style="text-align:left;"> `geom_point( )` </td>
-  </tr>
+<tr class="odd">
+<td style="text-align: left;">histogram</td>
+<td style="text-align: left;">`geom_histogram( )`</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">box plot</td>
+<td style="text-align: left;">`geom_boxplot( )`</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">bar plot</td>
+<td style="text-align: left;">`geom_bar( )`</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">line plot</td>
+<td style="text-align: left;">`geom_line( )`</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">scatter plot</td>
+<td style="text-align: left;">`geom_point( )`</td>
+</tr>
 </tbody>
 </table>
+
 
 </div>
 </div>
@@ -655,7 +652,11 @@ Solution:
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Distribution of Weekly Prices"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="01analytics_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="01analytics_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This is an example of a <strong>histogram</strong>. The variable on the x-axis (price) is split into different bins, and the y-axis counts the number of observations that fall withiin each bin.</p>
@@ -666,7 +667,11 @@ Solution:
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Distribution of Weekly Prices"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="01analytics_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="01analytics_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Notice that the focal variable of interest is now on the y-axis. The rectangular box shown in the middle of the plot indicates three key summary statistics: the bottom line is the 25th percentile, the middle line is the 50th percentile (or median), and the top line is the 75th percentile. The vertical line starting around 2.5 and ending around 7 indicates the full range of prices in the data.</p>
@@ -677,7 +682,11 @@ Solution:
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
 <span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Distribution of Weekly Prices"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="01analytics_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="01analytics_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>We have succeeded in creating a box plot for each brand, but the brand labels are impossible to read! As easy fix is to rotate the x-axis labels, which can be controlled using the <code>theme()</code> operator. The <code>theme()</code> operator is generally what we use to change plot formatting, such as the size of the axis labels or the position of the title.</p>
@@ -689,7 +698,11 @@ Solution:
 <span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle=</span><span class="dv">90</span>, <span class="at">hjust=</span><span class="dv">1</span>),</span>
 <span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="01analytics_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="01analytics_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Much better!</p>
@@ -701,7 +714,11 @@ Solution:
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Beer Prices over Time"</span>) <span class="sc">+</span></span>
 <span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="01analytics_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="01analytics_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This was a good attempt, but the plot is not especially useful! While we do notice that the prices are changing over time, we can’t identify the products themselves so we don’t know which products are changing more or less than others.</p>
@@ -713,7 +730,11 @@ Solution:
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Beer Prices over Time"</span>) <span class="sc">+</span></span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="01analytics_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="01analytics_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This is better, but it is still hard to identify products because of how much overlap there is in prices. So maybe the best thing to do is create a separate plot for each brand. This can be easily accomplished using <code>facet_wrap( )</code>.</p>
@@ -726,7 +747,11 @@ Solution:
 <span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>),</span>
 <span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="01analytics_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="01analytics_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Note that we added <code>show.legend=FALSE</code> to <code>geom_line( )</code> since we no longer need the color to identify products. We also added an option to <code>theme( )</code> to control the size of the text to ensure that the labels are all legible.</p>
@@ -738,7 +763,11 @@ Solution:
 <span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Price vs. Demand"</span>) <span class="sc">+</span></span>
 <span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="01analytics_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="01analytics_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This figure matches our intuition from economics, which is that as price increases, demand seems to fall. We can even imagine a line going through these points – this line would be a demand curve!</p>
@@ -750,7 +779,11 @@ Solution:
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Price vs. Demand"</span>) <span class="sc">+</span></span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="01analytics_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="01analytics_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <div class="cell">
@@ -762,7 +795,11 @@ Solution:
 <span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust=</span><span class="fl">0.5</span>),</span>
 <span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="01analytics_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="01analytics_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>These last two plots indeed show that demand is negatively related to price (as price increases, demand falls) and that the magnitude of this relationship may change across products.</p>
@@ -805,12 +842,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
     }
-  });
-  clipboard.on('success', function(e) {
+    return false;
+  }
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -842,11 +882,50 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -856,8 +935,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -869,9 +957,245 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -913,17 +1237,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./00R.html" class="pagination-link">
+      <a href="./00R.html" class="pagination-link" aria-label="Getting Started with R">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Getting Started with R</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02probability.html" class="pagination-link">
+      <a href="./02probability.html" class="pagination-link" aria-label="Computing Probabilities">
         <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Computing Probabilities</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 
