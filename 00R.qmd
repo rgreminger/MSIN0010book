@@ -1,5 +1,14 @@
 
 # Getting Started with R  {.unnumbered}
+```{r setup, include=FALSE}
+
+packages_available <- require("rpart") & require("tidyverse") & require("knitr") & require("kableExtra") & require("ISLR") & require("class") & require("dendextend")
+if (!packages_available){
+   install.packages(c("rpart", "tidyverse", "knitr", "kableExtra", "ISLR", "class", "dendextend"))
+}
+
+
+```
 
 ## Why use R? 
 
@@ -39,9 +48,10 @@ Clearly, it is much more convenient to write in R code than in these complicated
 
 To download R, go to [https://cran.rstudio.com/](https://cran.rstudio.com/) and choose "Download R for ..." your operating system (Windows, Mac, or Linux). For other questions, see the [R FAQ](https://cran.r-project.org/doc/FAQ/R-FAQ.html).
 
-After downloading R, you should also download [RStudio](https://rstudio.com), which is an integrated development enviroment (IDE) for R. Whereas we could use any basic text editor to write code for R, and IDE like Rstudio provides a much more interactive and user-friendly interface for using R. To download it, go [here](https://posit.co/download/rstudio-desktop/) and download the installer using the link "DOWNLOAD RSTDIO FOR ..." for your operating system. 
+After downloading R, you should also download [RStudio](https://posit.co/download/rstudio-desktop/), which is an integrated development enviroment (IDE) for R. Whereas we could use any basic text editor to write code for R, and IDE like Rstudio provides a much more interactive and user-friendly interface for using R. To download it, go [here](https://posit.co/download/rstudio-desktop/) and download the installer for your operating system. Other popular IDEs for R include [Positron](https://posit.co/products/ide/positron/) and [VS Code](https://code.visualstudio.com/).
 
 An alternative to run R locally on your computer is to run it in the cloud. By registering on [Posit cloud](https://posit.cloud/), you can get the Rstudio experience directly in your browser, without the need to install anything on your computer. However, this can only be used while connected to the internet, and the free account has resource limitations (e.g. RAM).
+
 
 ## Installing and Loading Packages 
 

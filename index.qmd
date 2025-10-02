@@ -2,4 +2,4 @@
 
 This book is written for use in MSIN0010: Data Analytics I at the [UCL School of Management](https://www.mgmt.ucl.ac.uk). It is meant to serve as a supplement to lecture and seminar materials and specifically focuses on applications in R.
 
-*Last update: October 2023* 
+*Last update: October 2025* 
